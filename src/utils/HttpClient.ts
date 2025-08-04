@@ -67,7 +67,7 @@ class Axios {
 
           try {
             // Gọi API refresh token
-            const { data } = await instance.post('/auth/refresh-token');
+            const { data } = await instance.post('/auth/refresh-token', {}, { withCredentials: true });
             const newAccessToken = data.data.accessToken;
 
             // Cập nhật token mới vào storage
