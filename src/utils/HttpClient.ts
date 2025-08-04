@@ -48,6 +48,8 @@ class Axios {
     instance.interceptors.response.use(
       (response) => response,
       async (error: AxiosError) => {
+        console.log("error: ",error);
+        
         const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
         // Chỉ xử lý lỗi 401 Unauthorized và đảm bảo không bị lặp vô hạn
@@ -88,7 +90,7 @@ class Axios {
             removeAccessToken();
             // Chuyển hướng về trang đăng nhập
             // Cách tốt nhất là dispatch một action logout ở đây
-            window.location.href = '/auth/login'; 
+            // window.location.href = '/auth/login'; 
             
             return Promise.reject(refreshError);
           } finally {
