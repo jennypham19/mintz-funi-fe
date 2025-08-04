@@ -84,7 +84,7 @@ const MissionDevelopment: React.FC = () => {
                 })}
             </Grid>
             <Typography sx={{ borderTop: '2px solid white', py: 1, mt: 4}} variant="h5" fontWeight={600}>Dịch vụ của chúng tôi</Typography>
-            {services.slice(0,5).map((content, index) => {
+            {services?.slice(0,5).map((content, index) => {
                 return(
                     <Grid key={index} sx={{ mt: 3}} container spacing={4} direction={ content.isReverse === true ? 'row-reverse' : 'row'}>
                         <Grid size={{ xs: 12, md: 6}}>

@@ -155,7 +155,7 @@ const News = () => {
         )}
           {/* News Cards */}
           <Grid container spacing={3}>
-            {news.map((item, index) => {
+            {news?.map((item, index) => {
               const formatted = dayjs(item.updatedAt).format('MMM DD,YYYY')
               return(
                 <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3}} key={item.id}>
