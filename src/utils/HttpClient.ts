@@ -72,6 +72,8 @@ class Axios {
             const { data } = await axios.post(`${__BASEURL__}/api/auth/refresh-token`, {}, {
               withCredentials: true
             });
+            console.log("data: ", data);
+            
             // const { data } = await instance.post('/api/auth/refresh-token',{}, { withCredentials: true});
             const newAccessToken = data.data.accessToken;
 
