@@ -23,7 +23,7 @@ const PlanDrawing: React.FC = () => {
 
     return(
         <Grid container>
-            {designAndBuilds.slice(0,3).map((data, index) => {
+            {designAndBuilds?.slice(0,3).map((data, index) => {
                 return(
                     <Grid key={index} size={{ xs: 12, md:4}}>
                         <Box
