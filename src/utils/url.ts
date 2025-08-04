@@ -14,7 +14,7 @@ export const prepareRealPath = (
 };
 
 //Get url image
-const apiBaseUrl = 'http://localhost:3002'
+const apiBaseUrl = import.meta.env.MODE === "development" ? 'http://localhost:3002' : 'https://mintz-funi-be.onrender.com'
 export function getPathImage(path: string) : string {
   if(!path){
     return "";
