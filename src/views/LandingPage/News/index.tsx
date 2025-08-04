@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { getPathImage } from '@/utils/url';
 import { getFormatText } from '@/utils/labelEnToVi';
 import CustomPagination from '@/components/Pagination/CustomPagination';
+import image_slide from '@/assets/images/users/12.png';
 
 
 export type CategoryType = 'Tất cả' | 'Sự kiện' | 'Kiến trúc' | 'Đời sống' | 'Công nghệ';
@@ -162,7 +163,7 @@ const News = () => {
                   <Card sx={{ bgcolor: '#1C1A1B', color: 'white'}}>
                     <CardMedia
                       component='img'
-                      image={getPathImage(item.imageUrl)}
+                      image={getPathImage(item.imageUrl) || image_slide}
                       alt={item.title}
                       sx={{
                           objectFit: 'fill',
