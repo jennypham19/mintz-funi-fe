@@ -48,8 +48,6 @@ class Axios {
     instance.interceptors.response.use(
       (response) => response,
       async (error: AxiosError) => {
-        console.log("error: ",error);
-        
         const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
         // Chỉ xử lý lỗi 401 Unauthorized và đảm bảo không bị lặp vô hạn
@@ -69,12 +67,7 @@ class Axios {
 
           try {
             // Gọi API refresh token
-            const { data } = await axios.post(`${__BASEURL__}/api/auth/refresh-token`, {}, {
-              withCredentials: true
-            });
-            console.log("data: ", data);
-            
-            // const { data } = await instance.post('/api/auth/refresh-token',{}, { withCredentials: true});
+            const { data } = await instance.post('/auth/refresh-token');
             const newAccessToken = data.data.accessToken;
 
             // Cập nhật token mới vào storage
@@ -95,7 +88,7 @@ class Axios {
             removeAccessToken();
             // Chuyển hướng về trang đăng nhập
             // Cách tốt nhất là dispatch một action logout ở đây
-            // window.location.href = '/auth/login'; 
+            window.location.href = '/auth/login'; 
             
             return Promise.reject(refreshError);
           } finally {
