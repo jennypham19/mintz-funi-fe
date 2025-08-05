@@ -67,7 +67,11 @@ class Axios {
 
           try {
             // Gọi API refresh token
-            const { data } = await instance.post('/auth/refresh-token');
+            const { data } = await axios.post(import.meta.env.VITE_API_BASE_URL +'/api/auth/refresh-token',{},{
+              withCredentials: true
+            });
+            console.log("data: ", data);
+            
             const newAccessToken = data.data.accessToken;
 
             // Cập nhật token mới vào storage
