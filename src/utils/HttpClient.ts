@@ -68,7 +68,6 @@ class Axios {
           try {
             // Gọi API refresh token
             const { data } = await axios.post(import.meta.env.VITE_API_BASE_URL +'/api/auth/refresh-token');
-            console.log("data: ", data);
             
             const newAccessToken = data.data.accessToken;
 
@@ -90,7 +89,7 @@ class Axios {
             removeAccessToken();
             // Chuyển hướng về trang đăng nhập
             // Cách tốt nhất là dispatch một action logout ở đây
-            // window.location.href = '/auth/login'; 
+            window.location.href = '/auth/login'; 
             
             return Promise.reject(refreshError);
           } finally {
