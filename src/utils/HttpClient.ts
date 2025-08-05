@@ -67,7 +67,7 @@ class Axios {
 
           try {
             // Gọi API refresh token
-            const { data } = await axios.post(import.meta.env.VITE_API_BASE_URL +'/api/auth/refresh-token');
+            const { data } = await instance.post('/api/auth/refresh-token');
             console.log("data: ", data);
             
             const newAccessToken = data.data.accessToken;
