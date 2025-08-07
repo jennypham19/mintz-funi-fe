@@ -133,31 +133,31 @@ export const CONTENT_PLAN = [
         id: 1,
         title: 'Phác thảo kế hoạch',
         image: plan_1,
-        content: [
-            'Tạo concept sơ bộ cho dự án',
-            'Sưu tầm và lên phương án dựng moodboard',
+        content: 
+            'Tạo concept sơ bộ cho dự án \n ' +
+            'Sưu tầm và lên phương án dựng moodboard \n' +
             'Đề xuất và tạo mặt bằng layout sơ lược'
-        ]
+        
     },
     {
         id: 2,
         title: 'Lên bản vẽ chi tiết',
         image: plan_2,
-        content: [
-            'Triển khai layout kỹ thuật',
-            'Diễn họa 3D chi tiết từng khu vực',
+        content: 
+            'Triển khai layout kỹ thuật \n' +
+            'Diễn họa 3D chi tiết từng khu vực \n' +
             'Hoàn thành hồ sơ bản vẽ hoàn chỉnh'
-        ]
+        
     },
     {
         id: 3,
         title: 'Hoàn thiện hồ sơ thi công',
         image: plan_3,
-        content: [
-            'Giấy phép xây dựng (nếu yêu cầu)',
-            'Hồ sơ bản vẽ M&E phối hợp',
+        content: 
+            'Giấy phép xây dựng (nếu yêu cầu) \n' +
+            'Hồ sơ bản vẽ M&E phối hợp \n' +
             'Tư vấn giám sát tác quyền trong quá trình thi công'
-        ]
+        
     },
 ]
 

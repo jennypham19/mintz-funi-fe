@@ -5,6 +5,7 @@ import { IDesignAndBuild } from "@/types/settings";
 import { getDesignAndBuilds } from "@/services/settings-service";
 import { getPathImage } from "@/utils/url";
 import cardfuni from '@/assets/images/users/cardfuni 2.png';
+import { CONTENT_PLAN } from "@/constants/contentAbout";
 
 
 const PlanDrawing: React.FC = () => {
@@ -23,7 +24,7 @@ const PlanDrawing: React.FC = () => {
 
     return(
         <Grid container>
-            {designAndBuilds?.slice(0,3).map((data, index) => {
+            {CONTENT_PLAN?.slice(0,3).map((data, index) => {
                 return(
                     <Grid key={index} size={{ xs: 12, md:4}}>
                         <Box
@@ -31,7 +32,8 @@ const PlanDrawing: React.FC = () => {
                                 position: 'relative',
                                 height: {xs: 300, md: 400}, // Chiều cao thu gọn lại
                                 width: '100%',
-                                backgroundImage: `url(${getPathImage(data.image_url) || cardfuni})`,
+                                // backgroundImage: `url(${getPathImage(data.image_url) || cardfuni})`,
+                                backgroundImage: `url(${data.image || cardfuni})`,
                                 backgroundSize: 'fill',
                                 backgroundPosition: 'center',
                                 display: 'flex',

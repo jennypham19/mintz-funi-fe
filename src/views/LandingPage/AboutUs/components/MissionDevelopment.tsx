@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid2'
-import { CONTENT_MISSION } from "@/constants/contentAbout";
+import { CONTENT_MISSION, CONTENT_SERVICE } from "@/constants/contentAbout";
 import CommonImage from "@/components/Image/index";
 import { IServices } from "@/types/settings";
 import { getServices } from "@/services/settings-service";
@@ -84,7 +84,7 @@ const MissionDevelopment: React.FC = () => {
                 })}
             </Grid>
             <Typography sx={{ borderTop: '2px solid white', py: 1, mt: 4}} variant="h5" fontWeight={600}>Dịch vụ của chúng tôi</Typography>
-            {services?.slice(0,5).map((content, index) => {
+            {CONTENT_SERVICE?.slice(0,5).map((content, index) => {
                 return(
                     <Grid key={index} sx={{ mt: 3}} container spacing={4} direction={ content.isReverse === true ? 'row-reverse' : 'row'}>
                         <Grid size={{ xs: 12, md: 6}}>
