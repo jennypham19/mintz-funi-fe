@@ -18,11 +18,10 @@ const Home = () => {
     <Box>
       <Box
         sx={{
-          bgcolor: 'black',
           position:'relative',
           height: {xs: 450, md: 500}, // Chiều cao thu gọn lại
           width: '100%',
-          // backgroundImage: `url(${homeImage})`,
+          backgroundImage: `url(${homeImage})`,
           backgroundSize: '100% 100%',
           backgroundPosition: 'center',
           display: 'flex',
