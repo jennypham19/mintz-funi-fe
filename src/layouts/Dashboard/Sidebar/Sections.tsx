@@ -52,11 +52,11 @@ const Sections = (profile: IUser | null, menuData: GroupPermission | null): Sect
         path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_BLOG}`,
         icon: PostAdd,
       },
-      {
-        title: 'Quản lý Hình ảnh, Dịch vụ...',
-        path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_SETTINGS}`,
-        icon: Settings
-      },    
+      // {
+      //   title: 'Quản lý Hình ảnh, Dịch vụ...',
+      //   path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_SETTINGS}`,
+      //   icon: Settings
+      // },    
     ];
 
   const isAdmin = profile.role?.toLowerCase().trim() === 'admin';

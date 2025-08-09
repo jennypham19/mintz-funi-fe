@@ -36,11 +36,7 @@ const PlanDrawing: React.FC = () => {
                                 backgroundImage: `url(${data.image || cardfuni})`,
                                 backgroundSize: 'fill',
                                 backgroundPosition: 'center',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
                                 color: '#fff',
-                                textAlign: 'center',
                                 px: 2,
                                 zIndex:1 
                             }}
@@ -53,19 +49,19 @@ const PlanDrawing: React.FC = () => {
                                     zIndex:1
                                 }}
                             >
+                                
                                 <Box
                                     sx={{
                                         zIndex: 2,
                                         display: 'flex',
                                         flexDirection: 'column',
                                         height: '100%',
-                                        textAlign: 'center',
                                         width: '100%',
                                         alignItems: 'center'
                                     }}
                                 >
-                                    <Typography fontWeight={500} sx={{ whiteSpace: 'normal', wordBreak: 'break-word', my: 1.5, fontSize: {xs: '20px', md: '25px'}}}>{data.title}</Typography>
-                                    <Stack direction='column'>
+                                    <Stack margin='auto 0' direction='column'>
+                                        <Typography fontWeight={500} sx={{ whiteSpace: 'normal', wordBreak: 'break-word', my: 1.5, fontSize: {xs: '20px', md: '25px'}}}>{data.title}</Typography>
                                         {data.content.split('\n').map((line, idx) => {
                                             const newLine = line.replace('/^\s*[-*~>]/', '•');
                                             return (
@@ -76,7 +72,8 @@ const PlanDrawing: React.FC = () => {
                                                         whiteSpace: 'normal', wordBreak: 'break-word',fontSize: {xs: '13px', md: '15px'},
                                                     }}
                                                 >
-                                                    {`${newLine.trim()}`}
+                                                    {/* {`• ${newLine.trim()}`} */}
+                                                    {`• ${line.trim()}`}
                                                 </Typography>
                                             )
                                         })}

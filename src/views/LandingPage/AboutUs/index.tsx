@@ -11,7 +11,7 @@ const AboutUs = () => {
     {id: 1, name: 'image_slide', url: `${image_slide}`, srcSet1200: `${image_slide}`, srcSet768: `${image_slide}` },
   ]
   return (
-    <Box sx={{ bgcolor: '#06372D', color: 'white',}}>
+    <Box sx={{ bgcolor: '#031512', color: 'white',}}>
       <Box
         sx={{
           px: { xs: 2, sm: 8, md: 10 },
@@ -58,15 +58,14 @@ const AboutUs = () => {
             justifyContent:'center',
             alignItems: 'center',
             flexDirection: 'column',
-            textAlign: 'center',
             py: { xs: 0, md: 5},
             px: { xs: 3, md: 0},
             pt: { xs: 5, md: 0}
           }}
         >
           <Typography fontWeight={700} variant="h4" sx={{ py: 2, borderTop: '2px solid white'}}>Lý Do Khách Hàng Chọn Mintz Funi</Typography>
-          <Typography textAlign='left' fontWeight={500} variant="h6" mb={2}>Am hiểu thị trường khách sạn Việt Nam</Typography>
           <Stack direction='column'>
+              <Typography fontWeight={500} variant="h6" mb={2}>Am hiểu thị trường khách sạn Việt Nam</Typography>
               {CONTENT_ITEM_REASON.map((item, idx) => {
                 return (
                   <Typography 
