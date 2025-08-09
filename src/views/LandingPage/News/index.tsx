@@ -155,6 +155,11 @@ const News = () => {
             <TabsViewSwitcher DataViewMode={DataViewMode} viewMode={activeCategory} onChange={setActiveCategory}/>
         )}
           {/* News Cards */}
+          {news.length === 0 && (
+            <Box sx={{ textAlign: 'center', mt: 5}}>
+              <Typography variant='body2' fontWeight={700} sx={{ color: 'white'}}>Không tồn tại bản ghi nào cả</Typography>
+            </Box>
+          )}
           <Grid container spacing={3}>
             {news?.map((item, index) => {
               const formatted = dayjs(item.updatedAt).format('MMM DD,YYYY')

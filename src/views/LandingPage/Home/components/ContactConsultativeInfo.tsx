@@ -154,9 +154,9 @@ const ContactConsultativeInfo: React.FC = () => {
                     >
                         THÔNG TIN TƯ VẤN
                     </Typography>
-                    <Typography sx={{ color: 'grey' }}> Hoặc liên hệ hợp tác với chúng tôi </Typography>
-                    <Typography sx={{ color: 'grey' }}> qua email bằng cách điền vào biểu </Typography>
-                    <Typography sx={{ color: 'grey' }}> mẫu sau </Typography>
+                    <Typography sx={{ color: '#9E9A99' }}> Hoặc liên hệ hợp tác với chúng tôi </Typography>
+                    <Typography sx={{ color: '#9E9A99' }}> qua email bằng cách điền vào biểu </Typography>
+                    <Typography sx={{ color: '#9E9A99' }}> mẫu sau </Typography>
                 </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 7}}>
@@ -178,6 +178,7 @@ const ContactConsultativeInfo: React.FC = () => {
                                         from="from-contact"
                                         error={!!errors.name}
                                         helperText={errors.name}
+                                        autoComplete='off'
                                     />
                                 </Box>
                                 <Box flexGrow={1}>
@@ -194,6 +195,7 @@ const ContactConsultativeInfo: React.FC = () => {
                                         error={!!errors.email}
                                         helperText={errors.email}
                                         from="from-contact"
+                                        autoComplete='off'
                                     />
                                 </Box>
                             </Stack>
@@ -214,6 +216,7 @@ const ContactConsultativeInfo: React.FC = () => {
                                         error={!!errors.phone}
                                         helperText={errors.phone}
                                         from="from-contact"
+                                        autoComplete='off'
                                     />
                                 </Box>
                                 <Box flexGrow={1}>
@@ -230,6 +233,7 @@ const ContactConsultativeInfo: React.FC = () => {
                                         from="from-contact"
                                         error={!!errors.title}
                                         helperText={errors.title}
+                                        autoComplete='off'
                                     />
                                 </Box>
                             </Stack>
@@ -251,6 +255,7 @@ const ContactConsultativeInfo: React.FC = () => {
                                     from="from-contact"
                                     error={!!errors.message}
                                     helperText={errors.message}
+                                    autoComplete='off'
                                 />
                             </Stack>
                         </Grid>

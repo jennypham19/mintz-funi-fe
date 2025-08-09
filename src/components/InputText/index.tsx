@@ -57,7 +57,8 @@ interface CustomInputProps {
     | 'value' | 'onChange' | 'label' | 'disabled' | 'slotProps' | 'sx' 
   >;
   onlyPositiveNumber?: boolean;
-  from?: string
+  from?: string;
+  autoComplete?: string;
 }
 
 const InputText: React.FC<CustomInputProps> = ({
@@ -82,7 +83,8 @@ const InputText: React.FC<CustomInputProps> = ({
   dateTimePickerProps = {},
   onlyPositiveNumber = false,
   maxDate,
-  from
+  from, 
+  autoComplete
 }) => {
 
   const commonSlotTextFieldProps = {
@@ -221,25 +223,33 @@ const InputText: React.FC<CustomInputProps> = ({
     disabled,
     sx,
     multiline: multiline,
-    rows: multiline ? rows : undefined, 
+    rows: multiline ? rows : undefined,
+    autoComplete
   };
 
 
   return (
     <TextField
+        autoComplete={autoComplete}
         InputProps={{
             sx:{
                 "& .MuiOutlinedInput-notchedOutline":{
-                    border: from ? "1px solid grey" : "1px solid rgb(53, 50, 50)",
+                    border: from ? "1px solid #F2F2F2" : "1px solid rgb(53, 50, 50)",
                     borderRadius:"8px",
                 },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    border: from ? "1px solid grey" : "1px solid rgb(53, 50, 50)",
+                "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    border: from ? "1px solid #F2F2F2" : "1px solid rgb(53, 50, 50)",
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                    border: from ? "1px solid grey" : "1px solid rgb(53, 50, 50)",
+                    border: from ? "1px solid #F2F2F2" : "1px solid rgb(53, 50, 50)",
                 },
-                color: from ? 'white' : 'black'
+                '& .MuiInputBase-input::placeholder': {
+                  color: from ? '#BBB7B6' : "grey"
+                },
+                // 🔹 Đổi màu khi có value
+                backgroundColor: value ? "#ffffff" : "transparent",
+                color: value ? "#004d40" : (from ? "white" : "black"),
+                transition: "all 0.2s ease",
             }
         }}
         sx={{

@@ -82,7 +82,7 @@ const Home = () => {
         </Box>
       </Box>
       <Box
-        sx={{ backgroundColor: '#06372D', p: 5}}
+        sx={{ backgroundColor: '#031512', p: 5}}
       >
         <ContactConsultativeInfo/>
       </Box>
