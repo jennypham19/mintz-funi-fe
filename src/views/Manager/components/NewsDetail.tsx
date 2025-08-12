@@ -82,7 +82,7 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ content }) => {
                 <CommonImage
                     src={selectedImage}
                     alt="Zoom"
-                    sx={{ height: "auto", width: 1000 }}
+                    sx={{ height: "auto", width: 700 }}
                 />
             </DialogComponent>
 
