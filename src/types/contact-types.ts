@@ -6,5 +6,6 @@ export interface Contact{
     title: string,
     message: string,
     createdAt?: string,
-    updatedAt?: string
+    updatedAt?: string,
+    status?: number | string,
 }

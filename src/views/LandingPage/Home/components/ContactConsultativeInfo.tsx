@@ -26,6 +26,7 @@ const ContactConsultativeInfo: React.FC = () => {
     const phoneRegex = /^(0|\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$/;
 
     const handleCustomInputChange = (name: string, value: string | null | Dayjs | number ) => {
+        
         if (Object.prototype.hasOwnProperty.call(formData, name)) {
             const validName = name as keyof ProfileFormData; 
     
@@ -164,7 +165,7 @@ const ContactConsultativeInfo: React.FC = () => {
                     <Grid container spacing={2}>
                         <Grid size={{ xs: 12}}>
                             <Stack direction={{ xs: 'column', md: 'row'}} spacing={{ xs: 0, md: 2}} sx={{ width: { xs: '100%', md: '80%'} }}>
-                                <Box flexGrow={1}>
+                                <Box flexGrow={1} component='form'>
                                     <Typography variant="body2" fontWeight={600} gutterBottom sx={{ color: 'white'}}>Tên đầy đủ</Typography>
                                     <InputText
                                         label=""

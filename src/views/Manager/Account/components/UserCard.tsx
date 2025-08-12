@@ -8,18 +8,19 @@ import avatar from "@/assets/images/users/default-avatar.jpg";
 interface UserCardProps {
     userProfile: UserProfile
     handleClick: (id: string | number) => void,
-    handleDelete: (id: string | number) => void,
+    handleUnactive: (id: string | number, userProfile: UserProfile) => void,
     handleEdit: (id: string | number) => void,
-    handleReset: (id: string | number) => void,
-    handleActive: (id: string | number) => void,
+    handleReset: (id: string | number, userProfile: UserProfile) => void,
+    handleActive: (id: string | number, userProfile: UserProfile) => void,
+    handleDelete: (id: string | number, userProfile: UserProfile) => void,
     handleAttach: (userProfile: UserProfile) => void,
 }
 
-const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleDelete, handleEdit, handleReset, handleActive, handleAttach }) => {
+const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleUnactive, handleEdit, handleReset, handleActive, handleAttach, handleDelete }) => {
     return (
         <Card onClick={() =>  userProfile.id && handleClick(userProfile.id)} sx={{ position: 'relative', borderRadius: '15px', cursor: 'pointer' }}>
             <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-                {userProfile.is_deleted === 0 ? (
+                {userProfile.is_actived === 0 ? (
                     <Tooltip title="Đang hoạt động">
                         <CircleIcon color="success" fontSize="small" />
                     </Tooltip>
@@ -37,7 +38,7 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleDe
                 <Typography sx={{ wordBreak: 'break-all' }} variant="body2">Username: {userProfile.username || '-'}</Typography>
                 <Typography variant="body2">Số điện thoại: {userProfile.phone_number || '-'}</Typography>
                 <Box sx={{ display: 'flex', mt: 1, gap: 1, justifyContent:'center' }}>
-                    {userProfile.is_deleted === 0 && (
+                    {userProfile.is_actived === 0 && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
@@ -48,7 +49,7 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleDe
                         Gán
                     </Button>
                     )}
-                    {userProfile.is_deleted === 0 && (
+                    {userProfile.is_actived === 0 && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
@@ -59,33 +60,44 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleDe
                         Sửa
                     </Button>
                     )}
-                    {userProfile.is_deleted === 0 && (
+                    {userProfile.is_actived === 0 && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
-                            userProfile.id && handleReset(userProfile.id);
+                            userProfile.id && handleReset(userProfile.id, userProfile);
                         }} 
                         variant="outlined" sx={{ color: '#1C1A1B', border: '1px solid #1C1A1B'}} size="small"
                     >
                         Reset
                     </Button>
                     )}
-                    {userProfile.is_deleted === 0 && (
+                    {userProfile.is_actived === 0 && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
-                            userProfile.id && handleDelete(userProfile.id)
+                            userProfile.id && handleUnactive(userProfile.id, userProfile)
+                        }} 
+                        variant="outlined" sx={{ color: '#1C1A1B', border: '1px solid #1C1A1B'}} size="small"
+                    >
+                        Vô hiệu hóa
+                    </Button>
+                    )}
+                    {userProfile.is_actived === 0 && (
+                    <Button 
+                        onClick={(e) => {
+                            e.stopPropagation(); 
+                            userProfile.id && handleDelete(userProfile.id, userProfile)
                         }} 
                         variant="outlined" sx={{ color: '#1C1A1B', border: '1px solid #1C1A1B'}} size="small"
                     >
                         Xóa
                     </Button>
                     )}
-                    {userProfile.is_deleted === 1 && (
+                    {userProfile.is_actived === 1 && (
                         <Button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                userProfile.id && handleActive(userProfile.id)
+                                userProfile.id && handleActive(userProfile.id, userProfile)
                             }}
                             variant="outlined" sx={{ color: '#1C1A1B', border: '1px solid #1C1A1B'}} size="small"
                         >

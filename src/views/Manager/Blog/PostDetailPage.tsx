@@ -12,6 +12,8 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import { useState } from 'react';
 import Button from '@/components/Button/Button';
 import useAuth from '@/hooks/useAuth';
+import { getCategoryLabel } from '@/utils/labelEnToVi';
+import NewsDetail from '../components/NewsDetail';
 
 const formatDate = (dateString: string) => {
   return new Intl.DateTimeFormat('vi-VN', {
@@ -134,7 +136,7 @@ const PostDetailPage: FC = () => {
 
       <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
-          <Chip label={post?.category || ''} sx={{ color: "#171717", fontSize: '16px', fontWeight: '700' }} size="small" />
+          <Chip label={getCategoryLabel(post?.category) || ''} sx={{ color: "#171717", fontSize: '16px', fontWeight: '700' }} size="small" />
           <Typography variant="body2" color="text.secondary">
             {formatDate(post?.createdAt)}
           </Typography>
@@ -160,14 +162,21 @@ const PostDetailPage: FC = () => {
         )}
 
         {/* Dùng dangerouslySetInnerHTML để render HTML */}
-        <Box
+        {/* <Box
           sx={{
             lineHeight: 1.8,
             '& ul, & ol': { pl: 3 },
             '& p': { mb: 2 },
+            '& img': {
+              display: 'block',
+              margin: '16px auto', // căn giữa ngang
+              maxWidth: '100%',
+              height: 'auto',
+            },
           }}
           dangerouslySetInnerHTML={{ __html: post?.content }}
-        />
+        /> */}
+        <NewsDetail content={post?.content} />
         <Stack direction="row" spacing={2} justifyContent="center" mt={4}>
           {/* Nút chỉ dành cho ADMIN */}
           {canAdminReview && (

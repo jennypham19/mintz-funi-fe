@@ -9,7 +9,7 @@ import image_slide from '@/assets/images/users/12.png';
 
 const Home = () => {
   const fixedImages: SrcSetWidth[] = [
-    {id: 1, name: 'image_slide', url: `${image_slide}`, srcSet1200: `${image_slide}`, srcSet768: `${image_slide}` },
+    {id: 1, name: 'image_slide', url: `${homeImage}`, srcSet1200: `${homeImage}`, srcSet768: `${homeImage}` },
 
   ]
   const { t } = useTranslation();

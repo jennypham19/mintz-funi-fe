@@ -1,12 +1,12 @@
 import Page from "@/components/Page";
 import InputSearch from "@/components/SearchBar";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import SummaryCard from "../components/SummaryCard";
 import AccountSummary from "../components/AccountSummary";
 import PostSummary from "../components/PostSummary";
 import { IPost } from "@/types/post";
-import { deleteUser, UserPayload, getUser, getUsers } from "@/services/user-service";
+import { deleteUser, getUser, getUsers } from "@/services/user-service";
 import { getPosts, getTotalPost, reviewPost } from "@/services/post-service";
 import { IUser } from "@/types/user";
 import useNotification from "@/hooks/useNotification";
@@ -87,7 +87,7 @@ const HomeDashboardManager: React.FC = () => {
         authorId: profile?.role === 'employee' ? profile.id : undefined,
       };
       const [contactsResponse, postsResponse] = await Promise.all([
-        getContacts({ limit: 6, page: 0, searchTerm: searchTerm }),
+        getContacts({ limit: 6, page: 0, status: 0, searchTerm: searchTerm }),
         getPosts(postParams)
       ]);
       setContacts(contactsResponse?.data?.contacts || []);
@@ -193,10 +193,7 @@ const HomeDashboardManager: React.FC = () => {
 
   const handleDelete = async() => {
     try {
-      const data: UserPayload = {
-        is_deleted: 1
-      }
-      await deleteUser(userId, data);
+      await deleteUser(userId);
       setOpenDialogDelete(false);
       setOpenDialogDeleteSuccess(true)
     } catch (error: any) {
@@ -313,7 +310,7 @@ const HomeDashboardManager: React.FC = () => {
             setOpenDialogDelete(false)
           }}
           handleAgree={handleDelete}
-          title="Bạn chắc chắn muốn xóa tài khoản này chứ? Tài khoản này sẽ bị vô hiệu hóa"
+          title="Bạn chắc chắn muốn xóa tài khoản này chứ? Tài khoản này sẽ bị xóa vĩnh viễn"
         />
       )}
       {openDialogDeleteSuccess && (

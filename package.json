@@ -36,6 +36,8 @@
     "numeral": "^2.0.6",
     "papaparse": "^5.4.1",
     "qs": "^6.13.0",
+    "quill": "^2.0.3",
+    "quill-image-resize-module-react": "^3.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.2.9",
@@ -51,6 +53,7 @@
     "react-virtualized-auto-sizer": "^1.0.24",
     "react-window": "^1.8.10",
     "simplebar-react": "^3.2.6",
+    "yet-another-react-lightbox": "^3.25.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

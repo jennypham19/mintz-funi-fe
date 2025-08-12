@@ -35,7 +35,7 @@ export interface CheckoutApiUserResponse {
 }
 
 export interface UserPayload {
-  is_deleted: number
+  is_actived: number
 }
 
 export const createAccount = (FormData: FormData) => {
@@ -109,11 +109,11 @@ export const resetUser = (id: string | number) => {
     )
 }
 
-export const deleteUser = async (
+export const unactiveUser = async (
   id: string | number,
   payload: UserPayload
 ): Promise<HttpResponse<UserProfile>> => {
-  const url = `${prefix}/delete/${id}`;
+  const url = `${prefix}/unactive/${id}`;
   return HttpClient.patch<UserProfile>(url, payload as any);
 };
 
@@ -125,3 +125,8 @@ export const activeUser = async (
   return HttpClient.patch<UserProfile>(url, payload as any);
 }
 
+export const deleteUser = (id: string | number) => {
+    return HttpClient.delete<any, HttpResponse<UserProfile | null>>(
+        `${prefix}/delete/${id}`
+    )
+}

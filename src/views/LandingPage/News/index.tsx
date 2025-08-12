@@ -14,7 +14,7 @@ import CustomPagination from '@/components/Pagination/CustomPagination';
 import image_slide from '@/assets/images/users/12.png';
 
 
-export type CategoryType = 'Tất cả' | 'Sự kiện' | 'Kiến trúc' | 'Đời sống' | 'Công nghệ';
+export type CategoryType = '0' | '1' | '2' | '3' | '4';
 
 export interface ViewModeProps{
     id: string | number,
@@ -26,28 +26,28 @@ const DataViewMode: ViewModeProps[] = [
     {
         id: 1,
         label: 'Tất cả',
-        value: 'Tất cả',
+        value: '0',
 
     },
     {
         id: 2,
         label: 'Sự kiện',
-        value: 'Sự kiện',
+        value: '1',
     },
     {
         id: 3,
         label: 'Kiến trúc',
-        value: 'Kiến trúc',
+        value: '2',
     },
     {
         id: 4,
         label: 'Đời sống',
-        value: 'Đời sống',
+        value: '3',
     },
     {
         id: 5,
         label: 'Công nghệ',
-        value: 'Công nghệ',
+        value: '4',
     },
 ]
 
@@ -66,7 +66,7 @@ export const getCategoryLabel = (category: CategoryNews | null | undefined): str
 }
 
 const News = () => {
-  const [activeCategory, setActiveCategory] = useState<CategoryType>('Tất cả');
+  const [activeCategory, setActiveCategory] = useState<CategoryType>('0');
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.down('md'));
   const [expanded, setExpanded] = useState(false);

@@ -13,4 +13,5 @@ export interface UserProfile{
     avatar_url?:string,
     is_deleted?: number;
     is_default?: number;
+    is_actived?: number;
 }

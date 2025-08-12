@@ -1,4 +1,5 @@
 // src/types/post.ts
+import { SvgIconComponent } from '@mui/icons-material';
 import { IUser } from './user';
 
 export interface IPost {
@@ -13,4 +14,10 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   isPublished :boolean;
+}
+
+export interface CategoryProps{
+  category: number,
+  categor_label: string,
+  icon: SvgIconComponent
 }
