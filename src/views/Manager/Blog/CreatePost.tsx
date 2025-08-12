@@ -56,19 +56,12 @@ const CreatePostPage: FC = () => {
     }
   };
 
-  // Load nội dung từ localStorage khi mount
-  useEffect(() => {
-    const saved = localStorage.getItem("quillContent");
-    if (saved) setFormData(prev => ({ ...prev, content: saved }));
-  }, []);
-
    // Lưu vào localStorage mỗi khi thay đổi
   const handleContentChange = (value: string) => {
     setFormData(prev => ({ ...prev, content: value }));
     if (errors.content) {
       setErrors(prev => ({ ...prev, content: undefined }));
     }
-    localStorage.setItem("quillContent", value);
   };
 
   const handleFileSelect = (file: File) => {
