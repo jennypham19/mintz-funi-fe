@@ -82,7 +82,7 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ content }) => {
                 <CommonImage
                     src={selectedImage}
                     alt="Zoom"
-                    sx={{ height: "auto" }}
+                    sx={{ height: "auto", width: 1000 }}
                 />
             </DialogComponent>
 
@@ -94,6 +94,10 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ content }) => {
                     slides={images}
                     index={photoIndex}
                     plugins={[Captions, Zoom]}
+                    zoom={{
+                        maxZoomPixelRatio: 4, // mặc định là 3 -> cho phép zoom lớn hơn
+                        zoomInMultiplier: 1.5 // tốc độ zoom khi click
+                    }}
                     captions={{ descriptionTextAlign: 'center'}}
                 />
             )}
