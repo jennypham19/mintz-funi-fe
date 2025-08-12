@@ -1,4 +1,9 @@
+import { CategoryProps } from "@/types/post";
 import { ROUTE_PATH } from "./routes";
+import EventIcon from '@mui/icons-material/Event';
+import ArchitectureIcon from '@mui/icons-material/Architecture';
+import DevicesIcon from '@mui/icons-material/Devices';
+import StyleIcon from '@mui/icons-material/Style';
 
 export const DATA_ALL_GROUPS = [
     {
@@ -129,3 +134,26 @@ export const modules = [
     ]
   }
 ];
+
+export const categoryPost: CategoryProps[] = [
+  {
+    category: 1,
+    categor_label: 'Sự kiện',
+    icon: EventIcon
+  },
+  {
+    category: 2,
+    categor_label: 'Kiến trúc',
+    icon: ArchitectureIcon
+  },
+  {
+    category: 3,
+    categor_label: 'Đời sống',
+    icon: StyleIcon
+  },
+  {
+    category: 4,
+    categor_label: 'Công nghệ',
+    icon: DevicesIcon
+  },
+]

@@ -28,6 +28,9 @@ export default defineConfig({
   server: {
     host: true, // Here
     port: 3000,
+    // hmr: {
+    //   overlay: false
+    // }
   },
   preview: {
     port: 4173,

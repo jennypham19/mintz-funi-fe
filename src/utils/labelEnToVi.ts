@@ -1,4 +1,4 @@
-import { ROLE_LABELS, RoleUser } from "@/constants/status";
+import { CATEGORY_LABELS, CategoryNews, ROLE_LABELS, RoleUser } from "@/constants/status";
 
 export const getRoleLabel = (role: RoleUser | null | undefined): string => {
     if(!role) return "Chưa xác định";
@@ -11,4 +11,9 @@ export const getFormatText = (content: string): string => {
         .replace(/<\/p>/g, '\n\n')    // đổi </p> thành xuống 2 dòng
         .replace(/<[^>]+>/g, '');     // remove tất cả tag html còn lại
     return formatText;
+}
+
+export const getCategoryLabel = (category: CategoryNews | null | undefined): string => {
+    if(!category) return 'TẤT CẢ';
+    return CATEGORY_LABELS[category] || category
 }

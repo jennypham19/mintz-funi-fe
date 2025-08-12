@@ -11,6 +11,8 @@ import Button from '@/components/Button/Button';
 import { useAppSelector } from '@/store';
 import dayjs, { Dayjs } from 'dayjs';
 import { getPostById, updatePost, uploadPostImage } from '@/services/post-service';
+import InputSelect from '@/components/InputSelect';
+import { categoryPost } from '@/constants/data';
 
 interface FormDataState {
   category: string;
@@ -102,7 +104,7 @@ const EditPostPage: FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    if (!formData.category.trim()) newErrors.category = 'Vui lòng nhập thể loại.';
+    if (!formData.category) newErrors.category = 'Vui lòng nhập thể loại.';
     if (!formData.time) newErrors.time = 'Vui lòng chọn thời gian.';
     if (!formData.title.trim()) newErrors.title = 'Tiêu đề không được để trống.';
     if (!formData.content.trim() || formData.content === '<p><br></p>') newErrors.content = 'Nội dung không được để trống.';
@@ -153,7 +155,6 @@ const EditPostPage: FC = () => {
   if (isLoadingData) {
     return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}><CircularProgress /></Box>;
   }
-
   return (
     <Page title="Chỉnh sửa bài viết">
       <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
@@ -171,12 +172,29 @@ const EditPostPage: FC = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <Typography fontWeight={700}>Thể loại</Typography>
-                <InputText
+                {/* <InputText
                   name="category"
                   type="text"
                   placeholder="Thể loại"
                   value={formData.category}
                   onChange={handleInputChange}
+                  error={!!errors.category}
+                  helperText={errors.category}
+                /> */}
+                <InputSelect
+                  name='category'
+                  label=''
+                  value={parseInt(formData.category)}
+                  onChange={handleInputChange}
+                  options={categoryPost}
+                  transformOptions={(data) => 
+                    data.map((item) => ({
+                      value: item.category,
+                      label: item.categor_label,
+                      icon: item.icon
+                    }))
+                  }
+                  placeholder='Thể loại'
                   error={!!errors.category}
                   helperText={errors.category}
                 />

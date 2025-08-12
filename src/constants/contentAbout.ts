@@ -10,6 +10,7 @@ import image_service_5 from "@/assets/images/users/image_service_5.png";
 import plan_1 from "@/assets/images/users/plan_1.png";
 import plan_2 from "@/assets/images/users/plan_2.png";
 import plan_3 from "@/assets/images/users/plan_3.png";
+import anh_xam from '@/assets/images/users/Background-xam-1.jpg';
 
 
 
@@ -90,7 +91,7 @@ export const CONTENT_SERVICE = [
         id: 1,
         order: '01',
         title: 'Thiết kế Concept Nội Thât Khách sạn & Resort',
-        image_url: image_service_1,
+        image_url: anh_xam,
         content: "Lên ý tưởng tổng thể dựa trên phân khúc: 3 sao, 4 sao, 5 sao, Boutique Hotel, Resort, Villa Resort...\nTư vấn định hình phong cách: Modern, Indochine, Minimalist, Tropical, Contemporary...\nPhác thảo moodboard, phối màu, vật liệu định hướng",
         isReverse: true, 
     },
@@ -98,7 +99,7 @@ export const CONTENT_SERVICE = [
         id: 2,
         order: '02',
         title: 'Thiết kế Layout Công Năng',
-        image_url: image_service_2,
+        image_url: anh_xam,
         content: 'Bố trí không gian tối ưu: phòng ngủ, sảnh, nhà hàng, khu tiện ích.\nĐảm bảo luồng giao thông nội bộ thuận tiện, phù hợp vận hành khách sạn.\nTối ưu hóa diện tích sử dụng ',
         isReverse: false, 
     },
@@ -106,7 +107,7 @@ export const CONTENT_SERVICE = [
         id: 3,
         order: '03',
         title: 'Diễn Họa 3D Phối Cảnh Nội Thất',
-        image_url: image_service_3,
+        image_url: anh_xam,
         content: 'Hình ảnh 3D chân thực, sát thực tế thi công.\nGiúp chủ đầu tư dễ dàng hình dung tổng thể trước khi triển khai.\nHỗ trợ điều chỉnh sớm các chi tiết không hợp lý',
         isReverse: true, 
     },
@@ -114,7 +115,7 @@ export const CONTENT_SERVICE = [
         id: 4,
         order: '04',
         title: 'Hồ Sơ Kỹ Thuật Thi Công Nội Thất Khách Sạn',
-        image_url: image_service_4,
+        image_url: anh_xam,
         content:'Triển khai đầy đủ các bản vẽ kỹ thuật: mặt bằng chi tiết, triển khai đồ nội thất rời – nội thất cố định.\nPhù hợp quy chuẩn xây dựng & dễ dàng cho nhà thầu thi công.\nTư vấn phối hợp các hạng mục: nội thất – điện – nước – HVAC',
         isReverse: false, 
     },
@@ -122,7 +123,7 @@ export const CONTENT_SERVICE = [
         id: 5,
         order: '05',
         title: 'Tư Vấn Vật Liệu & Thiết Bị Nội Thất Khách Sạn',
-        image_url: image_service_5,
+        image_url: anh_xam,
         content: 'Lựa chọn vật liệu bền, đẹp, phù hợp khí hậu Việt Nam.\nĐề xuất các giải pháp tiết kiệm chi phí mà vẫn đảm bảo thẩm mỹ.\nGợi ý thiết bị nội thất đồng bộ (furniture package cho khách sạn)',
         isReverse: true, 
     }
@@ -132,7 +133,7 @@ export const CONTENT_PLAN = [
     {
         id: 1,
         title: 'Phác thảo kế hoạch',
-        image: plan_1,
+        image: anh_xam,
         content: 
             'Tạo concept sơ bộ cho dự án \n ' +
             'Sưu tầm và lên phương án dựng moodboard \n' +
@@ -142,7 +143,7 @@ export const CONTENT_PLAN = [
     {
         id: 2,
         title: 'Lên bản vẽ chi tiết',
-        image: plan_2,
+        image: anh_xam,
         content: 
             'Triển khai layout kỹ thuật \n' +
             'Diễn họa 3D chi tiết từng khu vực \n' +
@@ -152,7 +153,7 @@ export const CONTENT_PLAN = [
     {
         id: 3,
         title: 'Hoàn thiện hồ sơ thi công',
-        image: plan_3,
+        image: anh_xam,
         content: 
             'Giấy phép xây dựng (nếu yêu cầu) \n' +
             'Hồ sơ bản vẽ M&E phối hợp \n' +

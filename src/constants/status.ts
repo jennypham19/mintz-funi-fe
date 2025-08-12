@@ -1,8 +1,8 @@
 export const CategoryNews = {
-    EVENT : 'event',           
-    ARCHITECTURE : 'architecture',
-    LIFE: 'life',
-    INFORMATION_TECH: 'information-tech',                      
+    EVENT : '1',           
+    ARCHITECTURE : '2',
+    LIFE: '3',
+    INFORMATION_TECH: '4',                      
 }
 
 export type CategoryNews = typeof CategoryNews[keyof typeof CategoryNews];

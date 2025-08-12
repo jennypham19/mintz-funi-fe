@@ -16,7 +16,7 @@ import {
 export interface Option {
   label: string;
   value: string | number;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | React.ComponentType<any>;
 }
 
 export interface OptionGroup {
@@ -42,8 +42,8 @@ interface InputSelectProps {
   loading?:boolean;
   sx?: SxProps<Theme>;
   MenuProps?: SelectProps["MenuProps"];
-  title: string,
-  loadingTitle: string
+  title?: string,
+  loadingTitle?: string
 }
 
 const InputSelect: React.FC<InputSelectProps> = ({
@@ -79,13 +79,32 @@ const InputSelect: React.FC<InputSelectProps> = ({
     return options;
   }, [options, optionGroups, transformOptions]);
 
+  //Hàm render icon linh hoạt
+  const renderIcon = (icon?: React.ReactNode | React.ComponentType<any>) => {
+    if(!icon) return null;
+    if(React.isValidElement(icon)) {
+      // Nếu là JSX element, icon: <EventIcon color="error" />
+      return React.cloneElement(icon as React.ReactElement, {
+        style: { marginRight: 8, ...(icon.props.style || {})},
+      });
+    }
+
+    if(typeof icon === 'function') {
+      // Nếu là component function/class, icon: EventIcon
+      const IconComp = icon as React.ComponentType<any>;
+      return <IconComp style={{ marginRight: 8 }} fontSize="small"/>
+    }
+
+    return null;
+  }
+
   const renderOptions = () => {
     if ( Array.isArray(finalOptions) && finalOptions.length > 0 && finalOptions[0] && 'options' in finalOptions[0]) {
       return (finalOptions as OptionGroup[]).map((group, i) => [
         <ListSubheader key={`group-${i}`}>{group.label}</ListSubheader>,
         ...group.options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
-            {option.icon && <span style={{ marginRight: 8 }}>{option.icon}</span>}
+            {renderIcon(option.icon)}
             {option.label}
           </MenuItem>
         )),
@@ -104,7 +123,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
     if ((finalOptions as Option[]).length > 0) {
       return (finalOptions as Option[]).map((option) => (
         <MenuItem key={option.value} value={option.value}>
-          {option.icon && <span style={{ marginRight: 8 }}>{option.icon}</span>}
+          {renderIcon(option.icon)}
           {option.label}
         </MenuItem>
       ));

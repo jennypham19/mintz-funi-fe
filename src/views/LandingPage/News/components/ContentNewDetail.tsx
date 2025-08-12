@@ -7,43 +7,18 @@ import IconButton from "@/components/IconButton/IconButton";
 import { IPost } from "@/types/post";
 import dayjs from "dayjs";
 import { getPathImage } from "@/utils/url";
-import parse from 'html-react-parser';
+import NewsDetail from "@/views/Manager/components/NewsDetail";
 
 interface ContentNewDetailProps{
     newContent: IPost,
     handleToggle: () => void;
 }
 
-interface NewsDetailProps {
-    content: string;
-}
-
-const NewsDetail: React.FC<NewsDetailProps> = ({ content }) => {
-  return (
-    <Box
-      sx={{
-        '& img': {
-          display: 'block',
-          margin: '16px auto', // căn giữa ngang
-          maxWidth: '100%',
-          height: 'auto',
-        },
-        '& p': {
-          textAlign: 'justify', // tuỳ bạn
-          marginBottom: '12px',
-        }
-      }}
-    >
-        <Typography sx={{ whiteSpace: 'normal', wordBreak: 'break-word', mt:1, fontSize: {xs: '14px', md: '16px'} }}>    
-            {parse(content)}
-        </Typography>
-    </Box>
-  );
-};
 
 const ContentNewDetail: React.FC<ContentNewDetailProps> = (props) => {
     const { newContent, handleToggle } = props;
-    const date = dayjs(newContent.updatedAt).format('MMM DD,YYYY')
+    const date = dayjs(newContent.updatedAt).format('MMM DD,YYYY');
+
     return(
         <Box>
             <Box
@@ -133,7 +108,7 @@ const ContentNewDetail: React.FC<ContentNewDetailProps> = (props) => {
                         borderRadius={2}
                     />
                 </Stack>
-                <Typography>BY MINTZ ADMIN</Typography>
+                <Typography>{`BY ${newContent.author.fullName.toUpperCase()}`}</Typography>
 
             </Box>
             <Box sx={{ height: '50px'}}></Box>

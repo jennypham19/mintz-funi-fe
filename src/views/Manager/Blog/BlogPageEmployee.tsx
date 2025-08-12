@@ -133,7 +133,7 @@ const BlogPageEmployee = () => {
                             <CreatePostCard/>
                         </Grid>
                         {displayedPosts.length === 0 ? (
-                            <Typography>Không tồn tại bản ghi nào cả</Typography>
+                            <Typography fontWeight={700} p={4}>Không tồn tại bản ghi nào cả</Typography>
                         ) : (
                             displayedPosts.map((item, index) => {
                                 return(

@@ -248,7 +248,7 @@ const InputText: React.FC<CustomInputProps> = ({
                 },
                 // 🔹 Đổi màu khi có value
                 backgroundColor: value ? "#ffffff" : "transparent",
-                color: value ? "#004d40" : (from ? "white" : "black"),
+                color: value && from ? "#004d40" : (from ? "white" : "black"),
                 transition: "all 0.2s ease",
             }
         }}

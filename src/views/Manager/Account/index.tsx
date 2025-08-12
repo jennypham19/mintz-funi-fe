@@ -5,7 +5,7 @@ import AddAccountCard from "./components/AddCard";
 import UserCard from "./components/UserCard";
 import Grid from "@mui/material/Grid2";
 import { UserProfile } from "@/types/user-types";
-import { activeUser, deleteUser, getListUsers, getUser, resetUser, UserPayload } from "@/services/user-service";
+import { activeUser, deleteUser, getListUsers, getUser, resetUser, unactiveUser, UserPayload } from "@/services/user-service";
 import CustomPagination from "@/components/Pagination/CustomPagination";
 import DialogDetailUser from "./components/DialogDetailUser";
 import DialogOpenConfirmAccount from "./components/DialogOpenConfirmAccount";
@@ -54,8 +54,8 @@ const ManagementAccount: React.FC = () => {
     const notify = useNotification();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(11);
-    const [total, setTotal] = useState(11);
+    const [rowsPerPage, setRowsPerPage] = useState(8);
+    const [total, setTotal] = useState(0);
     const [error, setError] = useState(null);
     const [listUsers, setListUsers] = useState<UserProfile[]>([]);
     const [listUser, setListUser] = useState<UserProfile | null>(null);
@@ -66,8 +66,10 @@ const ManagementAccount: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [openAddAccount, setOpenAddAccount] = useState(false);
     const [openEditAccount, setOpenEditAccount] = useState(false);
-    const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
+    const [openUnactiveAccount, setOpenUnactiveAccount] = useState(false);
+    const [openUnactiveSuccess, setOpenUnactiveSuccess] = useState(false);
     const [openResetAccount, setOpenResetAccount] = useState(false);
+    const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
     const [openDeleteSuccess, setOpenDeleteSuccess] = useState(false);
     const [openResetSuccess, setOpenResetSuccess] = useState(false);
     const [openDialogDetail, setOpenDialogDetail] = useState(false);
@@ -132,19 +134,39 @@ const ManagementAccount: React.FC = () => {
         }
     }
 
-    const handleOpenDelete = (id: string | number) => {
-        setOpenDeleteAccount(true)
+    const handleOpenUnactive = (id: string | number, user: UserProfile) => {
+        setOpenUnactiveAccount(true)
         setIdUser(id)
+        setUser(user)
     }
     
-    const handleDelete = async() => {
+    const handleUnactive = async() => {
         try {
             const data: UserPayload = {
-                is_deleted: 1
+                is_actived: 1
             }
-            await deleteUser(idUser, data);
-            setOpenDeleteAccount(false)
-            setOpenDeleteSuccess(true)
+            await unactiveUser(idUser, data);
+            setOpenUnactiveAccount(false)
+            setOpenUnactiveSuccess(true)
+        } catch (error: any) {
+            notify({
+                message: error.message,
+                severity: 'error' 
+            })
+        }
+    }
+
+    const handleOpenDelete = (id: string | number, user: UserProfile) => {
+        setOpenDeleteAccount(true);
+        setIdUser(id)
+        setUser(user)
+    }
+
+    const handleDelete = async() => {
+        try {
+            await deleteUser(idUser);
+            setOpenDeleteAccount(false);
+            setOpenDeleteSuccess(true);
         } catch (error: any) {
             notify({
                 message: error.message,
@@ -158,9 +180,10 @@ const ManagementAccount: React.FC = () => {
         setIdUser(id)
     }
 
-    const handleOpenReset = (id: string | number) => {
+    const handleOpenReset = (id: string | number, user: UserProfile) => {
         setOpenResetAccount(true)
         setIdUser(id)
+        setUser(user)
     }
 
     const handleReset = async() => {
@@ -178,15 +201,16 @@ const ManagementAccount: React.FC = () => {
         }
     }
 
-    const handleOpenActive = (id: string | number) => {
+    const handleOpenActive = (id: string | number, user: UserProfile) => {
         setOpenActiveAccount(true)
         setIdUser(id)
+        setUser(user)
     }
 
     const handleActive = async() => {
         try {
             const data: UserPayload = {
-                is_deleted: 0
+                is_actived: 0
             }
             await activeUser(idUser, data)
             setOpenActiveAccount(false)
@@ -229,22 +253,23 @@ const ManagementAccount: React.FC = () => {
                                 <FilterTabs data={DataStatusUser} viewMode={viewMode} onChange={setViewMode} />
                             </Box>
                             <Grid container spacing={1.5} pt={2}>
-                                <Grid size={{ xs:12, sm:6, md:4, lg:3}}>
+                                <Grid size={{ xs:12, sm:6, md:4}}>
                                     <AddAccountCard title="Thêm tài khoản" handleAdd={handleAddAccount} />
                                 </Grid>
                                 {listUsers.length === 0 ? (
                                     <Typography sx={{ mx: 2, mt: 3}} variant="h6">Không tồn tại bản ghi nào cả</Typography>
                                 ) : (
                                     listUsers.map((user, index) => (
-                                    <Grid size={{ xs:12, sm:6, md:4, lg:3}} key={index}>
+                                    <Grid size={{ xs:12, sm:6, md:4}} key={index}>
                                         <UserCard
                                             userProfile={user}
                                             handleClick={handleClick}
-                                            handleDelete={handleOpenDelete}
+                                            handleUnactive={handleOpenUnactive}
                                             handleEdit={handleOpenEdit}
                                             handleReset={handleOpenReset}
                                             handleActive={handleOpenActive}
                                             handleAttach={handleOpenAttachPermission}
+                                            handleDelete={handleOpenDelete}
                                         />
                                     </Grid>
                                 )))}
@@ -300,14 +325,34 @@ const ManagementAccount: React.FC = () => {
                     userDetail={listUser}
                 />
             )}
-            {openDeleteAccount && (
+            {openUnactiveAccount && user && (
+                <DialogOpenConfirmAccount
+                    open={openUnactiveAccount}
+                    handleClose={() => {
+                        setOpenUnactiveAccount(false)
+                    }}
+                    handleAgree={handleUnactive}
+                    title={`Bạn chắc chắn muốn vô hiệu hóa tài khoản ${user.username} này chứ? Tài khoản này sẽ bị vô hiệu hóa`}
+                />
+            )}
+            {openUnactiveSuccess && (
+                <DialogConfirmSuccess
+                    open={openUnactiveSuccess}
+                    handleClose={() => {
+                        setOpenUnactiveSuccess(false)
+                        getUsers(page, rowsPerPage, viewMode)
+                    }}
+                    title="Xin chúc mừng. Bạn vừa vô hiệu hóa tài khoản thành công"
+                />
+            )}
+            {openDeleteAccount && user && (
                 <DialogOpenConfirmAccount
                     open={openDeleteAccount}
                     handleClose={() => {
                         setOpenDeleteAccount(false)
                     }}
                     handleAgree={handleDelete}
-                    title="Bạn chắc chắn muốn xóa tài khoản này chứ? Tài khoản này sẽ bị vô hiệu hóa"
+                    title={`Bạn chắc chắn muốn xóa tài khoản ${user?.username} này chứ? Tài khoản này sẽ bị xóa vĩnh viễn`}
                 />
             )}
             {openDeleteSuccess && (
@@ -320,14 +365,14 @@ const ManagementAccount: React.FC = () => {
                     title="Xin chúc mừng. Bạn vừa xóa tài khoản thành công"
                 />
             )}
-            {openResetAccount && (
+            {openResetAccount && user && (
                 <DialogOpenConfirmAccount
                     open={openResetAccount}
                     handleClose={() => {
                         setOpenResetAccount(false)
                     }}
                     handleAgree={handleReset}
-                    title="Xác nhận đặt lại mật khẩu cho nhân viên"
+                    title={`Xác nhận đặt lại mật khẩu cho nhân viên ${user.fullName}, tài khoản: ${user.username}`}
                 />
             )}
             {openResetSuccess && user && (
@@ -346,7 +391,7 @@ const ManagementAccount: React.FC = () => {
                         setOpenActiveAccount(false)
                     }}
                     handleAgree={handleActive}
-                    title="Bạn muốn khôi phục tài khoản này?"
+                    title={`Bạn muốn khôi phục tài khoản ${user?.username} này?`}
                 />
             )}
             {openConfirmActiveSuccess && (

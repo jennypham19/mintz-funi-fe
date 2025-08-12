@@ -16,8 +16,9 @@ interface ProfileDataRequest {
   isRead: number
 }
 interface GetContactsParams {
-  limit: number;
   page: number;
+  limit: number;
+  status?: number | string,
   searchTerm?: string,
 }
 
@@ -26,6 +27,10 @@ interface PaginatedResponse<T> {
   totalPages: number;
   currentPage: number;
   totalContact: number;
+}
+
+export interface ContactPayload {
+  status: number
 }
 
 export type ContactsResponse = PaginatedResponse<Contact>;
@@ -42,3 +47,11 @@ export const getContacts = (params: GetContactsParams) => {
 export const getContact = (id: string | number) => {
   return HttpClient.get<any, HttpResponse<ContactsResponse>>(`${prefix}/${id}`);
 };
+
+export const forwardContact = async (
+  id: string | number,
+  payload: ContactPayload
+): Promise<HttpResponse<Contact>> => {
+  const url = `${prefix}/forward/${id}`;
+  return HttpClient.patch<Contact>(url, payload as any);
+}

@@ -4,11 +4,11 @@ import ImageCarousel, { SrcSetWidth } from '../Home/components/ImageCarousel';
 import MissionDevelopment from './components/MissionDevelopment';
 import PlanDrawing from './components/PlanDrawing';
 import { CONTENT_ITEM_REASON, CONTENT_REASON } from '@/constants/contentAbout';
-import image_slide from '@/assets/images/users/10.png';
+import anh_xam from '@/assets/images/users/Background-xam-1.jpg';
 
 const AboutUs = () => {
   const fixedImages: SrcSetWidth[] = [
-    {id: 1, name: 'image_slide', url: `${image_slide}`, srcSet1200: `${image_slide}`, srcSet768: `${image_slide}` },
+    {id: 1, name: 'anh_xam', url: `${anh_xam}`, srcSet1200: `${anh_xam}`, srcSet768: `${anh_xam}` },
   ]
   return (
     <Box sx={{ bgcolor: '#031512', color: 'white',}}>

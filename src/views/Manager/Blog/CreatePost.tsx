@@ -1,5 +1,5 @@
 // src/views/Manager/Blog/CreatePost.tsx
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Card, CardContent, Grid, IconButton, Stack, Typography } from '@mui/material';
 import Page from '@/components/Page';
@@ -12,6 +12,14 @@ import Button from '@/components/Button/Button';
 import { useAppSelector } from '@/store';
 import dayjs, { Dayjs } from 'dayjs';
 import { createPost, uploadPostImage } from '@/services/post-service';
+import { SvgIconComponent } from '@mui/icons-material';
+import EventIcon from '@mui/icons-material/Event';
+import ArchitectureIcon from '@mui/icons-material/Architecture';
+import DevicesIcon from '@mui/icons-material/Devices';
+import StyleIcon from '@mui/icons-material/Style';
+import InputSelect from '@/components/InputSelect';
+import { CategoryProps } from '@/types/post';
+import { categoryPost } from '@/constants/data';
 
 interface FormDataState {
   category: string;
@@ -24,6 +32,7 @@ interface FormDataState {
 type FormErrors = {
   [K in keyof FormDataState]?: string;
 };
+
 
 const CreatePostPage: FC = () => {
   const navigate = useNavigate();
@@ -47,11 +56,19 @@ const CreatePostPage: FC = () => {
     }
   };
 
+  // Load nội dung từ localStorage khi mount
+  useEffect(() => {
+    const saved = localStorage.getItem("quillContent");
+    if (saved) setFormData(prev => ({ ...prev, content: saved }));
+  }, []);
+
+   // Lưu vào localStorage mỗi khi thay đổi
   const handleContentChange = (value: string) => {
     setFormData(prev => ({ ...prev, content: value }));
     if (errors.content) {
       setErrors(prev => ({ ...prev, content: undefined }));
     }
+    localStorage.setItem("quillContent", value);
   };
 
   const handleFileSelect = (file: File) => {
@@ -60,7 +77,7 @@ const CreatePostPage: FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    if (!formData.category.trim()) newErrors.category = 'Vui lòng nhập thể loại.';
+    if (!formData.category) newErrors.category = 'Vui lòng nhập thể loại.';
     if (!formData.time) newErrors.time = 'Vui lòng chọn thời gian.';
     if (!formData.title.trim()) newErrors.title = 'Tiêu đề không được để trống.';
     if (!formData.content.trim() || formData.content === '<p><br></p>') newErrors.content = 'Nội dung không được để trống.';
@@ -88,9 +105,7 @@ const CreatePostPage: FC = () => {
         time: formData.time ? formData.time.toISOString() : '',
         imageUrl: uploadResponse.data.imageUrl,
       };
-
       await createPost(payload);
-
       notify({ severity: 'success', message: 'Tạo bài viết thành công, đang chờ duyệt!' });
       navigate(-1);
     } catch (error: any) {
@@ -117,12 +132,29 @@ const CreatePostPage: FC = () => {
             <Grid container spacing={2} >
               <Grid item xs={12} md={6}>
                 <Typography fontWeight={700}>Thể loại</Typography>
-                <InputText
+                {/* <InputText
                   name="category"
                   type="text"
                   placeholder="Thể loại"
                   value={formData.category}
                   onChange={handleInputChange}
+                  error={!!errors.category}
+                  helperText={errors.category}
+                /> */}
+                <InputSelect
+                  name='category'
+                  label=''
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  options={categoryPost}
+                  transformOptions={(data) => 
+                    data.map((item) => ({
+                      value: item.category,
+                      label: item.categor_label,
+                      icon: item.icon
+                    }))
+                  }
+                  placeholder='Thể loại'
                   error={!!errors.category}
                   helperText={errors.category}
                 />

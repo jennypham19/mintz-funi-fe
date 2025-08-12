@@ -143,7 +143,7 @@ class Axios {
       this.Instance.get<T, AxiosResponse<R>, D>(url, config)
         .then((response) => resolve(response.data))
         .catch((error: AxiosError) => {
-          reject(error.response?.data);
+          reject(error.response?.data || error);
         });
     });
   }
@@ -153,7 +153,7 @@ class Axios {
     return new Promise((resolve, reject) => {
       this.Instance.put<D, AxiosResponse<R>>(url, data, config)
         .then((response) => resolve(response.data))
-        .catch((error: AxiosError) => reject(error.response?.data));
+        .catch((error: AxiosError) => reject(error.response?.data || error));
     });
   }
 
@@ -165,7 +165,7 @@ class Axios {
     return new Promise((resolve, reject) => {
       this.Instance.patch<D, AxiosResponse<R>>(url, data, config)
         .then((response) => resolve(response.data))
-        .catch((error: AxiosError) => reject(error.response?.data));
+        .catch((error: AxiosError) => reject(error.response?.data || error));
     });
   }
 
@@ -174,7 +174,7 @@ class Axios {
     return new Promise((resolve, reject) => {
       this.Instance.delete<D, AxiosResponse<R>>(url, config)
         .then((response) => resolve(response.data))
-        .catch((error: AxiosError) => reject(error.response?.data));
+        .catch((error: AxiosError) => reject(error.response?.data || error));
     });
   }
 }
