@@ -1,3 +1,4 @@
+import { getAnalytics } from "@/services/analytics-service";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -12,7 +13,7 @@ import {
     CartesianGrid
 } from 'recharts'
 
-type DataPoint = {
+export type DataPoint = {
   date: string;
   activeUsers: number;
   pageViews: number;
@@ -31,26 +32,20 @@ const AnalyticsChart = () => {
 
 
     useEffect(() => {
-        async function load() {
-        setLoading(true);
-        setError(null);
-        try {
-            const params: any = {};
-            if (from) params.from = from;
-            if (to) params.to = to;
-            const res = await axios.get('/api/analytics/overview', { params });
-            if (res.data?.success) {
-            setData(res.data.data);
-            } else {
-            setError('Không tải được dữ liệu');
+        const load = async(fromDate: string, toDate: string) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const res = await getAnalytics({ from: fromDate, to: toDate });
+                console.log("res: ", res);
+                
+            } catch (err: any) {
+                setError(err?.message || 'Lỗi mạng');
+            } finally {
+                setLoading(false);
             }
-        } catch (err: any) {
-            setError(err?.message || 'Lỗi mạng');
-        } finally {
-            setLoading(false);
         }
-        }
-        load();
+        load(from, to);
     }, [from, to]);
 
     if (loading) return <CircularProgress />;
