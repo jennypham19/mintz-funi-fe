@@ -14,6 +14,8 @@ const Profile = Loadable(lazy(() => import('@/views/Manager/Profile/index')));
 const PortfolioServiceBuild = Loadable(lazy(() =>  import('@/views/Manager/PortfolioAndServiceAndBuild/index')))
 const EditPost = Loadable(lazy(() => import('@/views/Manager/Blog/EditPost')));
 
+const Analytics = Loadable(lazy(() => import('@/views/Manager/Analytics/index')));
+
 const managerRoutes: RouteObject[] = [
   { index: true, element: <Navigate to={ROUTE_PATH.MANAGE_HOME} replace /> },
   { path: ROUTE_PATH.MANAGE_HOME, element: <ManagementHome /> },
@@ -33,7 +35,7 @@ const managerRoutes: RouteObject[] = [
   },
   { path: ROUTE_PATH.MY_PROFILE, element: <ManagementCustomersInformation/>},
   { path: ROUTE_PATH.TO_PROFILE, element: <Profile/>},
-  { path: ROUTE_PATH.MANAGE_SETTINGS, element: <PortfolioServiceBuild/>},
+  { path: ROUTE_PATH.MANAGE_ANALYTICS, element: <Analytics/>},
 
 ];
 
