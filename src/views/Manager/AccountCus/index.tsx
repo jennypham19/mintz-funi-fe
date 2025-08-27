@@ -13,6 +13,7 @@ import FilterTabs from "../Account/components/FilterTabs";
 import DialogConfirmSuccess from "../Account/components/DialogConfirmSuccess";
 import DialogOpenConfirmAccount from "../Account/components/DialogOpenConfirmAccount";
 import useNotification from "@/hooks/useNotification";
+import CustomerInfoTable from "./components/CustomerInfoTable";
 
 export interface DataStatusCustomerProps {
     id: number | string;
@@ -65,7 +66,6 @@ const CustomerInfomation: React.FC = () => {
                 setContacts(contactsResponse?.data?.contacts || []);
                 contactsResponse.data?.totalContact && setTotal(contactsResponse.data?.totalContact)
             } catch (error: any) {
-                console.error("Failed to fetch dashboard data:", error);
                 setError(error.message)
             }finally{
                 setLoading(false);
@@ -89,7 +89,8 @@ const CustomerInfomation: React.FC = () => {
     }, [page, rowPerPage, viewMode, searchTerm]);
 
     const handleSearch = (value: string) => {
-        setSearchTerm(value.trim())
+        setSearchTerm(value.trim());
+        setPage(0)
     }
 
     const handlePageChange = (newPage: number) => {
@@ -144,13 +145,20 @@ const CustomerInfomation: React.FC = () => {
                 </Box>
                 <Stack sx={{display:'flex',flexDirection:'column'}}>
                     <Box px={1} pt={2.5}>
-                        <CustomerContact
+                        <CustomerInfoTable
                             handleClick={handleOpenDialogViewDetail}
                             contacts={contacts}
                             isLoading={loading}
                             handleForward={handleOpenDialogForward}
                             viewMode={viewMode}
-                        />  
+                        />
+                        {/* <CustomerContact
+                            handleClick={handleOpenDialogViewDetail}
+                            contacts={contacts}
+                            isLoading={loading}
+                            handleForward={handleOpenDialogForward}
+                            viewMode={viewMode}
+                        />   */}
                     </Box>
                     
                     <Box display='flex' justifyContent='center'>

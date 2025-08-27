@@ -111,6 +111,9 @@ const HomeDashboardManager: React.FC = () => {
       case ROLE.EMPLOYEE:
         fetchDashboardDataEmployee();
         break;
+      case ROLE.MODE:
+        fetchDashboardDataEmployee();
+        break;
       default:
         fetchDashboardData();
         break;
@@ -208,7 +211,7 @@ const HomeDashboardManager: React.FC = () => {
     setOpenDialogEdit(true)
     setUserId(id);
   }
-  const canReview = useMemo(() => profile?.role === 'admin', [profile?.role]);
+  const canReview = useMemo(() => profile?.role === 'mode', [profile?.role]);
 
   return (
     <Box p={2}>
@@ -244,7 +247,7 @@ const HomeDashboardManager: React.FC = () => {
               </SummaryCard>
             </Box>
           )}
-          {((profile?.role === ROLE.ADMIN) || (profile?.role === ROLE.EMPLOYEE && menuCodes.includes('003'))) && (
+          {((profile?.role === ROLE.ADMIN) || (profile?.role === ROLE.MODE) || (profile?.role === ROLE.EMPLOYEE && menuCodes.includes('003'))) && (
             <Box mt={1.5}>
               <SummaryCard
                 title="Quản lý bài viết"

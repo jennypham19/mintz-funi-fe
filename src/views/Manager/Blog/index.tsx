@@ -15,7 +15,7 @@ const ManagementBlog: FC = () => {
 
   return (
     <Page title="Quản lý bài viết">
-      {profile?.role === ROLE.ADMIN ? (
+      {(profile?.role === ROLE.ADMIN || profile?.role === ROLE.MODE) ? (
         <BlogPageManager/>
       ) : (
         <BlogPageEmployee/>

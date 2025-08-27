@@ -7,8 +7,8 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 interface CustomerContactCardProps {
     contact: Contact;
     handleClick: (id: string | number) => void;
-    handleForward: (contact: Contact) => void;
-    viewMode: string | number;
+    handleForward?: (contact: Contact) => void;
+    viewMode?: string | number;
 }
 
 const CustomerContactCard = ({ contact, handleClick, handleForward, viewMode }: CustomerContactCardProps) => (
@@ -36,7 +36,7 @@ const CustomerContactCard = ({ contact, handleClick, handleForward, viewMode }: 
                         </Tooltip>
                         {contact.status === 0 && viewMode === 0 && (
                             <Tooltip title="Chuyển">
-                                <IconButton onClick={(e) => {e.stopPropagation(), contact && handleForward(contact)}} size="small" color="primary"><CompareArrowsIcon fontSize="small" /></IconButton>
+                                <IconButton onClick={(e) => {e.stopPropagation(), contact && handleForward && handleForward(contact)}} size="small" color="primary"><CompareArrowsIcon fontSize="small" /></IconButton>
                             </Tooltip>
                         )}
                     </Stack>
@@ -52,8 +52,8 @@ interface CustomerContactSummaryProps {
     contacts: Contact[];
     isLoading?: boolean;
     handleClick: (id: string | number) => void;
-    handleForward: (contact: Contact) => void;
-    viewMode: string | number
+    handleForward?: (contact: Contact) => void;
+    viewMode?: string | number
 }
 
 const CustomerContact = ({ contacts, isLoading, handleClick, handleForward, viewMode }: CustomerContactSummaryProps) => {
@@ -82,7 +82,7 @@ const CustomerContact = ({ contacts, isLoading, handleClick, handleForward, view
                     <CustomerContactCard 
                         contact={contact} 
                         handleClick={() => handleClick(contact.id)} 
-                        handleForward={() => handleForward(contact)}
+                        handleForward={() => handleForward && handleForward(contact)}
                         viewMode={viewMode}
                     />
                 </Grid>

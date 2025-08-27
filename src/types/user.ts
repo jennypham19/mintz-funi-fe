@@ -5,7 +5,7 @@ export interface IUser {
     id: number;
     username: string;
     fullName: string;
-    role: 'admin' | 'employee';
+    role: 'admin' | 'employee' | 'mode';
     createdAt: string;
     updatedAt: string;
     email?: string,
@@ -17,4 +17,17 @@ export interface IUser {
     is_default?: number;
     permission?: GroupPermission
 }
+
+export interface IRole {
+    id: number;
+    label: string,
+    value: string
+}
+
+export interface IStatus {
+    id: number;
+    label: string,
+    value: string | number
+}
+
 

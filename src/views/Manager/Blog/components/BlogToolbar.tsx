@@ -7,15 +7,18 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DoNotDisturbOnOutlinedIcon from '@mui/icons-material/DoNotDisturbOnOutlined';
+import { IUser } from '@/types/user';
+import { ROLE } from '@/constants/roles';
 
 type StatusFilter = 'pending' | 'approved' | 'rejected';
 
 interface BlogToolbarProps {
   onFilterChange: (status: StatusFilter) => void;
   onSearch: (searchTerm: string) => void;
+  profile: IUser | null
 }
 
-const BlogToolbar: FC<BlogToolbarProps> = ({ onFilterChange, onSearch }) => {
+const BlogToolbar: FC<BlogToolbarProps> = ({ onFilterChange, onSearch, profile }) => {
   const [activeFilter, setActiveFilter] = useState<StatusFilter>('pending');
 
   const handleFilterClick = (status: StatusFilter) => {
@@ -24,21 +27,23 @@ const BlogToolbar: FC<BlogToolbarProps> = ({ onFilterChange, onSearch }) => {
   };
 
   return (
-    <Box sx={{ mb: 4 }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Tìm kiếm bài viết..."
-        onChange={(e) => onSearch(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-          sx: {}
-        }}
-      />
+    <Box sx={{ m: 2 }}>
+      {profile?.role === ROLE.ADMIN && (
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Tìm kiếm bài viết..."
+          onChange={(e) => onSearch(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+            sx: {}
+          }}
+        />
+      )}
       <Stack direction="row" spacing={2} sx={{ mt: 2, alignItems: 'center' }}>
         <Button endIcon={<FilterListIcon />} sx={{
           backgroundColor: '#ffffff',

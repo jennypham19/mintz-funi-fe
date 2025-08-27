@@ -104,10 +104,11 @@ const BlogPostCard: FC<BlogPostCardProps> = ({ post, onApprove, onReject, onPubl
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <Typography sx={{ fontSize: '16px', color: '#171717', maxWidth: '360px' }} fontWeight={700} noWrap>
+          <Typography sx={{ fontSize: '16px', color: '#171717', maxWidth: '360px' }} fontWeight={700}>
             {post.title}
           </Typography>
           <Typography sx={{
+            mt:1,
             flexGrow: 1,
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -116,6 +117,7 @@ const BlogPostCard: FC<BlogPostCardProps> = ({ post, onApprove, onReject, onPubl
             WebkitBoxOrient: 'vertical',
             maxHeight: '50px',
             maxWidth: '360px',
+            fontSize: '15px',
           }}>
             {plainTextContent}
           </Typography>

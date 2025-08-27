@@ -54,6 +54,7 @@ export const updateAccount = (id: string | number, FormData: FormData) => {
 export const getListUsers = async(
   page: number,
   size: number,
+  role?: string,
   status?: number | string,
   searchTerm?: string
 ): Promise<CheckoutApiUsersResponse> => {
@@ -61,8 +62,10 @@ export const getListUsers = async(
   const params: Record<string, any> = {
         page: page,
         size: size,
-        role: 'employee'
   };
+  if (role !== undefined && role !== 'all') {
+    params.role = role;
+  }
   if(searchTerm && searchTerm.trim()){
     params.searchTerm = searchTerm
   }

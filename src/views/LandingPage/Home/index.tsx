@@ -1,18 +1,14 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import homeImage from "@/assets/images/users/Background-xam-1.jpg";
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import ContactConsultativeInfo from './components/ContactConsultativeInfo';
 import ImageCarousel, { SrcSetWidth } from './components/ImageCarousel';
-import image_slide from '@/assets/images/users/12.png';
 
 const Home = () => {
   const fixedImages: SrcSetWidth[] = [
     {id: 1, name: 'image_slide', url: `${homeImage}`, srcSet1200: `${homeImage}`, srcSet768: `${homeImage}` },
 
   ]
-  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <Box>

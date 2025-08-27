@@ -2,11 +2,12 @@ import InputText from "@/components/InputText";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import dayjs, { Dayjs } from "dayjs";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import mintz_logo from "@/assets/images/users/logo.png";
 import CommonImage from "@/components/Image/index";
 import useNotification from "@/hooks/useNotification";
 import { sendInformation } from "@/services/contact-service";
+import { generateCaptcha } from "@/views/Manager/Account/components/DialogAddAccount";
 
 interface ProfileFormData {
   name: string;
@@ -14,16 +15,22 @@ interface ProfileFormData {
   phone: string;
   title: string;
   message: string;
+  captchaCode: string,
 }
 
 const ContactConsultativeInfo: React.FC = () => {
-    const [errors, setErrors] = useState<Partial<Record<'name' | 'email' | 'phone'| 'title' | 'message' , string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<'name' | 'email' | 'phone'| 'title' | 'message' | 'captchaCode' , string>>>({});
     const [formData, setFormData] = useState<ProfileFormData>({
         name: '', email: '', phone: '', title: '',
-        message: '',
+        message: '', captchaCode: ''
     });
     const notify = useNotification();
+    const [captcha, setCaptcha] = useState<string>('');
     const phoneRegex = /^(0|\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$/;
+
+    useEffect(() => {
+        setCaptcha(generateCaptcha());
+    }, [])
 
     const handleCustomInputChange = (name: string, value: string | null | Dayjs | number ) => {
         
@@ -34,37 +41,37 @@ const ContactConsultativeInfo: React.FC = () => {
                 ...prevData,
                 [validName]: value, 
             }));
-
-            if (validName === 'email' || validName === 'phone' || validName === 'name' || validName === 'title' || validName === 'message') {
+            
+            if (validName === 'email' || validName === 'phone' || validName === 'name' || validName === 'title' || validName === 'message' || validName === 'captchaCode') {
                 if(validName === 'phone' && typeof value === 'string'){
-                    const phone = value.replace(/\s|-/g, '');
-                    if (!/^\d+$/.test(phone)) {
+                    const phoneValid = value.replace(/\s|-/g, '');
+                    if (!/^\d+$/.test(phoneValid)) {
                         setErrors(prev => ({
                             ...prev,
-                            phone_number: 'Số điện thoại chỉ chứa số',
+                            phone: 'Số điện thoại chỉ chứa số',
                         }));
                         return;
                     }
-                    if(phone.startsWith('0') && phone.length !== 10){
+                    if(phoneValid.startsWith('0') && phoneValid.length !== 10){
                         setErrors(prev => ({
                             ...prev,
-                            phone_number: 'Số điện thoại phải có 10 chữ số (nếu bắt đầu bằng 0)',
-                        }));
-                        return;
-                    }
-
-                    if(phone.startsWith('+84') && (phone.length < 11 || phone.length > 12)){
-                        setErrors(prev => ({
-                            ...prev,
-                            phone_number: 'Số điện thoại phải có 11-12 chữ số (nếu bắt đầu bằng +84)',
+                            phone: 'Số điện thoại phải có 10 chữ số (nếu bắt đầu bằng 0)',
                         }));
                         return;
                     }
 
-                    if(!phoneRegex.test(phone)){
+                    if(phoneValid.startsWith('+84') && (phoneValid.length < 11 || phoneValid.length > 12)){
                         setErrors(prev => ({
                             ...prev,
-                            phone_number: 'Số điện thoại không đúng định dạng (bắt đầu từ +84|03|05|07|08|09',
+                            phone: 'Số điện thoại phải có 11-12 chữ số (nếu bắt đầu bằng +84)',
+                        }));
+                        return;
+                    }
+
+                    if(!phoneRegex.test(phoneValid)){
+                        setErrors(prev => ({
+                            ...prev,
+                            phone: 'Số điện thoại không đúng định dạng (bắt đầu từ +84|03|05|07|08|09',
                         }));
                         return;
                     }
@@ -81,10 +88,19 @@ const ContactConsultativeInfo: React.FC = () => {
                     }
                 }
 
-                if (errors[validName as 'name' | 'email' | 'phone'| 'title' | 'message']) {
+                if(validName === 'captchaCode' && typeof value === 'string'){
+                    if(value !== captcha){
+                        setErrors(prev => ({
+                            ...prev,
+                            captchaCode: "Captcha sai. Vui lòng nhập lại"
+                        }))
+                    }
+                }
+
+                if (errors[validName as 'name' | 'email' | 'phone'| 'title' | 'message' | 'captchaCode']) {
                     setErrors(prev => {
                         const newErrors = { ...prev };
-                        delete newErrors[validName as 'name' | 'email' | 'phone'| 'title' | 'message'];
+                        delete newErrors[validName as 'name' | 'email' | 'phone'| 'title' | 'message' | 'captchaCode'];
                         return newErrors;
                     });
                 }
@@ -95,13 +111,13 @@ const ContactConsultativeInfo: React.FC = () => {
     };
 
     const validateForm = (): boolean => {
-        const newErrors: Partial<Record<'name' | 'email' | 'phone'| 'title' | 'message', string>> = {};
+        const newErrors: Partial<Record<'name' | 'email' | 'phone'| 'title' | 'message' | 'captchaCode', string>> = {};
         if(!formData.name.trim()) newErrors.name = 'Tên đầy đủ là bắt buộc';
         if(!formData.email) newErrors.email = 'Email là bắt buộc';
         if(!formData.phone) newErrors.phone = 'Số điện thoại là bắt buộc';
         if(!formData.title) newErrors.title = 'Tiêu đề không được để trống';
         if(!formData.message) newErrors.message = 'Nội dung không được để trống';
-
+        if(!formData.captchaCode) newErrors.captchaCode = 'Mã Captcha không được để trống';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // True nếu không có lỗi
@@ -120,7 +136,8 @@ const ContactConsultativeInfo: React.FC = () => {
         try {
             const res = await sendInformation(data);
             notify({ message: res.message, severity: 'success'})
-            setFormData({ name: '', email: '', phone: '', title: '', message: ''})
+            setFormData({ name: '', email: '', phone: '', title: '', message: '', captchaCode: ''})
+            setCaptcha(generateCaptcha());
         } catch (error: any) {
             const errorMessage = ` Gửi thông tin thất bại ${error.message}`;
             notify({ message: errorMessage, severity: 'error'})
@@ -258,6 +275,56 @@ const ContactConsultativeInfo: React.FC = () => {
                                     helperText={errors.message}
                                     autoComplete='off'
                                 />
+                            </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 12}}>
+                            <Stack direction={{ xs: 'column', md: 'row'}} spacing={{ xs: 0, md: 2}} sx={{ width: { xs: '100%', md: '80%'} }}>
+                                <Box flexGrow={1}>
+                                    <Typography variant="body2" fontWeight={600} gutterBottom sx={{ color: 'white'}}>Xác minh mã Captcha</Typography>
+                                    <InputText
+                                        label=""
+                                        name="captchaCode"
+                                        value={formData.captchaCode}
+                                        onChange={handleCustomInputChange}
+                                        type="text"
+                                        sx={{ mt: 0}}
+                                        margin="dense"
+                                        placeholder="Nhập thông tin"
+                                        error={!!errors.captchaCode}
+                                        helperText={errors.captchaCode}
+                                        from="from-contact"
+                                        autoComplete='off'
+                                    />
+                                </Box>
+                                <Box flexGrow={1}>
+                                    <Typography variant="body2" fontWeight={600} gutterBottom sx={{ color: 'white'}}>Mã Captcha</Typography>
+                                    <Box
+                                        sx={{
+                                            border: '1px solid #fff',
+                                            borderRadius: '10px',
+                                            px: 2,
+                                            py: 0.5,
+                                            display: 'flex',
+                                            gap: 1,
+                                            height: '40px',
+                                             width: {xs: '100%', md: '50%'}
+                                        }}
+                                    >
+                                        {captcha.split('').map((char, index) => (
+                                            <Box
+                                                key={index}
+                                                sx={{
+                                                    transform: `rotate(${Math.random() * 30 - 15}deg)`,
+                                                    fontSize: '20px',
+                                                    fontWeight: 700,
+                                                    color: '#fff'
+                                                }}
+                                            >
+                                                {char}
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                </Box>
                             </Stack>
                         </Grid>
                         <Grid size={{ xs: 12}}>

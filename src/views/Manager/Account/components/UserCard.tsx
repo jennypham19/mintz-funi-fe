@@ -1,9 +1,13 @@
 import React from "react";
-import { Box, Card, CardContent, Typography, Avatar, Button, Tooltip, Stack } from "@mui/material";
+import { Box, Card, CardContent, Typography, Avatar, Button, Tooltip, Stack, CardHeader, CardActions } from "@mui/material";
 import CircleIcon from '@mui/icons-material/Circle';
 import { UserProfile } from "@/types/user-types";
 import { getPathImage } from "@/utils/url";
 import avatar from "@/assets/images/users/default-avatar.jpg";
+import useAuth from "@/hooks/useAuth";
+import { getRoleLabel } from "@/utils/labelEnToVi";
+import { Attachment } from "@mui/icons-material";
+import IconButton from "@/components/IconButton/IconButton";
 
 interface UserCardProps {
     userProfile: UserProfile
@@ -17,28 +21,41 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleUnactive, handleEdit, handleReset, handleActive, handleAttach, handleDelete }) => {
+    const { profile } = useAuth()
     return (
-        <Card onClick={() =>  userProfile.id && handleClick(userProfile.id)} sx={{ position: 'relative', borderRadius: '15px', cursor: 'pointer' }}>
-            <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-                {userProfile.is_actived === 0 ? (
-                    <Tooltip title="Đang hoạt động">
-                        <CircleIcon color="success" fontSize="small" />
-                    </Tooltip>
-                ): (
-                    <Tooltip title="Không hoạt động">
-                        <CircleIcon color="error" fontSize="small" />
-                    </Tooltip>
-                )}
-            </Box>
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Stack alignItems='center' direction='column'>
-                    <Avatar src={userProfile.avatar_url ? getPathImage(userProfile.avatar_url) : avatar} sx={{ width: 70, height: 70, borderRadius: '50%' }} />
-                    <Typography variant="subtitle1" fontWeight="bold">{userProfile.fullName}</Typography>
-                </Stack>
-                <Typography sx={{ wordBreak: 'break-all' }} variant="body2">Username: {userProfile.username || '-'}</Typography>
-                <Typography variant="body2">Số điện thoại: {userProfile.phone_number || '-'}</Typography>
-                <Box sx={{ display: 'flex', mt: 1, gap: 1, justifyContent:'center' }}>
-                    {userProfile.is_actived === 0 && (
+        <Card onClick={() =>  userProfile.id && handleClick(userProfile.id)} sx={{ position: 'relative', borderRadius: '15px', cursor: 'pointer', p: 1}}>
+            <CardHeader
+                avatar={
+                    <Avatar src={userProfile.avatar_url ? getPathImage(userProfile.avatar_url) : avatar} sx={{ width: 70, height: 70, borderRadius: '50%' }} />  
+                }
+                title={
+                    <Typography variant="h6" fontWeight="bold">{userProfile.fullName}</Typography>
+                }
+                subheader={
+                    <Stack direction="column" spacing={1}>
+                        <Typography sx={{ wordBreak: 'break-all' }} variant="body2">Username: {userProfile.username || '-'}</Typography>
+                        <Typography sx={{ wordBreak: 'break-all' }} variant="body2">Vai trò: {getRoleLabel(userProfile.role) || '-'}</Typography>
+                        <Typography variant="body2">Số điện thoại: {userProfile.phone_number || '-'}</Typography>
+                    </Stack>
+                }
+                action={
+                    <Box>
+                        {userProfile.is_actived === 0 ? (
+                            <Tooltip title="Đang hoạt động">
+                                <CircleIcon color="success" fontSize="small" />
+                            </Tooltip>
+                        ): (
+                            <Tooltip title="Không hoạt động">
+                                <CircleIcon color="error" fontSize="small" />
+                            </Tooltip>
+                        )}
+                    </Box>                    
+                }
+            />
+
+            <CardActions sx={{ display: 'flex', justifyContent:'center' }}>
+                <Box sx={{ display: 'flex', gap: 1, justifyContent:'center' }}>
+                    {userProfile.is_actived === 0 && userProfile.role !== profile?.role && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
@@ -60,7 +77,7 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleUn
                         Sửa
                     </Button>
                     )}
-                    {userProfile.is_actived === 0 && (
+                    {userProfile.is_actived === 0 && userProfile.role !== profile?.role && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
@@ -71,7 +88,7 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleUn
                         Reset
                     </Button>
                     )}
-                    {userProfile.is_actived === 0 && (
+                    {userProfile.is_actived === 0 && userProfile.role !== profile?.role && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
@@ -82,7 +99,7 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleUn
                         Vô hiệu hóa
                     </Button>
                     )}
-                    {userProfile.is_actived === 0 && (
+                    {userProfile.is_actived === 0 && userProfile.role !== profile?.role && (
                     <Button 
                         onClick={(e) => {
                             e.stopPropagation(); 
@@ -105,7 +122,7 @@ const UserCard: React.FC<UserCardProps> = ({ userProfile,  handleClick, handleUn
                         </Button>
                     )}
                 </Box>
-            </CardContent>
+            </CardActions>
         </Card>
     );
 };

@@ -8,6 +8,7 @@ import { getServices } from "@/services/settings-service";
 import { getPathImage } from "@/utils/url";
 import image_slide_12 from '@/assets/images/users/12.png';
 import image_slide_10 from '@/assets/images/users/10.png';
+import { Palette } from "@mui/icons-material";
 
 
 interface ServicesData extends IServices{
@@ -58,10 +59,10 @@ const MissionDevelopment: React.FC = () => {
             <Typography textAlign='center' sx={{ whiteSpace: 'normal', wordBreak: 'break-word', mt: 3, fontSize: {xs: '12px', md: '16px'}}}>
                 Mintz Funi luôn tự hào là đơn vị uy tín hàng đầu trong lĩnh vực thiết kế nội thất khách sạn và resort, với thế mạnh lên ý tưởng sáng tạo, tư vấn tận tâm và đồng hành cùng khách hàng để mang đến những giải pháp thiết kế tối ưu, phù hợp từng mục tiêu kinh doanh.Khởi đầu xây dựng là những con người có đam mê và tâm huyết, sau nhiều năm hoạt động thì chúng tôi dần đã trờ thành đơn vị nhà thầu có độ tin cậy tuyệt đối với những khách hàng có nhu cầu về thiết kế nội thất hiện nay.
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
                 {CONTENT_MISSION.map((content, index) => {
                     return(
-                        <Grid size={{ xs: 12, sm: 6, md: 3}}>
+                        <Grid size={{ xs: 12, sm: 6, lg: 3}}>
                             <Box
                                 display='flex'
                                 flexDirection='column'
@@ -69,16 +70,30 @@ const MissionDevelopment: React.FC = () => {
                                 alignItems='center'
                                 gap={1}
                                 mt={3}
+                                
                             >
-                                <CommonImage
-                                    src={content.image}
+
+                                <Box
                                     sx={{
                                         bgcolor: '#fff',
-                                        width: { xs: 200, md: 450},
+                                        width: { xs: 250, md: 350},
                                         height: { xs: 200, md: 250},
-                                        borderRadius: 3
+                                        borderRadius: 3,
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
                                     }}
-                                />
+                                >
+                                    <CommonImage
+                                        src={content.image}
+                                        sx={{
+                                            bgcolor: '#fff',
+                                            width: { xs: 100, md: 120},
+                                            height: { xs: 100, md: 120},
+                                            borderRadius: 3
+                                        }}
+                                    />
+                                </Box>
                                 <Typography mt={2} textAlign='center' sx={{ whiteSpace: 'normal', wordBreak: 'break-word', fontSize: {xs: '13px', md: '16px'}}}>
                                     {content.label}
                                 </Typography>

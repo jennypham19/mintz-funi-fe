@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Card, CardContent, Grid, IconButton, Stack, Typography, CircularProgress } from '@mui/material';
+import { Box, Card, CardContent, Grid, IconButton, Stack, Typography, CircularProgress, Paper } from '@mui/material';
 import Page from '@/components/Page';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ImageUpload from './components/ImageUpload';
@@ -45,6 +45,7 @@ const EditPostPage: FC = () => {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [rejectionReason, setRejectionReason] = useState<string | null>('');
 
   useEffect(() => {
     if (!postId) {
@@ -67,6 +68,7 @@ const EditPostPage: FC = () => {
             content: postData.content,
             authorName: postData.author?.fullName || 'Không xác định',
           });
+          postData.rejectionReason && setRejectionReason(postData.rejectionReason)
           setExistingImageUrl(postData.imageUrl);
         } else {
           throw new Error('Không nhận được dữ liệu bài viết từ API.');
@@ -166,6 +168,12 @@ const EditPostPage: FC = () => {
         </Typography>
       </Stack>
 
+      {rejectionReason && (
+        <Paper sx={{ borderRadius: 4, p: 3, mb: 2}}>
+          <Typography><b>Lý do phê duyệt thất bại: </b> {rejectionReason}</Typography>
+        </Paper>
+      )}
+
       <Box>
         <Card variant="outlined" sx={{ borderRadius: 4, p: 3 }}>
           <CardContent>
@@ -255,7 +263,7 @@ const EditPostPage: FC = () => {
           </CardContent>
         </Card>
 
-        <Stack direction="row" justifyContent="flex-end" spacing={2} sx={{ mt: 3 }}>
+        <Stack direction="row" justifyContent="flex-end" spacing={2} sx={{ my: 3 }}>
           {/* === PHẦN ĐÃ ĐƯỢC HOÀN THIỆN === */}
           <Button
             handleFunt={handleSubmit}
