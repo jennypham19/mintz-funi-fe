@@ -52,6 +52,11 @@ const Sections = (profile: IUser | null, menuData: GroupPermission | null): Sect
         path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_BLOG}`,
         icon: PostAdd,
       },
+      {
+        title: 'Thống kế lượt truy cập',
+        path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_ANALYTICS}`,
+        icon: HomeOutlined,
+      },
       // {
       //   title: 'Quản lý Hình ảnh, Dịch vụ...',
       //   path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_SETTINGS}`,
