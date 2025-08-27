@@ -52,8 +52,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onFileSelect, initialImage })
       />
       
       {preview ? (
-        <Box sx={{ position: 'relative', width: '100%', height: '250px', border: '1px dashed grey', borderRadius: 2, overflow: 'hidden' }}>
-          <img src={preview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        <Box sx={{ position: 'relative', width: '100%', height: '400px', border: '1px dashed grey', borderRadius: 2, overflow: 'hidden' }}>
+          <img src={preview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'fill' }} />
           <IconButton
             onClick={handleRemoveImage}
             sx={{

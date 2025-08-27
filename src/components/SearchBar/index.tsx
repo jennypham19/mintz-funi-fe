@@ -7,10 +7,11 @@ interface InputSearchProps{
     placeholder?: string;
     initialValue?: string;
     style?:SxProps<Theme>;
+    children?: React.ReactNode
 }
 
 const InputSearch: React.FC<InputSearchProps> = (props) => {
-    const { onSearch, placeholder, initialValue = " ", style} = props;
+    const { onSearch, placeholder, initialValue = " ", style, children} = props;
     const [searchTerm, setSearchTerm] = useState<string>(initialValue);
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -26,6 +27,9 @@ const InputSearch: React.FC<InputSearchProps> = (props) => {
     return (
         <Box
             sx={style}
+            display='flex'
+            justifyContent='flex-start'
+            flexDirection={{ xs: 'column', md: 'row'}}
         >
             <TextField
                 fullWidth
@@ -80,6 +84,7 @@ const InputSearch: React.FC<InputSearchProps> = (props) => {
                     }
                 }}
             />
+            {children}
         </Box>
     )
 }

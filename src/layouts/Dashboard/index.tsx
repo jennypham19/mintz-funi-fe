@@ -17,7 +17,7 @@ const DashboardLayout = () => {
   const [menuData, setMenuData] = useState<GroupPermission | null>(null);
 
   useEffect(() => {
-    if(profile && profile.role === ROLE.EMPLOYEE){
+    if(profile && profile.role !== ROLE.ADMIN ){
         const getRoleGroupAssignedUser = async(id: string | number) => {
           const res = await getRoleGroupToUser(id);
           const data = res.data as any as GroupPermission;
@@ -41,7 +41,15 @@ const DashboardLayout = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ 
+      display: 'flex',
+      overflowY: 'auto',
+      '&::-webkit-scrollbar': { width: '6px', height: '6px' },
+      '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 1 },
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: '#f1f1f1',
+      }, 
+    }}>
       <Sidebar
         collapsed={collapsed}
         openSidebar={openSidebar}
@@ -56,7 +64,7 @@ const DashboardLayout = () => {
           flexDirection: 'column',
           minHeight: '100svh',
           paddingTop: '64px',
-          overflow: 'hidden',
+          // overflow: 'hidden',
         }}
       >
         <Header
@@ -64,10 +72,9 @@ const DashboardLayout = () => {
           onToggleSidebar={handleToggleSidebar}
           onToggleCollapsed={handleToggleCollapsed}
         />
-
-        <Box sx={{ flexGrow: 1 }}>
-          <Outlet />
-        </Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <Outlet />
+          </Box>
         {/* <Footer /> */}
       </Box>
     </Box>

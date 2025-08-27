@@ -1,6 +1,6 @@
 import IconButton from "@/components/IconButton/IconButton";
 import { KeyboardBackspace, PhotoCamera } from "@mui/icons-material";
-import { Avatar, Box, Button, CircularProgress, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, CircularProgress, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import Grid from "@mui/material/Grid2";
@@ -12,6 +12,21 @@ import { createAccount } from "@/services/user-service";
 import { UserProfile } from "@/types/user-types";
 import DialogConformCreateAccount from "./DialogConformCreateAccount";
 import { getPathImage } from "@/utils/url";
+import { IRole } from "@/types/user";
+import InputSelect from "@/components/InputSelect";
+
+const ROLE_USER: IRole[] = [
+    {
+        id: 1,
+        label: 'Nhân viên',
+        value: 'employee'
+    },
+    {
+        id: 2,
+        label: 'Quản lý',
+        value: 'mode'
+    },
+]
 
 interface DialogAddAccountProps{
     onBack: () => void;
@@ -43,9 +58,9 @@ export const MAX_IMAGE_SIZE = 800; // px
 
 const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
     const [formData, setFormData] = useState<ProfileFormData>({
-        fullName: '', username: '', email: '', address: '', password: '', phone_number: '', passwordConfirm: '', role: 'employee', captchaCode: '', avatar_url: null
+        fullName: '', username: '', email: '', address: '', password: '', phone_number: '', passwordConfirm: '', role: '', captchaCode: '', avatar_url: null
     })
-    const [errors, setErrors] = useState<Partial<Record<'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode', string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode' | 'role', string>>>({});
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [initialAvatarUrl, setInitialAvatarUrl] = useState<string | null>(null);
@@ -53,7 +68,7 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const notify = useNotification();
     const [password, setPassword] = useState('');
-    const [openDialogConfirmCreateAccount, setOpenDialogConfirmCreateAccount] = useState(false)
+    const [openDialogConfirmCreateAccount, setOpenDialogConfirmCreateAccount] = useState(false);
 
     useEffect(() => {
         setCaptcha(generateCaptcha());
@@ -62,14 +77,14 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
     const handleBack = () => {
         onBack()
         setFormData({
-            fullName: '', username: '', email: '', address: '', password: '', phone_number: '', passwordConfirm: '', role: 'employee', captchaCode: '' ,avatar_url: null
+            fullName: '', username: '', email: '', address: '', password: '', phone_number: '', passwordConfirm: '', role: '', captchaCode: '' ,avatar_url: null
 
         })
     }
 
     const handleReset = () => {
         setFormData({
-            fullName: '', username: '', email: '', address: '', password: '', phone_number: '', passwordConfirm: '', role: 'employee', captchaCode: '' ,avatar_url: null
+            fullName: '', username: '', email: '', address: '', password: '', phone_number: '', passwordConfirm: '', role: '', captchaCode: '' ,avatar_url: null
 
         })
     }
@@ -103,7 +118,7 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
                 [validName]: value, 
             }));
 
-            if (validName === 'email' || validName === 'phone_number' || validName === 'captchaCode' || validName === 'password' || validName === 'passwordConfirm') {
+            if (validName === 'email' || validName === 'phone_number' || validName === 'captchaCode' || validName === 'password' || validName === 'passwordConfirm' || validName === 'role') {
                 if(validName === 'phone_number' && typeof value === 'string'){
                     const phone = value.replace(/\s|-/g, '');
                     if (!/^\d+$/.test(phone)) {
@@ -169,10 +184,10 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
 
                 }
 
-                if (errors[validName as 'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode']) {
+                if (errors[validName as 'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode' | 'role']) {
                     setErrors(prev => {
                         const newErrors = { ...prev };
-                        delete newErrors[validName as 'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode'];
+                        delete newErrors[validName as 'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode' | 'role'];
                         return newErrors;
                     });
                 }
@@ -202,12 +217,13 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
     }
 
     const validateForm = (): boolean => {
-        const newErrors: Partial<Record<'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode', string>> = {};
+        const newErrors: Partial<Record<'fullName' | 'username' | 'password'| 'phone_number' | 'passwordConfirm' | 'email' | 'captchaCode' | 'role', string>> = {};
         if(!formData.fullName.trim()) newErrors.fullName = 'Tên đầy đủ là bắt buộc';
         if(!formData.username) newErrors.username = 'Tên hiển thị là bắt buộc';
         // if(!formData.email) newErrors.email = 'Email là bắt buộc';
         if(!formData.password) newErrors.password = 'Nhập lại mật khẩu không được để trống';
         if(!formData.passwordConfirm) newErrors.passwordConfirm = 'Nhập lại mật khẩu không được để trống';
+        if(!formData.role) newErrors.role = 'Vai trò không được để trống';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // True nếu không có lỗi
@@ -317,8 +333,8 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
                                     helperText={errors.fullName}
                                 />
                             </Grid>
-                            <Grid size={{ xs: 12, md: 6}}>
-                                <Typography variant="body2" fontWeight={600}>Tên hiển thị</Typography>
+                            <Grid size={{ xs: 12, md: 3}}>
+                                <Typography variant="body2" fontWeight={600}>Tài khoản</Typography>
                                 <InputText
                                     label=""
                                     type="text"
@@ -329,6 +345,25 @@ const DialogAddAccount: React.FC<DialogAddAccountProps> = ({onBack}) => {
                                     sx={{ mt: 0}}
                                     error={!!errors.username}
                                     helperText={errors.username}
+                                />
+                            </Grid>
+                            <Grid size={{ xs: 12, md: 3}}>
+                                <Typography variant="body2" fontWeight={600}>Vai trò</Typography>
+                                <InputSelect
+                                    label=""
+                                    name="role"
+                                    onChange={handleCustomInputChange}
+                                    value={formData.role}
+                                    options={ROLE_USER}
+                                    transformOptions={(data) => 
+                                        data.map((item) => ({
+                                            value: item.value,
+                                            label: item.label
+                                        }))
+                                    }
+                                    placeholder="Nhập thông tin"
+                                    error={!!errors.role}
+                                    helperText={errors.role}
                                 />
                             </Grid>
                             <Grid size={{ xs: 12, md: 6}}>

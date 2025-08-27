@@ -39,7 +39,7 @@ const LandingPageLayout = () => {
               '&::-webkit-scrollbar-thumb': { bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 1 },
               '&::-webkit-scrollbar-track': {
                 backgroundColor: '#f1f1f1',
-            }, 
+              }, 
           }}
         >
           <Box sx={{ flexGrow: 1 }}>

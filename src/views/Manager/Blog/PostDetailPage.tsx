@@ -87,7 +87,7 @@ const PostDetailPage: FC = () => {
     return <Typography>Không thể tải bài viết hoặc bài viết không tồn tại.</Typography>;
   }
 
-  const isAdmin = profile?.role === 'admin';
+  const isAdmin = profile?.role === 'mode';
   const isEmployee = profile?.role === 'employee';
 
   const canAdminReview = isAdmin && post.status === 'pending';
@@ -154,7 +154,7 @@ const PostDetailPage: FC = () => {
             sx={{
               width: '100%',
               maxHeight: '500px',
-              objectFit: 'cover',
+              objectFit: 'fill',
               borderRadius: 2,
               my: 3,
             }}

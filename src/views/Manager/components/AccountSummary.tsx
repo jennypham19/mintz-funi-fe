@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IUser } from '@/types/user';
 import { getPathImage } from '@/utils/url';
+import { getRoleLabel } from '@/utils/labelEnToVi';
 
 interface AccountCardProps {
   user: IUser;
@@ -37,6 +38,7 @@ const AccountCard = ({ user, handleOpenEdit, handleOpenDelete, handleOpenView }:
         </Stack>
       </Box>
       <Typography variant="body2" color="text.secondary">Username: {user.username}</Typography>
+      <Typography variant="body2" color="text.secondary">Vai trò: {getRoleLabel(user.role) || " - "}</Typography>
       <Typography variant="body2" color="text.secondary">Số điện thoại: {user.phone_number || " - "}</Typography>
     </Box>
 

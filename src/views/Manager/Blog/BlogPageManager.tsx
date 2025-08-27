@@ -18,6 +18,7 @@ import CreatePostCard from "./components/CreatePostCard";
 import { getPosts, publishPost, reviewPost } from "@/services/post-service";
 import ConfirmDialog from "@/components/ConfirmDialog";
 import { useNavigate } from "react-router-dom";
+import { ROLE } from "@/constants/roles";
 
 const BlogPageManager: FC = () => {
   const [page, setPage] = useState(1);
@@ -113,7 +114,7 @@ const BlogPageManager: FC = () => {
     handleCloseDialog();
   };
 
-  const isAdmin = useMemo(() => profile?.role === 'admin', [profile?.role]);
+  const isAdmin = useMemo(() => profile?.role === 'mode', [profile?.role]);
   const isEmployee = useMemo(() => profile?.role === 'employee', [profile?.role]);
   return (
     <Page title="Quản lý bài viết">
@@ -123,13 +124,13 @@ const BlogPageManager: FC = () => {
           setPage(1);
         }}
         onSearch={(term) => console.log('Searching for:', term)}
+        profile={profile}
       />
-
       {isLoading && posts.length === 0 ? (
         <BlogSkeleton />
       ) : (
         <Grid sx={{ mx: 0.5}} container spacing={3}>
-          {profile?.role === 'employee' && <Grid item xs={12} sm={6} md={4} lg={3}><CreatePostCard /></Grid>}
+          {/* {profile?.role === 'employee' && <Grid item xs={12} sm={6} md={4} lg={3}><CreatePostCard /></Grid>} */}
           {posts.map((post) => {
             const canAdminReview = isAdmin && post.status === 'pending';
             const canEmployeePublish = isEmployee && post.status === 'approved';

@@ -204,7 +204,7 @@ const CreatePostPage: FC = () => {
           </CardContent>
         </Card>
 
-        <Stack direction="row" justifyContent="flex-end" spacing={2} sx={{ mt: 3 }}>
+        <Stack direction="row" justifyContent="flex-end" spacing={2} sx={{ my: 3 }}>
           <Button handleFunt={handleSubmit} customVariant="primary" backgroundColor='#1C1A1B' width={147} borderRadius='16px' disabled={isSubmitting}>
             Hoàn thành
           </Button>
