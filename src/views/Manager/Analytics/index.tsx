@@ -82,7 +82,8 @@ const AnalyticsChart = () => {
         const fetchRealtime = async() => {
             const res = await getRealtime();
             console.log("res: ", res);
-            
+            const newData = res.data as any as RealtimeData[];
+            setRealtimeData(newData);
         };
         fetchRealtime();
         const interval = setInterval(fetchRealtime, 10 * 60 * 1000); // 10 phút
