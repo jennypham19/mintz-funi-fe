@@ -125,11 +125,11 @@ const AnalyticsChart = () => {
                     <Typography variant="h6" gutterBottom mb={2}>Realtime Analytics (last 24h)</Typography>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={realtimeData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="timestamp" tickFormatter={(t) => dayjs(t).format("HH:mm")} />
-                        <YAxis />
-                        <Tooltip labelFormatter={(t) => dayjs(t).format("DD/MM HH:mm")} />
-                        <Line type="monotone" dataKey="active_users" name="Người dùng hoạt động" stroke="#8884d8" />
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="timestamp" tickFormatter={(t) => dayjs(t).format("HH:mm")} />
+                            <YAxis />
+                            <Tooltip labelFormatter={(t) => dayjs(t).format("DD/MM HH:mm")} />
+                            <Line type="monotone" dataKey="active_users" name="Người dùng hoạt động" stroke="#8884d8" />
                         </LineChart>
                     </ResponsiveContainer>
                 </Box>
