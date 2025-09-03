@@ -7,7 +7,8 @@ import {
   ContactsOutlined,
   ManageAccountsOutlined, 
   AccountCircleOutlined,  
-  Settings
+  Settings,
+  Analytics
 } from '@mui/icons-material';
 
 import { ROUTE_PATH } from '@/constants/routes';
@@ -53,9 +54,9 @@ const Sections = (profile: IUser | null, menuData: GroupPermission | null): Sect
         icon: PostAdd,
       },
       {
-        title: 'Thống kế lượt truy cập',
+        title: 'Thống kê lượt truy cập',
         path: `/${ROUTE_PATH.MANAGE}/${ROUTE_PATH.MANAGE_ANALYTICS}`,
-        icon: HomeOutlined,
+        icon: Analytics,
       },
       // {
       //   title: 'Quản lý Hình ảnh, Dịch vụ...',

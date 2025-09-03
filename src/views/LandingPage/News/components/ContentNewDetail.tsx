@@ -49,7 +49,7 @@ const ContentNewDetail: React.FC<ContentNewDetailProps> = (props) => {
                 </Typography>
                 <Typography sx={{ fontSize: { xs: '13px', md: '16px'}}} textAlign='center' mb={5}>{`Trang chủ/Tin tức/${newContent.title}`}</Typography>
                 <CommonImage
-                    src={getPathImage(newContent.imageUrl)}
+                    src={newContent.imageUrl}
                     sx={{
                         height: { xs: '100%', md: 600},
                         mb: 5

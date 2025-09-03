@@ -5,10 +5,8 @@ import { CONTENT_MISSION, CONTENT_SERVICE } from "@/constants/contentAbout";
 import CommonImage from "@/components/Image/index";
 import { IServices } from "@/types/settings";
 import { getServices } from "@/services/settings-service";
-import { getPathImage } from "@/utils/url";
 import image_slide_12 from '@/assets/images/users/12.png';
 import image_slide_10 from '@/assets/images/users/10.png';
-import { Palette } from "@mui/icons-material";
 
 
 interface ServicesData extends IServices{
@@ -32,7 +30,7 @@ const MissionDevelopment: React.FC = () => {
                         id: service.id,
                         content: service.content,
                         title: service.title,
-                        image_url: !isNaN(numericId) && numericId % 2 !== 0 ? getPathImage(service.image_url) || image_slide_12 : getPathImage(service.image_url) || image_slide_10,
+                        image_url: !isNaN(numericId) && numericId % 2 !== 0 ? service.image_url || image_slide_12 : service.image_url || image_slide_10,
                         createdAt: service.createdAt,
                         updatedAt: service.updatedAt,
                         order: String(index + 1).padStart(2, '0'),

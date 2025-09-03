@@ -12,6 +12,7 @@ import { getPathImage } from '@/utils/url';
 import { getFormatText } from '@/utils/labelEnToVi';
 import CustomPagination from '@/components/Pagination/CustomPagination';
 import image_slide from '@/assets/images/users/12.png';
+import Page from '@/components/Page';
 
 
 export type CategoryType = '0' | '1' | '2' | '3' | '4';
@@ -106,138 +107,140 @@ const News = () => {
   }
 
   return (
-    <Box sx={{ bgcolor: '#1C1A1B'}}>
-      {!expanded && (
-        <Box 
-          sx={{ 
-            color: 'white',
-            px: { xs: 2, md: 6 },
-            py: { xs: 4, md: 6 },
-            textAlign: 'left',
-          }}
-        >
-          <Typography variant='h5' fontWeight={700} textAlign='center' mb={1}>Tin tức</Typography>
-          <Typography variant='body1' textAlign='center' mb={5}>Trang chủ/Tin tức</Typography>
-          {mdUp ? (
-            <Stack
-              direction='column'
-              spacing={1}
-              sx={{
-                mb: 2,
-                width: '100%'
-              }}
-            >
-              {DataViewMode.map((category, index) => (
-                <Box
-                  key={index}
-                  onClick={() => category.value && handleActiveCategory(category.value)}
-                  sx={{
-                    px: 2,
-                    py: 1,
-                    borderRadius: 2,
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    bgcolor: activeCategory === category.value ? 'white' : 'transparent',
-                    color: activeCategory === category.value ? 'black' : 'white',
-                    fontWeight: activeCategory === category.value ? 700 : 400,
-                    border: '1px solid white',
-                    transition: '0.3s',
-                    "&:hover": {
-                      bgcolor: activeCategory === category.value ? "white" : 'rgba(255,255,255,0.1)'
-                    }
-                  }}
-                >
-                  {category.label}
-                </Box>
-              ))}
-            </Stack>
-          ) : (
-            <TabsViewSwitcher DataViewMode={DataViewMode} viewMode={activeCategory} onChange={setActiveCategory}/>
-        )}
-          {/* News Cards */}
-          {news.length === 0 && (
-            <Box sx={{ textAlign: 'center', mt: 5}}>
-              <Typography variant='body2' fontWeight={700} sx={{ color: 'white'}}>Không tồn tại bản ghi nào cả</Typography>
-            </Box>
+    <Page title='Mintz - Tin tức'>
+      <Box sx={{ bgcolor: '#1C1A1B'}}>
+        {!expanded && (
+          <Box 
+            sx={{ 
+              color: 'white',
+              px: { xs: 2, md: 6 },
+              py: { xs: 4, md: 6 },
+              textAlign: 'left',
+            }}
+          >
+            <Typography variant='h5' fontWeight={700} textAlign='center' mb={1}>Tin tức</Typography>
+            <Typography variant='body1' textAlign='center' mb={5}>Trang chủ/Tin tức</Typography>
+            {mdUp ? (
+              <Stack
+                direction='column'
+                spacing={1}
+                sx={{
+                  mb: 2,
+                  width: '100%'
+                }}
+              >
+                {DataViewMode.map((category, index) => (
+                  <Box
+                    key={index}
+                    onClick={() => category.value && handleActiveCategory(category.value)}
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      borderRadius: 2,
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      bgcolor: activeCategory === category.value ? 'white' : 'transparent',
+                      color: activeCategory === category.value ? 'black' : 'white',
+                      fontWeight: activeCategory === category.value ? 700 : 400,
+                      border: '1px solid white',
+                      transition: '0.3s',
+                      "&:hover": {
+                        bgcolor: activeCategory === category.value ? "white" : 'rgba(255,255,255,0.1)'
+                      }
+                    }}
+                  >
+                    {category.label}
+                  </Box>
+                ))}
+              </Stack>
+            ) : (
+              <TabsViewSwitcher DataViewMode={DataViewMode} viewMode={activeCategory} onChange={setActiveCategory}/>
           )}
-          <Grid container spacing={3}>
-            {news?.map((item, index) => {
-              const formatted = dayjs(item.updatedAt).format('MMM DD,YYYY')
-              return(
-                <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3}} key={item.id}>
-                  <Card sx={{ bgcolor: '#1C1A1B', color: 'white'}}>
-                    <CardMedia
-                      component='img'
-                      image={getPathImage(item.imageUrl) || image_slide}
-                      alt={item.title}
-                      sx={{
-                          objectFit: 'fill',
-                          backgroundColor: '#f5f5f5',
-                          height: "250px",
-                          width:"100%",
-                      }}
-                    />
-                    <CardContent>
-                      <Box display='flex' justifyContent='space-between'>
-                        <Typography variant="subtitle2" sx={{ opacity: 0.7 }}>
-                          {getCategoryLabel(item.category)}
-                        </Typography>
-                        <Typography variant="subtitle2" sx={{ opacity: 0.7 }}>
-                          {formatted}
-                        </Typography>
-                      </Box>
-                      <Typography variant="h6" sx={{ mt: 1, fontWeight: 600 }}>
-                        {item.title}
-                      </Typography>
-                      <Typography variant="body2" 
-                        sx={{ 
-                          mt: 1, opacity: 0.8, 
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          whiteSpace: 'normal',
-                          wordBreak: 'break-word',
+            {/* News Cards */}
+            {news.length === 0 && (
+              <Box sx={{ textAlign: 'center', mt: 5}}>
+                <Typography variant='body2' fontWeight={700} sx={{ color: 'white'}}>Không tồn tại bản ghi nào cả</Typography>
+              </Box>
+            )}
+            <Grid container spacing={3}>
+              {news?.map((item, index) => {
+                const formatted = dayjs(item.updatedAt).format('MMM DD,YYYY')
+                return(
+                  <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3}} key={item.id}>
+                    <Card sx={{ bgcolor: '#1C1A1B', color: 'white'}}>
+                      <CardMedia
+                        component='img'
+                        image={item.imageUrl || image_slide}
+                        alt={item.title}
+                        sx={{
+                            objectFit: 'fill',
+                            backgroundColor: '#f5f5f5',
+                            height: "250px",
+                            width:"100%",
                         }}
-                      >
-                        {getFormatText(item.content)}
-                      </Typography>
-                      <Button
-                        onClick={() => item && handleToggleExpand(item)}
-                        variant="text"
-                        sx={{ 
-                          mt: 1, color: "white", fontWeight: 500, fontSize: '13px',
-                          textDecoration: 'underline',
-                          '&:hover': { textDecoration: 'underline', textDecorationColor: '#fff', bgcolor: '#1C1A1B'} 
-                        }}
-                        endIcon={<ArrowRightAlt/>}
-                      >
-                        Xem thêm
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              )
-            })}
-          </Grid>
-          <Box display='flex' justifyContent='center'>
-            <CustomPagination
-              page={page}
-              count={total}
-              rowsPerPage={rowsPerPage}
-              onPageChange={handlePageChange}
-            />
+                      />
+                      <CardContent>
+                        <Box display='flex' justifyContent='space-between'>
+                          <Typography variant="subtitle2" sx={{ opacity: 0.7 }}>
+                            {getCategoryLabel(item.category)}
+                          </Typography>
+                          <Typography variant="subtitle2" sx={{ opacity: 0.7 }}>
+                            {formatted}
+                          </Typography>
+                        </Box>
+                        <Typography variant="h6" sx={{ mt: 1, fontWeight: 600 }}>
+                          {item.title}
+                        </Typography>
+                        <Typography variant="body2" 
+                          sx={{ 
+                            mt: 1, opacity: 0.8, 
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            whiteSpace: 'normal',
+                            wordBreak: 'break-word',
+                          }}
+                        >
+                          {getFormatText(item.content)}
+                        </Typography>
+                        <Button
+                          onClick={() => item && handleToggleExpand(item)}
+                          variant="text"
+                          sx={{ 
+                            mt: 1, color: "white", fontWeight: 500, fontSize: '13px',
+                            textDecoration: 'underline',
+                            '&:hover': { textDecoration: 'underline', textDecorationColor: '#fff', bgcolor: '#1C1A1B'} 
+                          }}
+                          endIcon={<ArrowRightAlt/>}
+                        >
+                          Xem thêm
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                )
+              })}
+            </Grid>
+            <Box display='flex' justifyContent='center'>
+              <CustomPagination
+                page={page}
+                count={total}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handlePageChange}
+              />
+            </Box>
           </Box>
-        </Box>
-      )}
-      {expanded && newContent && (
-        <ContentNewDetail
-          newContent={newContent}
-          handleToggle={() => setExpanded(false)}
-        />
-      )}
-    </Box>
+        )}
+        {expanded && newContent && (
+          <ContentNewDetail
+            newContent={newContent}
+            handleToggle={() => setExpanded(false)}
+          />
+        )}
+      </Box>
+    </Page>
   );
 };
 
