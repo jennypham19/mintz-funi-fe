@@ -130,7 +130,7 @@ const EditPostPage: FC = () => {
       let imageUrl = existingImageUrl;
 
       if (imageFile) {
-        const uploadResponse = await uploadPostImage(imageFile);
+        const uploadResponse = await uploadPostImage(imageFile, 'posts');
         if (!uploadResponse?.success || !uploadResponse.data?.imageUrl) {
           throw new Error('Upload ảnh mới thất bại.');
         }
@@ -235,7 +235,8 @@ const EditPostPage: FC = () => {
               <Grid item xs={12}>
                 <ImageUpload
                   onFileSelect={handleFileSelect}
-                  initialImage={existingImageUrl ? `${import.meta.env.VITE_API_BASE_URL}${existingImageUrl}` : undefined}
+                  // initialImage={existingImageUrl ? `${import.meta.env.VITE_API_BASE_URL}${existingImageUrl}` : undefined}
+                  initialImage={existingImageUrl ? existingImageUrl : undefined}
                 />
               </Grid>
 

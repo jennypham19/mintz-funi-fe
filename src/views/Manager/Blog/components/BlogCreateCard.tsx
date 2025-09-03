@@ -37,7 +37,8 @@ const BlogCreateCard: FC<BlogCreateCardProps> = ({ blog }) => {
         >
             <CardMedia
                 component='img'
-                image={getPathImage(blog.imageUrl)}
+                // image={getPathImage(blog.imageUrl)}
+                image={blog.imageUrl}
                 alt={blog.title}
                 sx={{
                     objectFit: 'fill',
