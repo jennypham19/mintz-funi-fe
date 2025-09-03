@@ -95,7 +95,8 @@ const BlogPostCard: FC<BlogPostCardProps> = ({ post, onApprove, onReject, onPubl
             height: "169px",
             mt: 5
           }}
-          image={`${import.meta.env.MODE === "development" ? import.meta.env.VITE_API_BASE_URL : 'https://mintz-funi-be.onrender.com'}${post.imageUrl}` || cardfuni_11}
+          // image={`${import.meta.env.MODE === "development" ? import.meta.env.VITE_API_BASE_URL : 'https://mintz-funi-be.onrender.com'}${post.imageUrl}` || cardfuni_11}
+          image={post.imageUrl || cardfuni_11}
           alt={post.title}
         />
         <CardContent sx={{

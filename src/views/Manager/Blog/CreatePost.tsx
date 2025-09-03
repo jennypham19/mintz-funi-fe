@@ -88,7 +88,7 @@ const CreatePostPage: FC = () => {
 
     setIsSubmitting(true);
     try {
-      const uploadResponse = await uploadPostImage(imageFile!);
+      const uploadResponse = await uploadPostImage(imageFile!, 'posts');
       if (!uploadResponse?.success || !uploadResponse.data?.imageUrl) {
         throw new Error('Upload ảnh thất bại hoặc không nhận được URL ảnh.');
       }

@@ -53,8 +53,9 @@ export const getPostsPublic = async(
   }
 };
 
-export const uploadPostImage = (file: File): Promise<HttpResponse<{ imageUrl: string }>> => {
+export const uploadPostImage = (file: File, type: string): Promise<HttpResponse<{ imageUrl: string }>> => {
   const formData = new FormData();
+  formData.append('type', type);
   formData.append('image', file);
   
   return HttpClient.post(
