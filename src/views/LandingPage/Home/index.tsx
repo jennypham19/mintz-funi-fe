@@ -3,6 +3,7 @@ import homeImage from "@/assets/images/users/Background-xam-1.jpg";
 import { useNavigate } from 'react-router-dom';
 import ContactConsultativeInfo from './components/ContactConsultativeInfo';
 import ImageCarousel, { SrcSetWidth } from './components/ImageCarousel';
+import Page from '@/components/Page';
 
 const Home = () => {
   const fixedImages: SrcSetWidth[] = [
@@ -11,7 +12,7 @@ const Home = () => {
   ]
   const navigate = useNavigate();
   return (
-    <Box>
+    <Page title='Mintz - Trang chủ'>
       <Box
         sx={{
           position:'relative',
@@ -83,7 +84,7 @@ const Home = () => {
         <ContactConsultativeInfo/>
       </Box>
       <ImageCarousel fixedImages={fixedImages}/>
-    </Box>
+    </Page>
   );
 };
 

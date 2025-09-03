@@ -94,10 +94,10 @@ const AnalyticsChart = () => {
 
     if (loadingData || loadingPaths) return <CircularProgress />;
     if (error) return <Typography color="error">{error}</Typography>;
-    if (!data || data.length === 0) return <Typography>Không có dữ liệu</Typography>;
+    if (!data || data.length === 0) return <Typography p={2} fontWeight={800}>Không có dữ liệu</Typography>;
     return (
-        <Paper sx={{ p:2, m: 2 }}>
-            <Page title="Thống kê lượt truy cập">
+        <Page title="Thống kê lượt truy cập">
+            <Paper sx={{ p:2, m: 2 }}>
                 <Typography variant="h6" gutterBottom>Traffic Analytics</Typography>
                 <FormControl sx={{ mb:2, minWidth: 200 }}>
                     <InputLabel>Page Path</InputLabel>
@@ -133,8 +133,8 @@ const AnalyticsChart = () => {
                         </LineChart>
                     </ResponsiveContainer>
                 </Box>
-            </Page>
-        </Paper>
+            </Paper>
+        </Page>
     )
 }
 
