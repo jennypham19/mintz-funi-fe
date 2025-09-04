@@ -133,7 +133,6 @@ const InputText: React.FC<CustomInputProps> = ({
                   name: 'sameWidth',
                   enabled:  true,
                   phase: 'beforeWrite',
-                  requires: ['commonSlotTextFieldProps'],
                   fn({ state }){
                     state.styles.popper.width = `${state.rects.reference.width}px`;
                   }
