@@ -1,14 +1,16 @@
 import { HttpResponse } from "@/types/common";
 import HttpClient from "@/utils/HttpClient";
 import { DataPoint, RealtimeData } from "@/views/Manager/Analytics";
+import { Dayjs } from "dayjs";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'; 
 const prefix = `${API_BASE_URL}/api/analytics`;
 
 interface GetAnalyticsParams {
-  from: string;
-  to: string;
+  from?: string;
+  to?: string;
   pagePath?: string; // thêm optional
+  date?: string | Dayjs | null;
 }
 
 export const getAnalytics = (params: GetAnalyticsParams) => {
