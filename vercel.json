@@ -3,6 +3,10 @@
       {
         "source": "/(.*)",
         "destination": "/index.html"
+      },
+      {
+        "source": "/moc/:path*",
+        "destination": "https://wooden-web-fe.vercel.app/:path*"
       }
     ]
   }
