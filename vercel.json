@@ -1,12 +1,12 @@
 {
     "rewrites": [
       {
-        "source": "/(.*)",
-        "destination": "/index.html"
-      },
-      {
         "source": "/moc/:path*",
         "destination": "https://wooden-web-fe.vercel.app/:path*"
+      },
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
       }
     ]
   }
