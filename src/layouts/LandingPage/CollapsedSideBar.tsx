@@ -1,7 +1,7 @@
 import Scrollbar from "@/components/Scrollbar";
 import { SIDEBAR_WIDTH } from "@/constants/layouts";
 import usePrevious from "@/hooks/usePrevious";
-import { AccountCircle, Close, Home, Newspaper } from "@mui/icons-material";
+import { AccountCircle, Close, Elevator, Home, Newspaper } from "@mui/icons-material";
 import { Avatar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemText, MenuItem, Select, Stack, Typography } from "@mui/material";
 import { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,6 +26,7 @@ const CollapsedSideBar = (props: CollapsedSideBarProps) => {
         { label: 'Trang chủ', icon: <Home/>, path: '/home' },
         { label: 'Funi', icon: <AccountCircle/>, path: '/about-us' },
         { label: 'Tin tức', icon: <Newspaper/>, path: '/news' },
+        { label: 'Thang máy', icon: <Elevator/>, path: '/elevator' },
     ];
 
     return (

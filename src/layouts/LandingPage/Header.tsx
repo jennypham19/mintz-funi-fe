@@ -72,16 +72,15 @@ const Header = (props: Props) => {
                 display: 'flex', justifyContent: 'center', alignItems: 'center', height: 64, px: 6, // padding ngang để giới hạn chiều rộng
               }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 15, }}>
-                <Typography sx={styleMenu('/home')} onClick={() =>  handleMenuClick('home','/home')}>Trang chủ</Typography>
-                <Typography sx={styleMenu('/about-us')} onClick={() =>  handleMenuClick('about-us','/about-us')}>Funi</Typography>
-
                 <CommonImage
                   src={mintz_logo}
                   alt="mintz logo"
                   sx={{ width: 100, height:100 }}
-                  />
-
+                  />                
+                <Typography sx={styleMenu('/home')} onClick={() =>  handleMenuClick('home','/home')}>Trang chủ</Typography>
+                <Typography sx={styleMenu('/about-us')} onClick={() =>  handleMenuClick('about-us','/about-us')}>Funi</Typography>
                 <Typography sx={styleMenu('/news')} onClick={() =>  handleMenuClick('news','/news')}>Tin tức</Typography>
+                <Typography sx={styleMenu('/elevator')} onClick={() =>  handleMenuClick('elevator','/elevator')}>Thang máy</Typography>
                 <Select
                   defaultValue="vi"
                   variant="standard"
