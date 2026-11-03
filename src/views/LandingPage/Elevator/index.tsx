@@ -4,6 +4,9 @@ import { useNavigate } from "react-router";
 import banner from "@/assets/images/users/elevator/banner.png"
 import StrategicPartner from "./components/StrategicPartner";
 import AboutElevator from "./components/AboutElevator";
+import Products from "./components/Products";
+import Services from "./components/Services";
+import Contacts from "./components/Contacts";
 
 const Elevator = () => {
     const navigate = useNavigate();
@@ -58,7 +61,7 @@ const Elevator = () => {
                                     px: 4,
                                     py: 1,
                                     fontWeight: 600,
-                                    fontSize: '14px',
+                                    fontSize: '18px',
                                     borderRadius: '8px',
                                     border: '1px solid white',
                                     boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
@@ -78,7 +81,7 @@ const Elevator = () => {
                                     px: 4,
                                     py: 1,
                                     fontWeight: 600,
-                                    fontSize: '14px',
+                                    fontSize: '18px',
                                     borderRadius: '8px',
                                     border: '1px solid white',
                                     boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
@@ -96,6 +99,9 @@ const Elevator = () => {
             </Box>
             <StrategicPartner/>
             <AboutElevator/>
+            <Products/>
+            <Services/>
+            <Contacts/>
         </Page>
     )
 }

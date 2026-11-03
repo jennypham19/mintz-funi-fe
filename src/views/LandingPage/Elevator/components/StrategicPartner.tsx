@@ -57,7 +57,7 @@ const StrategicPartner = () => {
                         <Box display='flex' flexDirection='column'>
                             <CommonImage
                                 src={data.image}
-                                sx={{ height: 150 }}
+                                sx={{ height: 120 }}
                             />
                             <Typography
                                 fontWeight={700}
