@@ -16,6 +16,7 @@ const Login = Loadable(lazy(() => import('@/views/Auth/Login')));
 const Home = Loadable(lazy(() => import('@/views/LandingPage/Home/index')));
 const AboutUs = Loadable(lazy(() => import('@/views/LandingPage/AboutUs/index')));
 const News = Loadable(lazy(() => import('@/views/LandingPage/News/index')));
+const Elevator = Loadable(lazy(() => import('@/views/LandingPage/Elevator/index')));
 const NotFound = Loadable(lazy(() => import('@/views/Errors/NotFound')));
 const PermissionDenied = Loadable(lazy(() => import('@/views/Errors/PermissionDenied')));
 
@@ -40,7 +41,7 @@ const routes: RouteObject[] = [
       {
         element: <AuthLayout />,
         children: [
-          { index: true, element: <Navigate to="login" replace /> },
+          // { index: true, element: <Navigate to="login" replace /> },
           { path: 'login', element: <Login /> },
           { path: 'change-password', element: <ChangePassword /> },
         ],
@@ -53,10 +54,11 @@ const routes: RouteObject[] = [
     path: '/',
     element: <LandingPageLayout />, 
     children: [
+      { index: true, element: <Navigate to="home" replace /> },
       { path: 'home', element: <Home /> },
       { path: 'about-us', element: <AboutUs /> },
       { path: 'news', element: <News /> },
-      { index: true, element: <Navigate to="/home" replace /> },
+      { path: 'elevator', element: <Elevator /> },
     ],
   },
 
