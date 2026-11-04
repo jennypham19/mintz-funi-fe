@@ -26,7 +26,7 @@ const CollapsedSideBar = (props: CollapsedSideBarProps) => {
         { label: 'Trang chủ', icon: <Home/>, path: '/home' },
         { label: 'Funi', icon: <AccountCircle/>, path: '/about-us' },
         { label: 'Tin tức', icon: <Newspaper/>, path: '/news' },
-        { label: 'Thang máy', icon: <Elevator/>, path: '/elevator' },
+        { label: 'Thang máy', icon: <Elevator/>, path: '/thang-may' },
     ];
 
     return (

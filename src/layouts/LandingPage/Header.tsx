@@ -80,7 +80,7 @@ const Header = (props: Props) => {
                 <Typography sx={styleMenu('/home')} onClick={() =>  handleMenuClick('home','/home')}>Trang chủ</Typography>
                 <Typography sx={styleMenu('/about-us')} onClick={() =>  handleMenuClick('about-us','/about-us')}>Funi</Typography>
                 <Typography sx={styleMenu('/news')} onClick={() =>  handleMenuClick('news','/news')}>Tin tức</Typography>
-                <Typography sx={styleMenu('/elevator')} onClick={() =>  handleMenuClick('elevator','/elevator')}>Thang máy</Typography>
+                <Typography sx={styleMenu('/elevator')} onClick={() =>  handleMenuClick('thang-may','/thang-may')}>Thang máy</Typography>
                 <Select
                   defaultValue="vi"
                   variant="standard"

@@ -20,6 +20,9 @@ const Elevator = Loadable(lazy(() => import('@/views/LandingPage/Elevator/index'
 const NotFound = Loadable(lazy(() => import('@/views/Errors/NotFound')));
 const PermissionDenied = Loadable(lazy(() => import('@/views/Errors/PermissionDenied')));
 
+// Các loại thang máy
+const ElevatorFamily = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorFamily')));
+
 const routes: RouteObject[] = [
   // --- NHÁNH 1: CÁC TRANG QUẢN LÝ (PRIVATE) ---
   {
@@ -58,7 +61,13 @@ const routes: RouteObject[] = [
       { path: 'home', element: <Home /> },
       { path: 'about-us', element: <AboutUs /> },
       { path: 'news', element: <News /> },
-      { path: 'elevator', element: <Elevator /> },
+      { path: 'thang-may', element: <Elevator />,},
+      // Trang chi tiết thang máy gia đình
+      {
+        path: "thang-may/thang-may-gia-dinh",
+        element: <ElevatorFamily />,
+      },
+
     ],
   },
 

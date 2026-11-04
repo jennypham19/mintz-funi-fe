@@ -10,6 +10,8 @@ import p_06 from "@/assets/images/users/elevator/06.png";
 import p_07 from "@/assets/images/users/elevator/07.png";
 import { DATA_VALUE } from "../constants";
 import { useState } from "react";
+import ElevatorFamily from "./TypeElevator/ElevatorFamily";
+import { useNavigate } from "react-router-dom";
 
 const DATA_PRODUCT_LINE_1 = [
     {
@@ -70,11 +72,12 @@ const DATA_PRODUCT_LINE_3 = [
 ]
 
 interface ProductsProps {
-    id: string
+    id: string,
+    onOpenTypeElevator: (type: string) => void
 }
 const Products = (props: ProductsProps) => {
-    const { id } = props;
-    const [openTypeElevator, setOpenTypeElevator] = useState<{open: boolean, type: string | null}>({open: false, type: null})
+    const { id, onOpenTypeElevator } = props;
+    const navigate = useNavigate();
     return(
         <Box id={id} bgcolor={COLORS.PRIMARY} display="flex" justifyContent="center" py={4} flexDirection="column">
             <Typography
@@ -96,9 +99,7 @@ const Products = (props: ProductsProps) => {
                 {DATA_PRODUCT_LINE_1.map((data_line_1) => (
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Box
-                            onClick={() => {
-                                setOpenTypeElevator({open: true, type: data_line_1.value})
-                            }}
+                            onClick={() => onOpenTypeElevator(data_line_1.value)}
                             sx={{ 
                                 position: 'relative',
                                 height: 400,
@@ -107,7 +108,8 @@ const Products = (props: ProductsProps) => {
                                 backgroundSize: 'fill',
                                 backgroundPosition: 'center',
                                 color: '#fff',
-                                zIndex:1
+                                zIndex:1,
+                                cursor: 'pointer'
                             }}
                         >
                             <Box
