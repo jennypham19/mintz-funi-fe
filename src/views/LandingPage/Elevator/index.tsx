@@ -10,6 +10,14 @@ import Contacts from "./components/Contacts";
 
 const Elevator = () => {
     const navigate = useNavigate();
+    const handleScrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+
+        element?.scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
+    }
     return (
         <Page title="Thang máy">
             <Box
@@ -55,7 +63,7 @@ const Elevator = () => {
                         <Box display="flex" gap={2} flexDirection={{ xs: "column", sm: "row" }} justifyContent="center"> 
                             <Button
                                 variant="outlined"
-                                // onClick={() => navigate('/about-us')}
+                                onClick={() => handleScrollToSection("contact")}
                                 sx={{
                                     color: 'white',
                                     px: 4,
@@ -75,7 +83,7 @@ const Elevator = () => {
                             </Button>
                             <Button
                                 variant="outlined"
-                                // onClick={() => navigate('/about-us')}
+                                onClick={() => handleScrollToSection("products")}
                                 sx={{
                                     color: 'white',
                                     px: 4,
@@ -99,9 +107,9 @@ const Elevator = () => {
             </Box>
             <StrategicPartner/>
             <AboutElevator/>
-            <Products/>
+            <Products id="products"/>
             <Services/>
-            <Contacts/>
+            <Contacts id="contact"/>
         </Page>
     )
 }

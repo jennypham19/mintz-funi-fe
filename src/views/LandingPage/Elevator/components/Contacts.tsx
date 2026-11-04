@@ -13,7 +13,7 @@ const DATA_CONTACTS_LINE_1 = [
     {
         id: 2,
         icon: <Email fontSize='large' sx={{ color: '#fff'}}/>,
-        title: 'Thangmay.funi@gmail.com'
+        title: 'thangmay.funi@gmail.com'
     },
     {
         id: 3,
@@ -22,12 +22,17 @@ const DATA_CONTACTS_LINE_1 = [
     }
 ]
 
-const Contacts = () => {
+interface ContactProps {
+    id: string
+}
+const Contacts = (props: ContactProps) => {
+    const { id } = props;
     return(
         <Box
+            id={id}
                 sx={{
                 position:'relative',
-                height: {xs: 450, md: 500}, // Chiều cao thu gọn lại
+                height: { xs: 450, md: 500 }, // Chiều cao thu gọn lại
                 width: '100%',
                 backgroundImage: `url(${contact})`,
                 backgroundSize: 'cover', // Kích thước ảnh nền
@@ -65,12 +70,16 @@ const Contacts = () => {
                                     <IconButton
                                         icon={data.icon}
                                         backgroundColor="#000"
-                                        width={70}
+                                        sx={{ 
+                                            width: { xs: 50, md: 70 },
+                                            height: { xs: 50, md: 70 }
+                                        }}
+                                        
                                         height={70}
                                         borderRadius='50%'
                                         border="1px solid #fff"
                                     />
-                                    <Typography variant="h4" margin="auto 0">{data.title}</Typography>
+                                    <Typography sx={{ fontSize: { xs: '1.2rem', md: '1.6rem'}}} margin="auto 0">{data.title}</Typography>
                                 </Box>
                             </Grid>
                         ))}
@@ -79,12 +88,14 @@ const Contacts = () => {
                         <IconButton
                             icon={<FmdGood fontSize='large' sx={{ color: '#fff'}}/>}
                             backgroundColor="#000"
-                            width={70}
-                            height={70}
+                            sx={{ 
+                                width: { xs: 50, md: 70 },
+                                height: { xs: 50, md: 70 }
+                            }}
                             borderRadius='50%'
                             border="1px solid #fff"
                         />
-                        <Typography variant="h4" margin="auto 0">SỐ 07 THANH NHÀN - THANH XUÂN - SÓC SƠN - THÀNH PHỐ HÀ NỘI</Typography>
+                        <Typography sx={{ fontSize: { xs: '1.2rem', md: '1.6rem'}}} margin="auto 0">SỐ 07 THANH NHÀN - THANH XUÂN - SÓC SƠN - THÀNH PHỐ HÀ NỘI</Typography>
                     </Box>
                 </Box>
             </Box>

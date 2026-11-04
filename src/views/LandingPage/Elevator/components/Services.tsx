@@ -57,8 +57,8 @@ const Services = () => {
                             <CommonImage
                                 src={data.image}
                                 sx={{
-                                    width: 150,
-                                    height: 150,
+                                    width: 120,
+                                    height: 120,
                                 }}
                             />
                             <Stack direction='column'>
