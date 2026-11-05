@@ -15,7 +15,7 @@ const Elevator = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const scrollTo  = location.state?.scrollTo ;
+        const scrollTo  = location.state?.scrollTo;
         if(scrollTo){
             // Chờ React render BOM
             requestAnimationFrame(() => {
@@ -51,7 +51,8 @@ const Elevator = () => {
             case DATA_VALUE.ELEVATOR_FAMILY:
                 navigate("/thang-may/thang-may-gia-dinh")
                 break;
-            
+            case DATA_VALUE.ELEVATOR_CUSTOMER:
+                navigate("/thang-may/thang-may-tai-khach")
         }
     }
     return (
