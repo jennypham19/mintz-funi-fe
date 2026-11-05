@@ -497,7 +497,7 @@ const cellBase = {
 
 /* ===================== COMPONENT CHÍNH ===================== */
 
-const ELevatorCustomer = () => {
+const ElevatorCustomer = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -1026,4 +1026,4 @@ const ELevatorCustomer = () => {
     );
 };
 
-export default ELevatorCustomer;
+export default ElevatorCustomer;

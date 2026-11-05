@@ -22,7 +22,7 @@ const PermissionDenied = Loadable(lazy(() => import('@/views/Errors/PermissionDe
 
 // Các loại thang máy
 const ElevatorFamily = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorFamily')));
-const ElevatorCustomer = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ELevatorCustomer')));
+const ElevatorCustomer = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorCustomer')));
 
 const routes: RouteObject[] = [
   // --- NHÁNH 1: CÁC TRANG QUẢN LÝ (PRIVATE) ---
