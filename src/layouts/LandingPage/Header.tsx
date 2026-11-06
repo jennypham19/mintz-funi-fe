@@ -1,5 +1,5 @@
 import { MINI_SIDEBAR_WIDTH, SIDEBAR_WIDTH } from '@/constants/layouts';
-import { Box, MenuItem, Select, Typography, useMediaQuery } from '@mui/material';
+import { Box, ClickAwayListener, MenuItem, Paper, Select, Typography, useMediaQuery } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import { CSSObject, Theme, useTheme } from '@mui/material/styles';
@@ -8,8 +8,10 @@ import mintz_logo from "@/assets/images/users/mintzdg-logo.png";
 import CommonImage from '@/components/Image/index';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { DensityMedium } from '@mui/icons-material';
+import { DensityMedium, KeyboardArrowDown } from '@mui/icons-material';
 import CollapsedSideBar from '../LandingPage/CollapsedSideBar';
+import { COLORS } from '@/constants/colors';
+import { ELEVATOR_SUBMENU } from './constants';
 
 
 interface Props {
@@ -31,7 +33,9 @@ const Header = (props: Props) => {
   const mdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   const isActive = (path: string) => location.pathname === path;
+  const isElevatorActive = location.pathname.startsWith('/thang-may');
 
+  const [elevatorOpen, setElevatorOpen] = useState<boolean>(false);
   const [activeMenu, setActiveMenu] = useState<string>('home')
 
   const handleMenuClick = (key: string, path: string) => {
@@ -80,7 +84,77 @@ const Header = (props: Props) => {
                 <Typography sx={styleMenu('/home')} onClick={() =>  handleMenuClick('home','/home')}>Trang chủ</Typography>
                 <Typography sx={styleMenu('/about-us')} onClick={() =>  handleMenuClick('about-us','/about-us')}>Funi</Typography>
                 <Typography sx={styleMenu('/news')} onClick={() =>  handleMenuClick('news','/news')}>Tin tức</Typography>
-                <Typography sx={styleMenu('/elevator')} onClick={() =>  handleMenuClick('thang-may','/thang-may')}>Thang máy</Typography>
+                <ClickAwayListener onClickAway={() => setElevatorOpen(false)}>
+                  <Box sx={{ position: 'relative' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
+                    <Typography
+                      sx={{
+                        ...styleMenu('/thang-may'),
+                        borderBottom: isElevatorActive ? '2px solid black' : '2px solid transparent',
+                      }}
+                      onClick={() => handleMenuClick('thang-may', '/thang-may')}
+                    >
+                      Thang máy
+                    </Typography>
+                    <KeyboardArrowDown
+                      onClick={() => setElevatorOpen((v) => !v)}
+                      sx={{
+                        fontSize: 18,
+                        mt: 0.5,
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s',
+                        transform: elevatorOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      }}
+                    />
+                  </Box>
+
+                  {elevatorOpen && (
+                    <Paper
+                      elevation={4}
+                      sx={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        mt: 0.5,
+                        minWidth: 230,
+                        borderRadius: 1.5,
+                        py: 1,
+                        zIndex: 30,
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {ELEVATOR_SUBMENU.map((child) => {
+                        const active = isActive(child.path);
+                        return (
+                          <Box
+                            key={child.path}
+                            onClick={() => {
+                              navigate(child.path);
+                              setElevatorOpen(false);
+                            }}
+                            sx={{
+                              px: 2,
+                              py: 1.25,
+                              fontSize: 14,
+                              fontWeight: active ? 600 : 400,
+                              whiteSpace: 'nowrap',
+                              cursor: 'pointer',
+                              color: active ? '#fff' : 'common.black',
+                              bgcolor: active ? COLORS.PRIMARY : 'transparent',
+                              transition: 'background-color 0.2s',
+                              '&:hover': {
+                                bgcolor: active ? COLORS.PRIMARY : '#F2F1E7',
+                              },
+                            }}
+                          >
+                            {child.label}
+                          </Box>
+                        );
+                      })}
+                    </Paper>
+                  )}
+                  </Box>
+                </ClickAwayListener>
                 <Select
                   defaultValue="vi"
                   variant="standard"

@@ -5,5 +5,5 @@ export const DATA_VALUE = {
     ELEVATOR_OVERSEE: 'elevator_oversee',
     ELEVATOR_VILLA: 'elevator_villa',
     ELEVATOR_RAISED_FLOOR: 'elevator_raised_floor',
-    ELEVATOR_SPECIALIST: 'elevator_specialist'
+    ELEVATOR_SPECIALIST: 'elevator_specialist',
 }

@@ -147,6 +147,7 @@ const Products = (props: ProductsProps) => {
                 {DATA_PRODUCT_LINE_2.map((data_line_2) => (
                     <Grid size={{ xs: 12, md: 4 }}>
                         <Box
+                            onClick={() => onOpenTypeElevator(data_line_2.value)}
                             sx={{ 
                                 position: 'relative',
                                 height: 400,
@@ -155,7 +156,8 @@ const Products = (props: ProductsProps) => {
                                 backgroundSize: 'fill',
                                 backgroundPosition: 'center',
                                 color: '#fff',
-                                zIndex:1
+                                zIndex:1,
+                                cursor: 'pointer'
                             }}
                         >
                             <Box
@@ -193,6 +195,7 @@ const Products = (props: ProductsProps) => {
                 {DATA_PRODUCT_LINE_3.map((data_line_3) => (
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Box
+                            onClick={() => onOpenTypeElevator(data_line_3.value)}
                             sx={{ 
                                 position: 'relative',
                                 height: 400,
@@ -201,7 +204,8 @@ const Products = (props: ProductsProps) => {
                                 backgroundSize: 'fill',
                                 backgroundPosition: 'center',
                                 color: '#fff',
-                                zIndex:1
+                                zIndex:1,
+                                cursor: 'pointer'
                             }}
                         >
                             <Box

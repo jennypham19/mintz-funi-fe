@@ -1,1028 +1,706 @@
-import IconButton from "@/components/IconButton/IconButton";
 import {
     ApartmentOutlined,
     ArrowForward,
     AutoAwesomeOutlined,
-    BusinessOutlined,
-    DiamondOutlined,
-    GroupsOutlined,
-    HandshakeOutlined,
-    HotelOutlined,
-    MenuBookOutlined,
-    NavigateBefore,
-    PsychologyOutlined,
-    ShieldOutlined,
-    SpeedOutlined,
-    StorefrontOutlined,
+    BoltOutlined,
+    CheckCircle,
+    LightbulbOutlined,
+    SensorDoorOutlined,
     TuneOutlined,
-    VerifiedOutlined,
+    VerifiedUserOutlined,
+    ViewInArOutlined,
 } from "@mui/icons-material";
-import {
-    Box,
-    Button,
-    Chip,
-    Paper,
-    Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 import CommonImage from "@/components/Image/index";
 import { COLORS } from "@/constants/colors";
-import e_customer_1 from "@/assets/images/users/elevator/e_customer/e_customer_1.png";
-import e_customer_2 from "@/assets/images/users/elevator/e_customer/e_customer_2.png";
-import e_customer_3 from "@/assets/images/users/elevator/e_customer/e_customer_3.png";
-import e_customer_4 from "@/assets/images/users/elevator/e_customer/e_customer_4.png";
+import InputText from "@/components/InputText";
+import InputSelect from "@/components/InputSelect";
+import banner_customer from "@/assets/images/users/elevator/e_customer/banner_elevator_customer.png";
+import overall_customer from "@/assets/images/users/elevator/e_customer/overall_customer.png";
+import elevator_fuji from "@/assets/images/users/elevator/e_customer/elevator_fuji.png";
+import elevator_schindler from "@/assets/images/users/elevator/e_customer/elevator_schindler.png";
+import elevator_kone from "@/assets/images/users/elevator/e_customer/elevator_kone.png";
+import elevator_mitsubishi from "@/assets/images/users/elevator/e_customer/elevator_mitsubishi.png";
+import Page from "@/components/Page";
+import { useEffect } from "react";
 
-const COLOR = {
-    gold: "#C9A66B",
-    goldDark: "#B8924F",
-    brown: "#3A2A1C",
-    text: "#2B2B2B",
-    muted: "#6F6F6F",
-    mutedLight: "#8A8A8A",
-    rowBg: "#F5F5F5",
-    pageBg: "#F7F7F7",
-    border: "#E6E6E6",
+/* ===================== THEME =====================
+ * Màu chủ đạo: #031512 (COLORS.PRIMARY)
+ * Toàn trang nền xanh đậm, chữ trắng, thẻ nội dung màu kem.
+ */
+const C = {
+    bg: "#031512", // nền xanh chính (cùng tông #031512)
+    cardDark: "#072A20", // thẻ tối (gói giá, mẫu mã)
+    primary: COLORS.PRIMARY, // #031512
+    accent: "#0F4433", // nút filled xanh trên nền tối
+    border: "rgba(255,255,255,0.12)",
+    cream: "#F2F1E7", // thẻ nội dung sáng
+    cardText: "#1E2621",
+    cardMuted: "#5E655F",
+    cardMutedLight: "#8A908A",
+    white: "#FFFFFF",
+    whiteMuted: "rgba(255,255,255,0.72)",
+    whiteFaint: "rgba(255,255,255,0.5)",
+    button: "#E8E6D9",
+    bgLight: "#DDECE9",
+    bgPrimary: "#052F27",
+    textBanner: '#2D9D84'
+    
 };
 
-/* ===================== HERO / STATS ===================== */
+/* ===================== DATA ===================== */
 
-const HERO_STATS = [
-    {
-        id: 1,
-        icon: <SpeedOutlined />,
-        value: "1.6 - 4.0",
-        unit: "m/s",
-        label: "Tốc độ vượt trội",
-    },
-    {
-        id: 2,
-        icon: <GroupsOutlined />,
-        value: "8N - 30",
-        unit: "người",
-        label: "Dải tải trọng linh hoạt",
-    },
-    {
-        id: 3,
-        icon: <TuneOutlined />,
-        value: "100%",
-        unit: "",
-        label: "Cấu hình theo dự án",
-    },
+const STATS = [
+    { id: 1, title: "AN TOÀN", sub: "An toàn tuyệt đối" },
+    { id: 2, title: "VẬN HÀNH", sub: "Vận hành êm ái" },
+    { id: 3, title: "TIẾT KIỆM", sub: "Tiết kiệm năng lượng" },
+    { id: 4, title: "MẪU MÃ", sub: "Mẫu mã đa dạng" },
 ];
 
-/* ===================== ỨNG DỤNG ===================== */
-
-const DATA_APPLICATION = [
-    {
-        id: 1,
-        icon: <BusinessOutlined />,
-        name: "Tòa Nhà Văn Phòng Hạng A & B",
-        tooltip: "Lưu lượng giờ cao điểm",
-        des: "Giải quyết bài toán ùn tắc giờ cao điểm với hệ điều phối nhóm thông minh, tối ưu thời gian chờ và lưu lượng hành khách lên tới hàng nghìn lượt mỗi giờ.",
-        note: [
-            { title: "Tải trọng khuyến nghị:" },
-            { des_title: "1000 - 1600 kg / 13 - 21 người" },
-        ],
-    },
-    {
-        id: 2,
-        icon: <HotelOutlined />,
-        name: "Khách Sạn & Resort 5 Sao",
-        tooltip: "Đẳng cấp & êm ái",
-        des: "Vận hành siêu êm, cabin hoàn thiện vật liệu cao cấp mạ titan, kính và gỗ. Trải nghiệm di chuyển sang trọng tương xứng với tiêu chuẩn lưu trú thượng lưu.",
-        note: [
-            { title: "Hoàn thiện cabin:" },
-            { des_title: "Mạ Titan vàng gương & vách gỗ" },
-        ],
-    },
-    {
-        id: 3,
-        icon: <ApartmentOutlined />,
-        name: "Khu Căn Hộ & Chung Cư Cao Cấp",
-        tooltip: "Bền bỉ 24/7",
-        des: "Thiết kế cho cường độ hoạt động liên tục, tiết kiệm điện năng với động cơ không hộp số Gearless. Bảo mật phân tầng thẻ từ an toàn cho cư dân.",
-        note: [
-            { title: "Chế độ vận hành:" },
-            { des_title: "Liên tục 24/7 - Tiết kiệm ~45% điện" },
-        ],
-    },
-    {
-        id: 4,
-        icon: <StorefrontOutlined />,
-        name: "TTTM & Tổ Hợp Giải Trí",
-        tooltip: "Lưu thông lớn",
-        des: "Cabin rộng rãi, cửa mở lớn đón dòng khách hàng liên tục. Buồng kính Panoramic quan sát toàn cảnh, tạo điểm nhấn thị giác cho không gian thương mại.",
-        note: [
-            { title: "Kiểu dáng chủ đạo:" },
-            { des_title: "Cabin kính Panoramic quan sát" },
-        ],
-    },
+const OVERVIEW_CHECKS = [
+    "Công nghệ hiện đại, vận hành ổn định",
+    "Đầy đủ tính năng theo TCVN",
+    "Phù hợp nhiều công trình",
 ];
 
-/* ===================== THÔNG SỐ KỸ THUẬT ===================== */
-
-interface ProfessionalParameter {
-    id: number;
-    weight: string;
-    people_number: string;
-    title: string;
-    des: string;
-    speed: string;
-    cabin: string;
-    type_open: string;
-    stop: string;
-    note: string;
-    isPopular: boolean;
-}
-
-const DATA_PROFESSIONAL_PARAMETERS: ProfessionalParameter[] = [
-    {
-        id: 1,
-        weight: "800",
-        people_number: "11 Người",
-        title: "Tiêu Chuẩn Tòa Nhà Vừa & Nhỏ",
-        des: "Phù hợp văn phòng, chung cư mini và khách sạn dưới 10 tầng với lưu lượng ổn định.",
-        speed: "1.0 - 1.75 m/s",
-        cabin: "1400 × 1350 mm",
-        type_open: "Lùa 2 cánh mở tâm (CO)",
-        stop: "Tối đa 10 - 12 điểm dừng",
-        note: "Phù hợp: Tòa nhà 6 - 12 tầng",
-        isPopular: false,
-    },
-    {
-        id: 2,
-        weight: "1000",
-        people_number: "13 Người",
-        title: "Cân Bằng Lưu Lượng & Chi Phí",
-        des: "Lựa chọn tối ưu nhất cho đa số cao ốc văn phòng hạng B và chung cư cao cấp.",
-        speed: "1.75 - 2.5 m/s",
-        cabin: "1600 × 1400 mm",
-        type_open: "Lùa 2 cánh mở tâm (CO)",
-        stop: "Tối đa 16 - 20 điểm dừng",
-        note: "Phù hợp: Tòa nhà 12 - 25 tầng",
-        isPopular: true,
-    },
-    {
-        id: 3,
-        weight: "1350 - 1600",
-        people_number: "18 - 21 Người",
-        title: "Đẳng Cấp Cao Ốc & Khách Sạn 5 Sao",
-        des: "Cabin siêu rộng, tốc độ cao phục vụ cao ốc chọc trời và tổ hợp thương mại quy mô lớn.",
-        speed: "2.5 - 4.0 m/s",
-        cabin: "2000 × 1500 mm",
-        type_open: "Lùa 2 - 4 cánh mở tâm",
-        stop: "Trên 25 điểm dừng",
-        note: "Phù hợp: Cao ốc trên 25 tầng",
-        isPopular: false,
-    },
+const OVERVIEW_HIGHLIGHTS = [
+    { id: 1, icon: <ApartmentOutlined />, text: "Điểm nhấn kiến trúc sang trọng" },
+    { id: 2, icon: <VerifiedUserOutlined />, text: "An toàn tuyệt đối" },
+    { id: 3, icon: <BoltOutlined />, text: "Tiết kiệm điện năng" },
+    { id: 4, icon: <AutoAwesomeOutlined />, text: "Đa dạng mẫu mã" },
 ];
 
-const SPEC_ROWS: { label: string; key: keyof ProfessionalParameter }[] = [
-    { label: "Tốc độ di chuyển:", key: "speed" },
-    { label: "Lòng cabin tiêu chuẩn:", key: "cabin" },
-    { label: "Kiểu mở cửa:", key: "type_open" },
-    { label: "Số điểm dừng:", key: "stop" },
-];
-
-/* ===================== BẢNG SO SÁNH MR vs MRL ===================== */
-
-interface ComparisonRow {
-    id: number;
-    feature: string;
-    mrl: string;
-    mrlHighlight?: string;
-    mr: string;
-}
-
-const COMPARISON_HEADERS = {
-    feature: "Đặc Tính Kỹ Thuật",
-    mrl: "Thang Không Phòng Máy (MRL)",
-    mr: "Thang Có Phòng Máy (MR)",
-};
-
-const COMPARISON_DATA: ComparisonRow[] = [
-    {
-        id: 1,
-        feature: "Yêu cầu kết cấu xây dựng",
-        mrlHighlight: "Không cần phòng máy,",
-        mrl: " tiết kiệm trọn vẹn tầng thượng",
-        mr: "Yêu cầu xây dựng phòng máy riêng trên nóc giếng thang",
-    },
-    {
-        id: 2,
-        feature: "Hiệu suất năng lượng",
-        mrl: "Động cơ Gearless nam châm vĩnh cửu, tiết kiệm tới 45%",
-        mr: "Động cơ có hộp số, hao phí nhiệt và điện năng cao hơn",
-    },
-    {
-        id: 3,
-        feature: "Tốc độ tối đa phù hợp",
-        mrl: "Lý tưởng cho tốc độ 1.0 - 2.5 m/s, nhà tầm trung",
-        mr: "Đáp ứng tốt tốc độ cao 3.0 - 6.0 m/s cho cao ốc chọc trời",
-    },
-    {
-        id: 4,
-        feature: "Chi phí & thời gian thi công",
-        mrl: "Lắp đặt nhanh, tối ưu chi phí phần thô xây dựng",
-        mr: "Chi phí xây dựng phòng máy & kết cấu đỡ cao hơn",
-    },
-];
-
-/* ===================== ĐỊNH HƯỚNG VẬN HÀNH ===================== */
-
-const DATA_PHILOSOPHY = [
-    {
-        id: 1,
-        icon: <ShieldOutlined />,
-        name: "An Toàn Kỹ Thuật Tuyệt Đối",
-        des: "Tích hợp bộ cứu hộ tự động ARD khi mất điện, thắng cơ khẩn cấp và cảm biến quá tải. Tuân thủ nghiêm ngặt tiêu chuẩn an toàn thang máy EN 81-20/50.",
-    },
-    {
-        id: 2,
-        icon: <PsychologyOutlined />,
-        name: "Điều Phối Giao Thông Minh AI",
-        des: "Hệ điều khiển nhóm Destination Control gom nhóm hành khách theo tầng đích, giảm tối đa thời gian chờ và số lần dừng không cần thiết vào giờ cao điểm.",
-    },
-    {
-        id: 3,
-        icon: <DiamondOutlined />,
-        name: "Thẩm Mỹ Kiến Trúc Đẳng Cấp",
-        des: "Đa dạng vật liệu hoàn thiện cabin từ thép không gỉ hoa văn, kính cường lực đến gỗ tự nhiên, đồng bộ với ngôn ngữ thiết kế sảnh và kiến trúc công trình.",
-    },
-];
-
-/* ===================== CATALOG SẢN PHẨM ===================== */
-
-interface ProductItem {
+interface ProductModel {
     id: number;
     image: string;
     name: string;
-    tag: string;
+    price: string;
     des: string;
-    badge?: string;
 }
 
-const DATA_PRODUCTS: ProductItem[] = [
+const PRODUCTS: ProductModel[] = [
     {
         id: 1,
-        image: e_customer_1,
-        name: "Auravate Executive Titanium",
-        tag: "VĂN PHÒNG HẠNG A",
-        des: "Cabin thép không gỉ mạ titan vân xước sang trọng, bảng điều khiển cảm ứng, hệ chiếu sáng gián tiếp hiện đại cho sảnh thương mại.",
-        badge: "FLAGSHIP",
+        image: elevator_fuji,
+        name: "THANG MÁY FUJI NHẬT BẢN",
+        price: "Liên hệ báo giá",
+        des: "Phù hợp nhu cầu gia đình có ít thành viên, sử dụng thang rải rác trong ngày.",
     },
     {
         id: 2,
-        image: e_customer_2,
-        name: "Auravate Panoramic Glass Vision",
-        tag: "QUAN SÁT TOÀN CẢNH",
-        des: "Buồng kính cường lực trong suốt, mở rộng tầm nhìn 360 độ. Điểm nhấn kiến trúc cho trung tâm thương mại và khách sạn.",
+        image: elevator_schindler,
+        name: "THANG MÁY SCHINDLER",
+        price: "Liên hệ báo giá",
+        des: "Phù hợp nhu cầu gia đình có ít thành viên, sử dụng thang rải rác trong ngày.",
     },
     {
         id: 3,
-        image: e_customer_4,
-        name: "Auravate Grand Luxury Wood & Glass",
-        tag: "KHÁCH SẠN 5 SAO",
-        des: "Giao thoa giữa vách gỗ tự nhiên ấm áp và kính gương, tôn vinh không gian lưu trú thượng lưu với trải nghiệm di chuyển êm ái.",
+        image: elevator_kone,
+        name: "THANG MÁY KONE",
+        price: "Liên hệ báo giá",
+        des: "Phù hợp nhu cầu gia đình có ít thành viên, sử dụng thang rải rác trong ngày.",
     },
     {
         id: 4,
-        image: e_customer_3,
-        name: "Auravate High-Speed Master",
-        tag: "CAO ỐC CHỌC TRỜI",
-        des: "Tốc độ lên tới 4.0 m/s với hệ giảm chấn và cân bằng áp suất, vận hành êm cho các tòa nhà siêu cao tầng.",
-    },
-    {
-        id: 5,
-        image: e_customer_1,
-        name: "Auravate Medical & Cargo Dual",
-        tag: "BỆNH VIỆN & TẢI HÀNG",
-        des: "Cabin sâu rộng, sàn chịu lực lớn phục vụ băng ca y tế và vận chuyển hàng hóa cồng kềnh trong tổ hợp công trình.",
+        image: elevator_mitsubishi,
+        name: "THANG MÁY MITSUBISHI",
+        price: "Liên hệ báo giá",
+        des: "Phù hợp nhu cầu gia đình có ít thành viên, sử dụng thang rải rác trong ngày.",
     },
 ];
 
-/* ===================== BỘ SƯU TẬP CÔNG TRÌNH ===================== */
-
-const DATA_PROJECTS = [
+const DESIGN_STANDARDS = [
     {
         id: 1,
-        image: e_customer_1,
-        name: "Dự Án Thẩm Văn Phòng Quốc Tế",
-        location: "TP. Hồ Chí Minh",
+        icon: <ViewInArOutlined />,
+        title: "Thiết kế cabin",
+        des: "Vật liệu inox, kính, gương và hệ thống chiếu sáng hiện đại.",
     },
     {
         id: 2,
-        image: e_customer_2,
-        name: "Tổ Hợp Thương Mại Central Park",
-        location: "Hà Nội",
+        icon: <TuneOutlined />,
+        title: "Bảng điều khiển",
+        des: "Nút bấm dễ sử dụng, màn hình hiển thị tầng rõ ràng.",
     },
     {
         id: 3,
-        image: e_customer_4,
-        name: "Khách Sạn 5 Sao Grand Luxury",
-        location: "Đà Nẵng",
+        icon: <LightbulbOutlined />,
+        title: "Ánh sáng và thông gió",
+        des: "Đèn LED, quạt thông gió, đảm bảo sự thoải mái.",
+    },
+    {
+        id: 4,
+        icon: <SensorDoorOutlined />,
+        title: "Cửa thang máy",
+        des: "Đóng mở nhẹ nhàng, hạn chế tiếng ồn.",
     },
 ];
 
-/* ===================== CARD THÔNG SỐ ===================== */
+interface PricingPlan {
+    id: number;
+    tag: string;
+    weight: string;
+    people: string;
+    des: string;
+}
 
-const ParameterCard: React.FC<{ item: ProfessionalParameter }> = ({ item }) => {
-    const { isPopular } = item;
+const PRICING: PricingPlan[] = [
+    {
+        id: 1,
+        tag: "VĂN PHÒNG - KHÁCH SẠN",
+        weight: "630 KG",
+        people: "từ 6 người",
+        des: "Phù hợp nhu cầu gia đình có ít thành viên, sử dụng thang rải rác trong ngày.",
+    },
+    {
+        id: 2,
+        tag: "CHUNG CƯ - KHÁCH SẠN",
+        weight: "750 KG",
+        people: "Từ 10 người",
+        des: "Phù hợp nhu cầu gia đình có ít thành viên, sử dụng thang rải rác trong ngày.",
+    },
+    {
+        id: 3,
+        tag: "CHUNG CƯ - VĂN PHÒNG",
+        weight: "1000 KG",
+        people: "từ 13 người",
+        des: "Phù hợp chung cư diện tích cần di chuyển mật độ cao và số lượng người đông đúc.",
+    },
+    {
+        id: 4,
+        tag: "TÒA NHÀ ĐÔNG NGƯỜI",
+        weight: "1350 KG",
+        people: "Khoảng 18 người",
+        des: "Phù hợp những tòa điểm cần di chuyển mật độ cực cao và số lượng người đông đúc.",
+    },
+];
 
-    return (
-        <Box
-            sx={{
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-                bgcolor: "#fff",
-                borderRadius: "14px",
-                p: { xs: 2.5, md: 3 },
-                border: `1.5px solid ${isPopular ? COLOR.gold : "transparent"}`,
-                boxShadow: isPopular
-                    ? "0 8px 28px rgba(201,166,107,0.22)"
-                    : "0 2px 12px rgba(0,0,0,0.06)",
-            }}
-        >
-            {isPopular && (
-                <Chip
-                    label="KHUYẾN NGHỊ"
-                    size="small"
-                    sx={{
-                        position: "absolute",
-                        top: 0,
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        bgcolor: COLOR.goldDark,
-                        color: "#fff",
-                        fontWeight: 600,
-                        fontSize: 11,
-                        letterSpacing: "0.04em",
-                        height: 22,
-                        borderRadius: "6px",
-                        "& .MuiChip-label": { px: 1.5 },
-                    }}
-                />
-            )}
+const LOAD_OPTIONS = [
+    { value: "630", label: "630 KG" },
+    { value: "750", label: "750 KG" },
+    { value: "1000", label: "1000 KG" },
+    { value: "1350", label: "1350 KG trở lên" },
+];
 
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: 2,
-                }}
-            >
-                <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.75 }}>
-                    <Typography
-                        component="span"
-                        sx={{
-                            fontWeight: 600,
-                            fontSize: { xs: 30, md: 34 },
-                            lineHeight: 1,
-                            color: COLOR.brown,
-                        }}
-                    >
-                        {item.weight}
-                    </Typography>
-                    <Typography
-                        component="span"
-                        sx={{
-                            fontWeight: 600,
-                            fontSize: { xs: 20, md: 22 },
-                            lineHeight: 1,
-                            color: COLORS.PRIMARY,
-                        }}
-                    >
-                        kg
-                    </Typography>
-                </Box>
+const SECTION_PX = { xs: 2.5, md: 8, lg: 15 };
+const SECTION_PY = { xs: 4.5, md: 7 };
 
-                <Chip
-                    label={item.people_number}
-                    size="small"
-                    sx={{
-                        bgcolor: COLOR.rowBg,
-                        color: COLOR.muted,
-                        fontSize: 11,
-                        fontWeight: 500,
-                        height: 22,
-                        borderRadius: "999px",
-                    }}
-                />
-            </Box>
+/* ===================== SECTION HEADING ===================== */
 
-            <Typography
-                sx={{ fontWeight: 700, fontSize: 13.5, color: COLOR.text, mb: 0.75 }}
-            >
-                {item.title}
+const SectionHeading: React.FC<{ label: string; title: string; sub?: string }> = ({
+    label,
+    title,
+    sub,
+}) => (
+    <Stack direction="column" spacing={1.25} alignItems="center" textAlign="center" mb={{ xs: 3.5, md: 4.5 }}>
+        <Typography sx={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", color: C.white }}>
+            {label}
+        </Typography>
+        <Typography sx={{ fontWeight: 700, color: C.white, fontSize: { xs: 24, md: 32 } }}>
+            {title}
+        </Typography>
+        {sub && (
+            <Typography sx={{ fontSize: { xs: 13, md: 14 }, maxWidth: 680, color: C.whiteMuted }}>
+                {sub}
             </Typography>
-            <Typography
-                sx={{
-                    fontSize: 12.5,
-                    lineHeight: 1.6,
-                    color: COLOR.muted,
-                    mb: 2.5,
-                    minHeight: { md: 60 },
-                }}
-            >
-                {item.des}
-            </Typography>
+        )}
+    </Stack>
+);
 
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                {SPEC_ROWS.map((row) => (
-                    <Box
-                        key={row.key}
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 1.5,
-                            bgcolor: COLOR.rowBg,
-                            borderRadius: "6px",
-                            px: 1.5,
-                            py: 1.1,
-                        }}
-                    >
-                        <Typography
-                            sx={{ fontSize: 12, color: COLOR.muted, whiteSpace: "nowrap" }}
-                        >
-                            {row.label}
-                        </Typography>
-                        <Typography
-                            sx={{
-                                fontSize: 12,
-                                fontWeight: 700,
-                                color: COLOR.text,
-                                textAlign: "right",
-                            }}
-                        >
-                            {String(item[row.key])}
-                        </Typography>
-                    </Box>
-                ))}
-            </Box>
-
-            <Typography
-                sx={{
-                    mt: "auto",
-                    pt: 3,
-                    fontSize: 10.5,
-                    letterSpacing: "0.03em",
-                    textTransform: "uppercase",
-                    color: COLOR.mutedLight,
-                }}
-            >
-                {item.note}
-            </Typography>
-        </Box>
-    );
-};
-
-const cellBase = {
-    fontSize: 12,
-    px: 2,
-    py: 1.75,
-    borderBottom: `1px solid #EDEDED`,
-} as const;
-
-/* ===================== COMPONENT CHÍNH ===================== */
+/* ===================== COMPONENT ===================== */
 
 const ElevatorCustomer = () => {
     const navigate = useNavigate();
-
-    const handleBack = () => {
-        navigate("/thang-may", { state: { scrollTo: "products" } });
-    };
+    const location = useLocation();
 
     const handleContact = () => {
         navigate("/thang-may", { state: { scrollTo: "contact" } });
     };
 
-    return (
-        <Box sx={{ bgcolor: COLOR.pageBg }}>
-            {/* ----------------- BANNER ----------------- */}
-            <Box px={3} py={5}>
-                <Stack direction="row" display="flex" gap={1} alignItems="center">
-                    <IconButton
-                        icon={<NavigateBefore />}
-                        handleFunt={handleBack}
-                        backgroundColor="transparent"
-                        tooltip="Quay lại"
-                        width={0}
-                        height={0}
-                    />
-                    <Typography fontWeight={600}>THANG MÁY TẢI KHÁCH</Typography>
-                </Stack>
-                <Grid container spacing={4} mt={1} alignItems="center">
-                    <Grid size={{ xs: 12, md: 7 }}>
-                        <Typography fontWeight={700} variant="h4">
-                            Vận Hành Đỉnh Cao
-                        </Typography>
-                        <Stack direction="row" flexWrap="wrap">
-                            <Typography
-                                sx={{
-                                    color: COLORS.PRIMARY,
-                                    fontFamily: "'Playfair Display', 'Didot', serif",
-                                    fontStyle: "italic",
-                                    fontWeight: 400,
-                                    paddingRight: "8px",
-                                }}
-                                variant="h4"
-                            >
-                                Tối Ưu Lưu Thông
-                            </Typography>
-                            <Typography variant="h4" fontWeight={700}>
-                                Cao Ốc Đô Thị
-                            </Typography>
-                        </Stack>
-                        <Typography mt={2} color={COLOR.muted}>
-                            Giải pháp di chuyển thẳng đứng cho tòa nhà văn phòng, khách sạn, chung
-                            cư và trung tâm thương mại. Hệ vận hành êm ái, tốc độ cao cùng hệ điều
-                            phối giao thông thông minh, đáp ứng lưu lượng hành khách lớn trong giờ
-                            cao điểm và vận hành bền bỉ liên tục 24/7.
-                        </Typography>
+    const handleProducts = () => {
+        navigate("/thang-may", { state: { scrollTo: "products" } });
+    };
 
-                        {/* Stats */}
-                        <Grid container spacing={2} mt={1}>
-                            {HERO_STATS.map((stat) => (
-                                <Grid key={stat.id} size={{ xs: 12, sm: 4 }}>
-                                    <Box
-                                        borderRadius={2}
-                                        p={2}
-                                        bgcolor="#fff"
-                                        sx={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)", height: "100%" }}
-                                    >
-                                        <Box sx={{ color: COLORS.PRIMARY, mb: 0.5 }}>{stat.icon}</Box>
-                                        <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
-                                            <Typography fontWeight={700} fontSize={20} color={COLOR.brown}>
-                                                {stat.value}
-                                            </Typography>
-                                            <Typography fontSize={13} color={COLOR.muted}>
-                                                {stat.unit}
-                                            </Typography>
-                                        </Box>
-                                        <Typography variant="caption" color={COLOR.muted}>
-                                            {stat.label}
-                                        </Typography>
-                                    </Box>
+    useEffect(() => {
+        const scrollTo  = location.state?.scrollTo;
+        
+        if(scrollTo){
+            // Chờ React render BOM
+            requestAnimationFrame(() => {
+                const element = document.getElementById(scrollTo);
+
+                element?.scrollIntoView({
+                    behavior: "smooth",
+                    block: 'start'
+                })
+            });
+
+            // Xóa state để tránh cuộn lại khi refresh hoặc quay lại
+            navigate(location.pathname, {
+                replace: true,
+                state: null
+            });
+        }
+
+    }, [location.state, location.pathname, navigate])
+
+    return (
+        <Page title="Thang máy tải khách">
+            <Box sx={{ bgcolor: C.bg }}>
+                {/* ===================== HERO ===================== */}
+                <Box
+                    id="banner_elevator_customer"
+                    sx={{
+                        position: "relative",
+                        overflow: "hidden",
+                        color: "#fff",
+                        bgcolor: C.bgPrimary,
+                        minHeight: { xs: 460, md: 480 },
+                    }}
+                >
+                    {/* Ảnh nền full-bleed, lệch về bên phải */}
+                    <Box
+                        component="img"
+                        src={banner_customer}
+                        alt="Sảnh thang máy hiện đại"
+                        sx={{
+                            position: "absolute",
+                            inset: 0,
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "fit",
+                            objectPosition: "right center",
+                        }}
+                    />
+
+                    {/* Khối xanh đậm có cạnh phải vát chéo */}
+                    <Box
+                        sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            bottom: 0,
+                            width: { xs: "100%", md: "56%" },
+                            bgcolor: C.bgPrimary,
+                            clipPath: { xs: "none", md: "polygon(0 0, 100% 0, 80% 100%, 0 100%)" },
+                        }}
+                    />
+
+                    {/* Nội dung */}
+                    <Box
+                        sx={{
+                            position: "relative",
+                            zIndex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            minHeight: { xs: 460, md: 360 },
+                            px: SECTION_PX,
+                            py: { xs: 5, md: 0 },
+                            maxWidth: { md: "52%" },
+                        }}
+                    >
+                        <Typography sx={{ fontSize: { xs: 13, md: 16 }, fontWeight: 700, letterSpacing: "0.14em", color: C.textBanner }}>
+                            DI CHUYỂN ÊM ÁI - NÂNG TẦM CUỘC SỐNG
+                        </Typography>
+                        <Typography sx={{ mt: 2, fontWeight: 800, lineHeight: 1.1, fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" } }}>
+                            THANG MÁY TIỆN NGHI
+                        </Typography>
+                        <Typography sx={{ fontWeight: 800, lineHeight: 1.1, fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" } }}>
+                            TẢI KHÁCH AN TOÀN
+                        </Typography>
+                        <Typography sx={{ mt: 3, fontSize: 15, color: C.whiteMuted, maxWidth: 440 }}>
+                            Giải pháp di chuyển hiện đại, an toàn và tiện nghi cho mọi công trình
+                            từ gia đình đến nhà cao tầng.
+                        </Typography>
+                        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mt={4}>
+                            <Button
+                                onClick={handleProducts}
+                                sx={{
+                                    bgcolor: C.button,
+                                    color: C.primary,
+                                    fontWeight: 700,
+                                    px: 3,
+                                    py: 1.25,
+                                    "&:hover": { bgcolor: "#dcd9c6" },
+                                }}
+                            >
+                                KHÁM PHÁ THANG MÁY
+                            </Button>
+                            <Button
+                                onClick={handleContact}
+                                variant="outlined"
+                                sx={{
+                                    color: "#fff",
+                                    borderColor: "rgba(255,255,255,0.5)",
+                                    fontWeight: 700,
+                                    px: 3,
+                                    py: 1.25,
+                                    "&:hover": { borderColor: "#fff", bgcolor: "rgba(255,255,255,0.08)" },
+                                }}
+                            >
+                                NHẬN TƯ VẤN NGAY
+                            </Button>
+                        </Stack>
+                    </Box>
+                </Box>
+                    {/* STATS BAR */}
+                    <Box
+                        sx={{
+                            mt: { xs: 3.5, md: 5 },
+                            mx: { xs: 2.5, md: 8, lg: 15 },
+                            bgcolor: C.bgPrimary,
+                            border: `1px solid ${C.border}`,
+                            borderRadius: 2,
+                            px: { xs: 2.5, md: 4 },
+                            py: { xs: 2.5, md: 3 },
+                        }}
+                    >
+                        <Grid container rowSpacing={2.5} columnSpacing={2}>
+                            {STATS.map((stat, idx) => (
+                                <Grid
+                                    key={stat.id}
+                                    size={{ xs: 6, md: 3 }}
+                                    sx={{
+                                        textAlign: "center",
+                                        borderLeft: { md: idx === 0 ? "none" : `1px solid ${C.border}` },
+                                    }}
+                                >
+                                    <Typography sx={{ fontWeight: 800, fontSize: { xs: 16, md: 20 }, letterSpacing: "0.04em", color: C.white }}>
+                                        {stat.title}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: { xs: 12, md: 13 }, color: C.whiteMuted, mt: 0.5 }}>
+                                        {stat.sub}
+                                    </Typography>
                                 </Grid>
                             ))}
                         </Grid>
+                    </Box>
 
-                        <Box gap={2} mt={4} display="flex" flexDirection={{ xs: "column", sm: "row" }}>
-                            <Button
-                                sx={{ bgcolor: COLORS.PRIMARY, color: "#fff" }}
-                                endIcon={<ArrowForward />}
-                                onClick={handleContact}
-                            >
-                                NHẬN TƯ VẤN GIẢI PHÁP DỰ ÁN
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                sx={{ color: COLORS.PRIMARY, borderColor: COLORS.PRIMARY }}
-                                startIcon={<MenuBookOutlined />}
-                            >
-                                HỒ SƠ NĂNG LỰC
-                            </Button>
-                        </Box>
-                    </Grid>
-
-                    <Grid size={{ xs: 12, md: 5 }}>
-                        <Box sx={{ position: "relative" }}>
+                {/* ===================== TỔNG QUAN SẢN PHẨM ===================== */}
+                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                    <Grid container spacing={{ xs: 3, md: 4 }} alignItems="center">
+                        <Grid size={{ xs: 12, md: 5 }}>
                             <CommonImage
-                                src={e_customer_1}
+                                src={overall_customer}
                                 sx={{
-                                    height: { xs: 260, md: 440 },
                                     width: "100%",
+                                    height: { xs: 260, md: 380 },
                                     objectFit: "cover",
-                                    borderRadius: 3,
+                                    borderRadius: 2,
                                 }}
                             />
-                            {/* TOP 1 badge */}
-                            <Paper
-                                elevation={0}
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 4 }}>
+                            <Typography sx={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", color: C.whiteFaint }}>
+                                Tổng quan sản phẩm
+                            </Typography>
+                            <Typography sx={{ fontWeight: 700, color: C.white, mt: 1, mb: 2, fontSize: { xs: 24, md: 30 } }}>
+                                Thang máy tải khách
+                            </Typography>
+                            <Typography sx={{ fontSize: 14, color: C.whiteMuted, lineHeight: 1.7, mb: 2.5 }}>
+                                Thang máy tải khách là dòng sản phẩm chất lượng cao được sản xuất với
+                                công nghệ hiện đại, đáp ứng đủ tiêu chuẩn an toàn, vận hành êm ái và
+                                tiết kiệm năng lượng. Sản phẩm phù hợp cho các tòa nhà có công trình
+                                lớn: khách sạn, trung tâm thương mại, hộ gia đình.
+                            </Typography>
+                            <Stack direction='column' spacing={1.25}>
+                                {OVERVIEW_CHECKS.map((item) => (
+                                    <Stack key={item} direction="row" spacing={1.25} alignItems="center">
+                                        <CheckCircle sx={{ fontSize: 20, color: "#5BB89A" }} />
+                                        <Typography sx={{ fontSize: 14, color: C.white }}>{item}</Typography>
+                                    </Stack>
+                                ))}
+                            </Stack>
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 3 }}>
+                            <Box
                                 sx={{
-                                    position: "absolute",
-                                    left: 16,
-                                    bottom: 16,
-                                    bgcolor: "rgba(255,255,255,0.95)",
+                                    bgcolor: C.cream,
                                     borderRadius: 2,
-                                    px: 2,
-                                    py: 1.25,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 1.25,
-                                    boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+                                    p: 2.5,
                                 }}
                             >
-                                <Box
-                                    sx={{
-                                        bgcolor: COLOR.goldDark,
-                                        color: "#fff",
-                                        borderRadius: 1.5,
-                                        px: 1.25,
-                                        py: 0.5,
-                                        fontWeight: 700,
-                                        fontSize: 13,
-                                    }}
-                                >
-                                    TOP 1
-                                </Box>
-                                <Box>
-                                    <Typography fontSize={12} fontWeight={700} color={COLOR.text}>
-                                        Giải pháp thang khách thương mại
-                                    </Typography>
-                                    <Typography fontSize={11} color={COLOR.muted}>
-                                        Hơn 500+ dự án tòa nhà & khách sạn
-                                    </Typography>
-                                </Box>
-                            </Paper>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Box>
-
-            {/* ----------------- ỨNG DỤNG CHUẨN MỰC ----------------- */}
-            <Box
-                gap={1}
-                bgcolor="#e9e9e9"
-                px={2}
-                py={5}
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-            >
-                <Typography textAlign="center" letterSpacing="0.08em">
-                    GIẢI PHÁP THEO CÔNG NĂNG
-                </Typography>
-                <Typography textAlign="center" variant="h4" fontWeight={700}>
-                    Ứng Dụng Chuẩn Mực Cho Từng
-                </Typography>
-                <Typography textAlign="center" variant="h4" fontWeight={700}>
-                    Không Gian Thương Mại
-                </Typography>
-                <Typography textAlign="center" variant="caption" color={COLOR.muted}>
-                    Mỗi loại hình công trình đòi hỏi một cấu hình tải trọng, tốc độ và tần suất
-                    vận hành riêng biệt. Mintz Funi mang tới giải pháp tối ưu cho từng bài toán
-                    giao thông đứng.
-                </Typography>
-                <Grid container spacing={2} mt={1}>
-                    {DATA_APPLICATION.map((data) => (
-                        <Grid key={data.id} size={{ xs: 12, sm: 6, md: 3 }}>
-                            <Box
-                                borderRadius={2}
-                                p={2}
-                                bgcolor="#fff"
-                                height="100%"
-                                display="flex"
-                                gap={1}
-                                flexDirection="column"
-                            >
-                                <IconButton icon={data.icon} backgroundColor="#e4e3e3" />
-                                <Typography fontWeight={600} variant="subtitle2">
-                                    {data.name}
+                                <Typography sx={{ fontWeight: 700, fontSize: 18, color: C.bg, mb: 2 }}>
+                                    Ưu điểm nổi bật
                                 </Typography>
-                                <Typography variant="caption" color={COLOR.mutedLight}>
-                                    {data.tooltip.toUpperCase()}
-                                </Typography>
-                                <Typography variant="caption" color={COLOR.muted}>
-                                    {data.des}
-                                </Typography>
-                                <Box borderRadius={1} bgcolor="#e4e3e3" p={1.5} mt="auto">
-                                    {data.note.map((item, idx) => (
-                                        <Stack key={idx} direction="column">
-                                            <Typography variant="caption" fontWeight={500}>
-                                                {item.title}
-                                            </Typography>
-                                            <Typography variant="caption">{item.des_title}</Typography>
+                                <Stack direction='column' spacing={2}>
+                                    {OVERVIEW_HIGHLIGHTS.map((h) => (
+                                        <Stack key={h.id} direction="row" spacing={1.5} alignItems="center">
+                                            <Box
+                                                sx={{
+                                                    width: 34,
+                                                    height: 34,
+                                                    borderRadius: "50%",
+                                                    bgcolor: "#fff",
+                                                    border: "1px solid #00C8B3",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    color: "#00C8B3",
+                                                    flexShrink: 0,
+                                                    "& svg": { fontSize: 18 },
+                                                }}
+                                            >
+                                                {h.icon}
+                                            </Box>
+                                            <Typography sx={{ fontSize: 13, color: C.cardText }}>{h.text}</Typography>
                                         </Stack>
                                     ))}
-                                </Box>
+                                </Stack>
                             </Box>
                         </Grid>
-                    ))}
-                </Grid>
-            </Box>
-
-            {/* ----------------- THÔNG SỐ CHUYÊN MÔN ----------------- */}
-            <Box gap={1} px={2} py={5}>
-                <Grid container spacing={2}>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Typography letterSpacing="0.08em">THÔNG SỐ CHUYÊN MÔN</Typography>
-                        <Typography variant="h5" fontWeight={500}>
-                            Bộ Tiêu Chí Kỹ Thuật Lựa Chọn Cho Kỹ Sư & Chủ Đầu Tư
-                        </Typography>
                     </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
-                        <Typography variant="caption" color={COLOR.muted}>
-                            Lựa chọn đúng mức tải trọng, tốc độ và cấu hình phòng máy giúp tối ưu
-                            chi phí đầu tư, diện tích xây dựng và chất lượng dịch vụ giao thông
-                            đứng trong suốt vòng đời công trình.
-                        </Typography>
-                    </Grid>
-                </Grid>
-                <Box
-                    sx={{
-                        mt: 5,
-                        mx: "auto",
-                        display: "grid",
-                        gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
-                        gap: { xs: 4, md: 3 },
-                        alignItems: "stretch",
-                    }}
-                >
-                    {DATA_PROFESSIONAL_PARAMETERS.map((item) => (
-                        <ParameterCard key={item.id} item={item} />
-                    ))}
                 </Box>
-            </Box>
 
-            {/* ----------------- SO SÁNH MR vs MRL ----------------- */}
-            <Box sx={{ bgcolor: "#F3F3F3", px: { xs: 2, md: 3 }, py: 2 }}>
-                <Paper
-                    elevation={0}
-                    sx={{
-                        mx: "auto",
-                        bgcolor: "#fff",
-                        borderRadius: "12px",
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-                        px: { xs: 2, md: 3 },
-                        py: { xs: 2.5, md: 3 },
-                    }}
-                >
-                    <Typography component="h2" sx={{ fontWeight: 600, fontSize: 18, mb: 2.5 }}>
-                        So Sánh Cấu Hình: Thang Không Phòng Máy (MRL) & Thang Có Phòng Máy (MR)
-                    </Typography>
-
-                    <TableContainer sx={{ overflowX: "auto" }}>
-                        <Table sx={{ minWidth: 720, tableLayout: "fixed" }}>
-                            <TableHead>
-                                <TableRow sx={{ bgcolor: "#EEEEEE" }}>
-                                    <TableCell
-                                        sx={{ ...cellBase, width: "26%", fontWeight: 600, borderBottom: "none" }}
-                                    >
-                                        {COMPARISON_HEADERS.feature}
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ ...cellBase, width: "37%", fontWeight: 600, borderBottom: "none" }}
-                                    >
-                                        {COMPARISON_HEADERS.mrl}
-                                    </TableCell>
-                                    <TableCell
-                                        sx={{ ...cellBase, width: "37%", fontWeight: 600, borderBottom: "none" }}
-                                    >
-                                        {COMPARISON_HEADERS.mr}
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-
-                            <TableBody>
-                                {COMPARISON_DATA.map((row, index) => {
-                                    const isLast = index === COMPARISON_DATA.length - 1;
-                                    const border = isLast ? { borderBottom: "none" } : {};
-
-                                    return (
-                                        <TableRow key={row.id}>
-                                            <TableCell sx={{ ...cellBase, ...border, fontWeight: 600 }}>
-                                                {row.feature}
-                                            </TableCell>
-                                            <TableCell sx={{ ...cellBase, ...border }}>
-                                                {row.mrlHighlight && (
-                                                    <Box component="span" sx={{ fontWeight: 500 }}>
-                                                        {row.mrlHighlight}
-                                                    </Box>
-                                                )}
-                                                {row.mrl}
-                                            </TableCell>
-                                            <TableCell sx={{ ...cellBase, ...border }}>{row.mr}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Paper>
-            </Box>
-
-            {/* ----------------- ĐỊNH HƯỚNG VẬN HÀNH ----------------- */}
-            <Box
-                gap={1}
-                bgcolor="#e9e9e9"
-                px={2}
-                py={6}
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-            >
-                <Typography textAlign="center" letterSpacing="0.08em">
-                    TRIẾT LÝ VẬN HÀNH
-                </Typography>
-                <Typography textAlign="center" variant="h4" fontWeight={700}>
-                    Định Hướng Thiết Kế Vận Hành
-                </Typography>
-                <Typography textAlign="center" variant="h4" fontWeight={700}>
-                    Thông Minh Auravate
-                </Typography>
-                <Typography textAlign="center" variant="caption" color={COLOR.muted} mb={2}>
-                    Giao thoa giữa an toàn kỹ thuật tuyệt đối, trí tuệ điều phối giao thông và
-                    thẩm mỹ kiến trúc đẳng cấp cho từng công trình thương mại.
-                </Typography>
-                <Grid container spacing={2}>
-                    {DATA_PHILOSOPHY.map((data) => (
-                        <Grid key={data.id} size={{ xs: 12, md: 4 }}>
-                            <Box
-                                borderRadius={2}
-                                p={2.5}
-                                bgcolor="#fff"
-                                height="100%"
-                                display="flex"
-                                flexDirection="column"
-                                gap={1.25}
-                            >
-                                <IconButton icon={data.icon} backgroundColor="#e4e3e3" />
-                                <Typography fontWeight={600} variant="subtitle1">
-                                    {data.name}
-                                </Typography>
-                                <Typography variant="caption" color={COLOR.muted}>
-                                    {data.des}
-                                </Typography>
-                            </Box>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
-
-            {/* ----------------- CATALOG SẢN PHẨM ----------------- */}
-            <Box px={{ xs: 2, md: 3 }} py={6}>
-                <Typography textAlign="center" letterSpacing="0.08em">
-                    DANH MỤC SẢN PHẨM
-                </Typography>
-                <Typography textAlign="center" variant="h4" fontWeight={700}>
-                    Catalog Sản Phẩm & Dòng Cabin Tiêu Biểu
-                </Typography>
-                <Typography textAlign="center" variant="caption" color={COLOR.muted} display="block" mb={4}>
-                    Đa dạng dòng cabin được thiết kế riêng cho từng phân khúc công trình, sẵn
-                    sàng tùy biến vật liệu và cấu hình theo yêu cầu.
-                </Typography>
-
-                <Grid container spacing={2}>
-                    {DATA_PRODUCTS.map((product) => (
-                        <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Box
-                                bgcolor="#fff"
-                                borderRadius={2}
-                                height="100%"
-                                display="flex"
-                                flexDirection="column"
-                                sx={{ boxShadow: "0 2px 12px rgba(0,0,0,0.06)", overflow: "hidden" }}
-                            >
-                                <Box sx={{ position: "relative" }}>
-                                    <CommonImage
-                                        src={product.image}
-                                        sx={{
-                                            width: "100%",
-                                            height: 200,
-                                            objectFit: "cover",
-                                            borderRadius: 0,
-                                        }}
-                                    />
-                                    {product.badge && (
-                                        <Chip
-                                            label={product.badge}
-                                            size="small"
-                                            sx={{
-                                                position: "absolute",
-                                                top: 12,
-                                                left: 12,
-                                                bgcolor: COLOR.goldDark,
-                                                color: "#fff",
-                                                fontWeight: 700,
-                                                fontSize: 10,
-                                                height: 22,
-                                                borderRadius: "6px",
-                                            }}
-                                        />
-                                    )}
-                                </Box>
-                                <Box p={2} display="flex" flexDirection="column" gap={0.75} flexGrow={1}>
-                                    <Typography variant="caption" color={COLOR.goldDark} fontWeight={700}>
-                                        {product.tag}
-                                    </Typography>
-                                    <Typography fontWeight={700} fontSize={15} color={COLOR.text}>
-                                        {product.name}
-                                    </Typography>
-                                    <Typography variant="caption" color={COLOR.muted}>
-                                        {product.des}
-                                    </Typography>
-                                    <Button
-                                        endIcon={<ArrowForward />}
-                                        onClick={handleContact}
-                                        sx={{
-                                            mt: "auto",
-                                            alignSelf: "flex-start",
-                                            color: COLORS.PRIMARY,
-                                            px: 0,
-                                            fontSize: 13,
-                                        }}
-                                    >
-                                        XEM CHI TIẾT CẤU HÌNH
-                                    </Button>
-                                </Box>
-                            </Box>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
-
-            {/* ----------------- BỘ SƯU TẬP CÔNG TRÌNH ----------------- */}
-            <Box bgcolor="#e9e9e9" px={{ xs: 2, md: 3 }} py={6}>
-                <Typography textAlign="center" letterSpacing="0.08em">
-                    DỰ ÁN TIÊU BIỂU
-                </Typography>
-                <Typography textAlign="center" variant="h4" fontWeight={700} mb={1}>
-                    Bộ Sưu Tập Công Trình Thực Tế
-                </Typography>
-                <Typography textAlign="center" variant="caption" color={COLOR.muted} display="block" mb={4}>
-                    Những công trình thang máy tải khách đã được Mintz Funi thi công và bàn giao
-                    trên khắp cả nước.
-                </Typography>
-
-                <Grid container spacing={2}>
-                    {DATA_PROJECTS.map((project) => (
-                        <Grid key={project.id} size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Box
-                                sx={{
-                                    position: "relative",
-                                    borderRadius: 2,
-                                    overflow: "hidden",
-                                    height: 260,
-                                }}
-                            >
-                                <CommonImage
-                                    src={project.image}
-                                    sx={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 0 }}
-                                />
+                {/* ===================== MẪU MÃ THANG MÁY ===================== */}
+                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                    <SectionHeading
+                        label="MẪU MÃ ĐA DẠNG"
+                        title="MẪU MÃ THANG MÁY THỰC TẾ"
+                        sub="Các mẫu dưới đây là nhóm tải trọng tham khảo trong dải sản phẩm 500–5.000kg. Tải trọng, kích thước cabin và cấu hình sẽ được xác định theo loại hàng và hiện trạng công trình."
+                    />
+                    <Grid container spacing={2}>
+                        {PRODUCTS.map((p) => (
+                            <Grid key={p.id} size={{ xs: 12, sm: 6, md: 3 }}>
                                 <Box
                                     sx={{
-                                        position: "absolute",
-                                        inset: 0,
-                                        background:
-                                            "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%)",
+                                        bgcolor: C.white,
+                                        color: "#fff",
+                                        borderRadius: 2,
+                                        border: `1px solid ${C.border}`,
+                                        height: "100%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        overflow: "hidden",
                                     }}
-                                />
-                                <Box sx={{ position: "absolute", left: 16, bottom: 16, color: "#fff" }}>
-                                    <Typography fontWeight={700} fontSize={16}>
-                                        {project.name}
-                                    </Typography>
-                                    <Typography variant="caption">{project.location}</Typography>
+                                >
+                                    <CommonImage
+                                        src={p.image}
+                                        sx={{ width: "100%", height: 350, objectFit: "cover", borderRadius: 0 }}
+                                    />
+                                    <Box sx={{ p: 2.5, flexGrow: 1, display: "flex", flexDirection: "column" }}>
+                                        <Typography sx={{ fontWeight: 700, fontSize: 15, color: C.bg }}>{p.name}</Typography>
+                                        <Typography sx={{ fontSize: 13, fontWeight: 600, color: C.bg, mt: 0.5 }}>
+                                            {p.price}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 12.5, color: C.bg, mt: 1, lineHeight: 1.6, flexGrow: 1 }}>
+                                            {p.des}
+                                        </Typography>
+                                        <Button
+                                            onClick={handleContact}
+                                            fullWidth
+                                            sx={{
+                                                mt: 2,
+                                                bgcolor: C.bg,
+                                                color: "#fff",
+                                                fontWeight: 600,
+                                                "&:hover": { bgcolor: "#135640" },
+                                            }}
+                                        >
+                                            Nhận tư vấn
+                                        </Button>
+                                    </Box>
                                 </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+
+                {/* ===================== TIÊU CHUẨN THIẾT KẾ ===================== */}
+                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                    <SectionHeading
+                        label="TIÊU CHUẨN THIẾT KẾ"
+                        title="Yêu cầu đối với thang máy tải khách"
+                        sub="Thiết kế cần đáp ứng đặc thù hàng hóa, tần suất vận hành và điều kiện mặt bằng của từng công trình."
+                    />
+                    <Grid container spacing={2}>
+                        {DESIGN_STANDARDS.map((d) => (
+                            <Grid key={d.id} size={{ xs: 12, sm: 6, md: 3 }}>
+                                <Box sx={{ bgcolor: C.cream, borderRadius: 2, p: 2.5, height: "100%" }}>
+                                    <Box
+                                        sx={{
+                                            width: 42,
+                                            height: 42,
+                                            borderRadius: 1.5,
+                                            bgcolor: "#fff",
+                                            border: `1px solid ${C.bg}`,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            color: C.bg,
+                                            mb: 1.5,
+                                        }}
+                                    >
+                                        {d.icon}
+                                    </Box>
+                                    <Typography sx={{ fontWeight: 700, fontSize: 18, color: C.bg, mb: 0.75 }}>
+                                        {d.title}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 13, color: C.bg, lineHeight: 1.6 }}>
+                                        {d.des}
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+
+                {/* ===================== PHÂN KHÚC TẢI TRỌNG ===================== */}
+                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                    <SectionHeading
+                        label="PHÂN KHÚC TẢI TRỌNG"
+                        title="Lựa chọn tải trọng theo nhu cầu vận chuyển"
+                        sub="Các mức dưới đây là nhóm tải trọng tham khảo trong dải sản phẩm 500–5.000kg. Tải trọng, kích thước cabin và cấu hình sẽ được xác định theo loại hàng và hiện trạng công trình."
+                    />
+                    <Grid container spacing={2}>
+                        {PRICING.map((plan) => (
+                            <Grid key={plan.id} size={{ xs: 12, sm: 6, md: 3 }}>
+                                <Box
+                                    sx={{
+                                        color: "#fff",
+                                        borderRadius: 2,
+                                        border: `1px solid ${C.border}`,
+                                        height: "100%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        overflow: "hidden",
+                                    }}
+                                >
+                                    <Box bgcolor={C.bgPrimary} sx={{ p: 2.5, borderBottom: `1px solid ${C.border}` }}>
+                                        <Typography sx={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: C.white }}>
+                                            {plan.tag}
+                                        </Typography>
+                                        <Typography sx={{ fontWeight: 800, fontSize: 30, mt: 1 }}>
+                                            {plan.weight}
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 12, color: C.whiteMuted }}>
+                                            {plan.people}
+                                        </Typography>
+                                    </Box>
+                                    <Box bgcolor={C.white} sx={{ p: 2.5, flexGrow: 1, display: "flex", flexDirection: "column", gap: 1 }}>
+                                        <Typography sx={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", color: C.bg }}>
+                                            GIÁ THAM KHẢO
+                                        </Typography>
+                                        <Typography sx={{ fontWeight: 800, fontSize: 18, mb: 1.5, color: C.bg }}>
+                                            Liên hệ báo giá
+                                        </Typography>
+                                        <Typography sx={{ fontSize: 12.5, color: C.bg, lineHeight: 1.6, flexGrow: 1 }}>
+                                            {plan.des}
+                                        </Typography>
+                                        <Button
+                                            onClick={handleContact}
+                                            fullWidth
+                                            sx={{
+                                                mt: 2,
+                                                bgcolor: C.bg,
+                                                color: "#fff",
+                                                fontWeight: 600,
+                                                "&:hover": { bgcolor: "#135640" },
+                                            }}
+                                        >
+                                            Nhận tư vấn
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+
+                {/* ===================== ĐỒNG HÀNH + FORM ===================== */}
+                <Box bgcolor={C.bgPrimary} sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                    <Grid container spacing={{ xs: 3, md: 5 }} alignItems="center">
+                        <Grid size={{ xs: 12, md: 5 }}>
+                            <Typography sx={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", color: C.white }}>
+                                MINTZ FUNI ĐỒNG HÀNH CÙNG BẠN
+                            </Typography>
+                            <Typography sx={{ fontWeight: 700, color: C.white, mt: 1.5, fontSize: { xs: 24, md: 32 } }}>
+                                Tìm giải pháp phù hợp cho ngôi nhà của bạn
+                            </Typography>
+                            <Typography sx={{ fontSize: 14, color: C.whiteMuted, mt: 2 }}>
+                                Để lại thông tin công trình và nhu cầu sử dụng. Đội ngũ Mintz Funi sẽ
+                                tiếp nhận để tư vấn phương án tải trọng, vị trí lắp đặt và cấu hình phù
+                                hợp.
+                            </Typography>
+                            <Typography sx={{ fontSize: 14, fontWeight: 700, color: C.white, mt: 2 }}>
+                                Tư vấn - Thiết kế - Thi công - Lắp đặt
+                            </Typography>
+                            <Typography sx={{ fontSize: 14, color: C.whiteMuted, mt: 1 }}>
+                                Chính sách bảo hành lên đến 10 năm theo điều kiện áp dụng.
+                            </Typography>
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 7 }}>
+                            <Box sx={{ bgcolor: C.bgLight, borderRadius: 2, p: { xs: 2.5, md: 4 } }}>
+                                <Typography sx={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.14em", color: C.bg, mb: 3 }}>
+                                    ĐĂNG KÝ TƯ VẤN
+                                </Typography>
+                                <Grid container spacing={2.5}>
+                                    <Grid size={{ xs: 12, sm: 6 }}>
+                                        <Typography sx={{ fontSize: 15, fontWeight: 600, color: C.cardText, mb: 0.75 }}>
+                                            Tên đầy đủ
+                                        </Typography>
+                                        <InputText label="" name="" value={""} onChange={() => {}} type="text" placeholder="Nhập thông tin" />
+                                    </Grid>
+                                    <Grid size={{ xs: 12, sm: 6 }}>
+                                        <Typography sx={{ fontSize: 15, fontWeight: 600, color: C.cardText, mb: 0.75 }}>
+                                            Số điện thoại
+                                        </Typography>
+                                        <InputText label="" name="" value={""} onChange={() => {}} type="text" placeholder="Nhập thông tin" />
+                                    </Grid>
+                                    <Grid size={{ xs: 12, sm: 6 }}>
+                                        <Typography sx={{ fontSize: 15, fontWeight: 600, color: C.cardText, mb: 0.75 }}>
+                                            Tải trọng quan tâm
+                                        </Typography>
+                                        <InputSelect
+                                            label=""
+                                            name=""
+                                            value={""}
+                                            onChange={() => {}}
+                                            options={LOAD_OPTIONS}
+                                            transformOptions={(data) =>
+                                                data.map((item) => ({ value: item.value, label: item.label }))
+                                            }
+                                            placeholder="Chọn thông tin"
+                                        />
+                                    </Grid>
+                                    <Grid size={{ xs: 12, sm: 6 }}>
+                                        <Typography sx={{ fontSize: 15, fontWeight: 600, color: C.cardText, mb: 0.75 }}>
+                                            Số tầng công trình
+                                        </Typography>
+                                        <InputText label="" name="" value={""} onChange={() => {}} type="text" placeholder="Nhập thông tin" />
+                                    </Grid>
+                                    <Grid size={{ xs: 12 }}>
+                                        <Typography sx={{ fontSize: 15, fontWeight: 600, color: C.cardText, mb: 0.75 }}>
+                                            Địa chỉ
+                                        </Typography>
+                                        <InputText label="" name="" value={""} onChange={() => {}} type="text" placeholder="Nhập thông tin" multiline rows={5} />
+                                    </Grid>
+                                    <Grid size={{ xs: 12 }}>
+                                        <Button
+                                            onClick={handleContact}
+                                            endIcon={<ArrowForward />}
+                                            sx={{
+                                                bgcolor: C.primary,
+                                                color: "#fff",
+                                                fontWeight: 700,
+                                                px: 3,
+                                                py: 1.1,
+                                                "&:hover": { bgcolor: "#052a22" },
+                                            }}
+                                        >
+                                            GỬI THÔNG TIN
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
-                    ))}
-                </Grid>
+                    </Grid>
+                </Box>
             </Box>
-
-            {/* ----------------- CTA CUỐI ----------------- */}
-            <Box
-                px={2}
-                py={6}
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                gap={2}
-                textAlign="center"
-            >
-                <HandshakeOutlined sx={{ fontSize: 40, color: COLORS.PRIMARY }} />
-                <Typography variant="h5" fontWeight={700}>
-                    Sẵn sàng đồng hành cùng dự án của bạn
-                </Typography>
-                <Typography variant="caption" color={COLOR.muted} maxWidth={560}>
-                    Đội ngũ kỹ sư Mintz Funi tư vấn cấu hình, khảo sát hiện trạng và bàn giao
-                    hồ sơ kỹ thuật chi tiết hoàn toàn miễn phí.
-                </Typography>
-                <Stack direction="row" gap={1} flexWrap="wrap" justifyContent="center">
-                    <Chip icon={<VerifiedOutlined />} label="Bảo hành chính hãng 36 tháng" variant="outlined" />
-                    <Chip icon={<AutoAwesomeOutlined />} label="Bảo trì 24/7 toàn quốc" variant="outlined" />
-                </Stack>
-                <Button
-                    sx={{ bgcolor: COLORS.PRIMARY, color: "#fff", mt: 1 }}
-                    endIcon={<ArrowForward />}
-                    onClick={handleContact}
-                >
-                    LIÊN HỆ NHẬN BÁO GIÁ NGAY
-                </Button>
-            </Box>
-        </Box>
+        </Page>
     );
 };
 

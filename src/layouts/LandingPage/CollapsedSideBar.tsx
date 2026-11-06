@@ -1,11 +1,10 @@
-import Scrollbar from "@/components/Scrollbar";
-import { SIDEBAR_WIDTH } from "@/constants/layouts";
-import usePrevious from "@/hooks/usePrevious";
-import { AccountCircle, Close, Elevator, Home, Newspaper } from "@mui/icons-material";
-import { Avatar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemText, MenuItem, Select, Stack, Typography } from "@mui/material";
-import { createContext, useEffect, useState } from "react";
+import { AccountCircle, Close, Elevator, ExpandLess, ExpandMore, Home, Newspaper } from "@mui/icons-material";
+import { Avatar, Box, Collapse, Drawer, IconButton, List, ListItemButton, ListItemText } from "@mui/material";
+import { createContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import mintz_logo from "@/assets/images/users/mintzdg-logo.png";
+import { COLORS } from "@/constants/colors";
+import { ELEVATOR_SUBMENU } from "./constants";
 
 
 export const CollapseContext = createContext<boolean | null>(null);
@@ -21,13 +20,19 @@ const CollapsedSideBar = (props: CollapsedSideBarProps) => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const isElevatorActive = location.pathname.startsWith('/thang-may');
+    const [elevatorExpanded, setElevatorExpanded] = useState<boolean>(isElevatorActive);
 
     const menuItems = [
         { label: 'Trang chủ', icon: <Home/>, path: '/home' },
         { label: 'Funi', icon: <AccountCircle/>, path: '/about-us' },
         { label: 'Tin tức', icon: <Newspaper/>, path: '/news' },
-        { label: 'Thang máy', icon: <Elevator/>, path: '/thang-may' },
     ];
+
+    const goTo = (path: string) => {
+        navigate(path);
+        onToggleCollapsed();
+    };
 
     return (
         <Drawer anchor="left" open={collapsed} onClose={onToggleCollapsed}>
@@ -67,42 +72,64 @@ const CollapsedSideBar = (props: CollapsedSideBarProps) => {
                     <Avatar src={mintz_logo} alt="Logo" sx={{ height: 150, width: 150, bgcolor: 'grey.300', borderRadius: '50%' }} />
 
                 {/* Menu Items */}
-                <List sx={{ px: 2 }}>
+                <List sx={{ width: '100%', px: 1 }}>
                 {menuItems.map((item) => {
-                    const isActive = location.pathname === item.path;
+                    const active = location.pathname === item.path;
                     return (
-                        <ListItem
-                        key={item.path}
-                        onClick={() => {
-                            navigate(item.path);
-                            onToggleCollapsed();
-                        }}
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'flex-start',
-                            mb: 1,
-                        }}
+                        <ListItemButton
+                            key={item.path}
+                            onClick={() => goTo(item.path)}
+                            sx={{
+                                borderRadius: 1.5,
+                                mb: 0.5,
+                                color: active ? '#fff' : 'inherit',
+                                bgcolor: active ? COLORS.PRIMARY : 'transparent',
+                                '&:hover': { bgcolor: active ? COLORS.PRIMARY : '#F2F1E7' },
+                            }}
                         >
-                        <ListItemText
-                            primary={
-                                <Stack direction='row'>
-                                    <IconButton>{item.icon}</IconButton>
-                                    <Typography
-                                        sx={{
-                                            fontWeight: isActive ? 600 : 400,
-                                            fontSize: '1rem',
-                                            borderBottom: isActive ? '2px solid black' : 'none',
-                                        }}
-                                    >
-                                        {item.label}
-                                    </Typography>
-                                </Stack>
-                            }
-                            />
-                    </ListItem>
+                            <IconButton sx={{ p: 0.5, mr: 1, color: 'inherit' }}>{item.icon}</IconButton>
+                            <ListItemText primary={item.label} slotProps={{ primary: { fontWeight: active ? 600 : 400 } }} />
+                        </ListItemButton>
                     );
                 })}
+
+                {/* Thang máy - menu cha có menu con */}
+                <ListItemButton
+                    onClick={() => setElevatorExpanded((v) => !v)}
+                    sx={{
+                        borderRadius: 1.5,
+                        mb: 0.5,
+                        fontWeight: isElevatorActive ? 600 : 400,
+                        bgcolor: isElevatorActive ? 'rgba(3,21,18,0.06)' : 'transparent',
+                    }}
+                >
+                    <IconButton sx={{ p: 0.5, mr: 1, color: 'inherit' }}><Elevator /></IconButton>
+                    <ListItemText primary="Thang máy" slotProps={{ primary: { fontWeight: isElevatorActive ? 600 : 400 } }} />
+                    {elevatorExpanded ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={elevatorExpanded} timeout="auto" unmountOnExit>
+                    <List disablePadding>
+                        {ELEVATOR_SUBMENU.map((child) => {
+                            const active = location.pathname === child.path;
+                            return (
+                                <ListItemButton
+                                    key={child.path}
+                                    onClick={() => goTo(child.path)}
+                                    sx={{
+                                        pl: 6,
+                                        borderRadius: 1.5,
+                                        mb: 0.5,
+                                        color: active ? '#fff' : 'inherit',
+                                        bgcolor: active ? COLORS.PRIMARY : 'transparent',
+                                        '&:hover': { bgcolor: active ? COLORS.PRIMARY : '#F2F1E7' },
+                                    }}
+                                >
+                                    <ListItemText primary={child.label} slotProps={{ primary: { fontSize: 14, fontWeight: active ? 600 : 400 } }} />
+                                </ListItemButton>
+                            );
+                        })}
+                    </List>
+                </Collapse>
                 </List>
                 </Box>
             </Box>

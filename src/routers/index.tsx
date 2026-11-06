@@ -23,6 +23,9 @@ const PermissionDenied = Loadable(lazy(() => import('@/views/Errors/PermissionDe
 // Các loại thang máy
 const ElevatorFamily = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorFamily')));
 const ElevatorCustomer = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorCustomer')));
+const ElevatorLoadGood = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorLoadGood')));
+const ElevatorOversee = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorOversee')));
+const ElevatorRaisedFloor = Loadable(lazy(() => import('@/views/LandingPage/Elevator/components/TypeElevator/ElevatorRaisedFloor')));
 
 const routes: RouteObject[] = [
   // --- NHÁNH 1: CÁC TRANG QUẢN LÝ (PRIVATE) ---
@@ -71,7 +74,19 @@ const routes: RouteObject[] = [
       {
         path: "thang-may/thang-may-tai-khach",
         element: <ElevatorCustomer />,
-      },      
+      }, 
+      {
+        path: "thang-may/thang-may-tai-hang",
+        element: <ElevatorLoadGood/>
+      },
+      {
+        path: "thang-may/thang-may-quan-sat",
+        element: <ElevatorOversee/>
+      },
+      {
+        path: "thang-may/thang-may-san-nang",
+        element: <ElevatorRaisedFloor/>
+      }     
 
     ],
   },

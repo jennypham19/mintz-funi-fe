@@ -16,6 +16,7 @@ const Elevator = () => {
 
     useEffect(() => {
         const scrollTo  = location.state?.scrollTo;
+        
         if(scrollTo){
             // Chờ React render BOM
             requestAnimationFrame(() => {
@@ -49,10 +50,19 @@ const Elevator = () => {
         if(!type) return;
         switch(type){
             case DATA_VALUE.ELEVATOR_FAMILY:
-                navigate("/thang-may/thang-may-gia-dinh")
+                navigate("/thang-may/thang-may-gia-dinh", { state: { scrollTo: "banner_elevator_family" }})
                 break;
             case DATA_VALUE.ELEVATOR_CUSTOMER:
-                navigate("/thang-may/thang-may-tai-khach")
+                navigate("/thang-may/thang-may-tai-khach", { state: { scrollTo: "banner_elevator_customer" } })
+                break;
+            case DATA_VALUE.ELEVATOR_PACKAGE:
+                navigate("/thang-may/thang-may-tai-hang", { state: { scrollTo: "banner_elevator_load_goods" }});
+                break;
+            case DATA_VALUE.ELEVATOR_OVERSEE:
+                navigate("/thang-may/thang-may-quan-sat", { state: { scrollTo: "banner-elevator-oversee" }});
+                break;
+            case DATA_VALUE.ELEVATOR_RAISED_FLOOR:
+                navigate("/thang-may/thang-may-san-nang")
         }
     }
     return (
