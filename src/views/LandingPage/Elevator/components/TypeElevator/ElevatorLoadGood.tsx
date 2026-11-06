@@ -255,7 +255,7 @@ const ElevatorLoadGood = () => {
     }, [location.state, location.pathname, navigate])
 
     return (
-        <Page title="Thang máy tải hàng">
+        <Page title="Thang máy tải hàng/chuyên dụng">
             <Box sx={{ bgcolor: C.bg }}>
                 {/* ===================== HERO ===================== */}
                 <Box

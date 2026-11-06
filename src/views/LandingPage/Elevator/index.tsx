@@ -52,6 +52,9 @@ const Elevator = () => {
             case DATA_VALUE.ELEVATOR_FAMILY:
                 navigate("/thang-may/thang-may-gia-dinh", { state: { scrollTo: "banner_elevator_family" }})
                 break;
+            case DATA_VALUE.ELEVATOR_VILLA:
+                navigate("/thang-may/thang-may-gia-dinh", { state: { scrollTo: "banner_elevator_family" }})
+                break;
             case DATA_VALUE.ELEVATOR_CUSTOMER:
                 navigate("/thang-may/thang-may-tai-khach", { state: { scrollTo: "banner_elevator_customer" } })
                 break;
@@ -62,7 +65,11 @@ const Elevator = () => {
                 navigate("/thang-may/thang-may-quan-sat", { state: { scrollTo: "banner-elevator-oversee" }});
                 break;
             case DATA_VALUE.ELEVATOR_RAISED_FLOOR:
-                navigate("/thang-may/thang-may-san-nang", { state: { scrollTo: "banner-elevator-raised-floor" }})
+                navigate("/thang-may/thang-may-san-nang", { state: { scrollTo: "banner-elevator-raised-floor" }});
+                break;
+            case DATA_VALUE.ELEVATOR_SPECIALIST:
+                navigate("/thang-may/thang-may-tai-hang", { state: { scrollTo: "banner_elevator_load_goods" }});
+                break;
         }
     }
     return (

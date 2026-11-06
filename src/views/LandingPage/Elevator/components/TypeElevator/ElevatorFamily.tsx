@@ -332,14 +332,14 @@ const ElevatorFamily = () => {
     }
 
     return (
-        <Page title="Thang máy gia đình">
+        <Page title="Thang máy gia đình/biệt thự">
             <Box sx={{ bgcolor: C.bg }}>
                 {/* ===================== HERO ===================== */}
                 <Box id="banner_elevator_family" sx={{ bgcolor: C.bgPrimary, color: "#fff", px: SECTION_PX, pt: { xs: 4.5, md: 7 }, pb: { xs: 4, md: 5 } }}>
                     <Grid container spacing={{ xs: 3, md: 5 }} alignItems="center">
                         <Grid size={{ xs: 12, md: 6 }}>
                             <Typography sx={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.14em", color: C.textBanner }}>
-                                GIẢI PHÁP THANG MÁY GIA ĐÌNH
+                                GIẢI PHÁP THANG MÁY GIA ĐÌNH / BIỆT THỰ
                             </Typography>
                             <Typography sx={{ mt: 2, fontWeight: 800, lineHeight: 1.1, fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" } }}>
                                 DI CHUYỂN TIỆN NGHI
