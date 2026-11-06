@@ -62,7 +62,7 @@ const Elevator = () => {
                 navigate("/thang-may/thang-may-quan-sat", { state: { scrollTo: "banner-elevator-oversee" }});
                 break;
             case DATA_VALUE.ELEVATOR_RAISED_FLOOR:
-                navigate("/thang-may/thang-may-san-nang")
+                navigate("/thang-may/thang-may-san-nang", { state: { scrollTo: "banner-elevator-raised-floor" }})
         }
     }
     return (

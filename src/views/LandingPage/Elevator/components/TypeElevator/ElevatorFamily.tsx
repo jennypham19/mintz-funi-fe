@@ -322,6 +322,15 @@ const ElevatorFamily = () => {
 
     }, [location.state, location.pathname, navigate])
 
+    const handleScrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+
+        element?.scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
+    }
+
     return (
         <Page title="Thang máy gia đình">
             <Box sx={{ bgcolor: C.bg }}>
@@ -345,7 +354,7 @@ const ElevatorFamily = () => {
                             </Typography>
                             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mt={4}>
                                 <Button
-                                    onClick={handleProducts}
+                                    onClick={() => handleScrollToSection("elevator-family-loading-capacity")}
                                     sx={{
                                         bgcolor: C.button,
                                         color: C.primary,
@@ -355,7 +364,7 @@ const ElevatorFamily = () => {
                                         "&:hover": { bgcolor: "#dcd9c6" },
                                     }}
                                 >
-                                    KHÁM PHÁ DÒNG SẢN PHẨM
+                                    KHÁM PHÁ TẢI TRỌNG
                                 </Button>
                                 <Button
                                     onClick={handleContact}
@@ -467,7 +476,7 @@ const ElevatorFamily = () => {
                 </Box>
 
                 {/* ===================== PHÂN KHÚC TẢI TRỌNG ===================== */}
-                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                <Box id="elevator-family-loading-capacity" sx={{ px: SECTION_PX, py: SECTION_PY }}>
                     <SectionHeading
                         label="LỰA CHỌN THEO NHU CẦU"
                         title="Các phân khúc tải trọng"

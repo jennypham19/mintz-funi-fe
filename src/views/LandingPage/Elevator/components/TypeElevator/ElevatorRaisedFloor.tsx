@@ -17,7 +17,7 @@ import {
     TuneOutlined,
 } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 import CommonImage from "@/components/Image/index";
 import { COLORS } from "@/constants/colors";
@@ -36,6 +36,7 @@ import safe_3 from "@/assets/images/users/elevator/e_raised_floor/elevator_raise
 import safe_4 from "@/assets/images/users/elevator/e_raised_floor/elevator_raised_floor_8.png";
 import safe_5 from "@/assets/images/users/elevator/e_raised_floor/elevator_raised_floor_4.png";
 import Page from "@/components/Page";
+import { useEffect } from "react";
 
 /* ===================== THEME =====================
  * Màu chủ đạo: #031512 (COLORS.PRIMARY)
@@ -245,6 +246,7 @@ const IconBox: React.FC<{ children: React.ReactNode; size?: number }> = ({ child
 
 const ElevatorRaisedFloor = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleContact = () => {
         navigate("/thang-may", { state: { scrollTo: "contact" } });
@@ -254,11 +256,43 @@ const ElevatorRaisedFloor = () => {
         navigate("/thang-may", { state: { scrollTo: "products" } });
     };
 
+    useEffect(() => {
+        const scrollTo  = location.state?.scrollTo;
+        
+        if(scrollTo){
+            // Chờ React render BOM
+            requestAnimationFrame(() => {
+                const element = document.getElementById(scrollTo);
+
+                element?.scrollIntoView({
+                    behavior: "smooth",
+                    block: 'start'
+                })
+            });
+
+            // Xóa state để tránh cuộn lại khi refresh hoặc quay lại
+            navigate(location.pathname, {
+                replace: true,
+                state: null
+            });
+        }
+
+    }, [location.state, location.pathname, navigate])
+
+    const handleScrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+
+        element?.scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
+    }
     return (
         <Page title="Thang máy sàn nâng">
             <Box sx={{ bgcolor: C.bg }}>
                 {/* ===================== HERO ===================== */}
                 <Box
+                    id="banner-elevator-raised-floor"
                     sx={{
                         position: "relative",
                         overflow: "hidden",
@@ -319,7 +353,7 @@ const ElevatorRaisedFloor = () => {
                         </Typography>
                         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mt={4}>
                             <Button
-                                onClick={handleProducts}
+                                onClick={() => handleScrollToSection('elevator-raised-floor-product')}
                                 sx={{ bgcolor: C.button, color: C.primary, fontWeight: 700, px: 3, py: 1.25, "&:hover": { bgcolor: "#dcd9c6" } }}
                             >
                                 KHÁM PHÁ SẢN PHẨM
@@ -399,7 +433,7 @@ const ElevatorRaisedFloor = () => {
                 </Box>
 
                 {/* ===================== DANH MỤC SẢN PHẨM ===================== */}
-                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                <Box id="elevator-raised-floor-product" sx={{ px: SECTION_PX, py: SECTION_PY }}>
                     <SectionHeading
                         label="DANH MỤC SẢN PHẨM"
                         title="Một giải pháp - nhiều cách ứng dụng"

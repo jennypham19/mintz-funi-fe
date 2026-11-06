@@ -246,6 +246,15 @@ const ElevatorCustomer = () => {
 
     }, [location.state, location.pathname, navigate])
 
+    const handleScrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+
+        element?.scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
+    }
+
     return (
         <Page title="Thang máy tải khách">
             <Box sx={{ bgcolor: C.bg }}>
@@ -317,7 +326,7 @@ const ElevatorCustomer = () => {
                         </Typography>
                         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mt={4}>
                             <Button
-                                onClick={handleProducts}
+                                onClick={() => handleScrollToSection('elevator-customer-product')}
                                 sx={{
                                     bgcolor: C.button,
                                     color: C.primary,
@@ -327,7 +336,7 @@ const ElevatorCustomer = () => {
                                     "&:hover": { bgcolor: "#dcd9c6" },
                                 }}
                             >
-                                KHÁM PHÁ THANG MÁY
+                                KHÁM PHÁ DÒNG SẢN PHẨM
                             </Button>
                             <Button
                                 onClick={handleContact}
@@ -456,7 +465,7 @@ const ElevatorCustomer = () => {
                 </Box>
 
                 {/* ===================== MẪU MÃ THANG MÁY ===================== */}
-                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                <Box id="elevator-customer-product" sx={{ px: SECTION_PX, py: SECTION_PY }}>
                     <SectionHeading
                         label="MẪU MÃ ĐA DẠNG"
                         title="MẪU MÃ THANG MÁY THỰC TẾ"

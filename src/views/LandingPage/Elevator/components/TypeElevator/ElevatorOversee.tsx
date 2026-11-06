@@ -225,6 +225,15 @@ const ElevatorOversee = () => {
 
     }, [location.state, location.pathname, navigate])
 
+    const handleScrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+
+        element?.scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
+    }
+
     return (
         <Page title="Thang máy quan sát">
             <Box sx={{ bgcolor: C.bg }}>
@@ -285,7 +294,7 @@ const ElevatorOversee = () => {
                         </Typography>
                         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mt={4}>
                             <Button
-                                onClick={handleProducts}
+                                onClick={() => handleScrollToSection('elevator-oversee-product')}
                                 sx={{
                                     bgcolor: C.button,
                                     color: C.primary,
@@ -295,7 +304,7 @@ const ElevatorOversee = () => {
                                     "&:hover": { bgcolor: "#dcd9c6" },
                                 }}
                             >
-                                KHÁM PHÁ THANG MÁY
+                                KHÁM PHÁ DÒNG SẢN PHẨM
                             </Button>
                             <Button
                                 onClick={handleContact}
@@ -349,7 +358,7 @@ const ElevatorOversee = () => {
                 </Box>
 
                 {/* ===================== MẪU MÃ ===================== */}
-                <Box sx={{ px: SECTION_PX, py: SECTION_PY }}>
+                <Box id="elevator-oversee-product" sx={{ px: SECTION_PX, py: SECTION_PY }}>
                     <SectionHeading
                         label="MẪU MÃ ĐA DẠNG"
                         title="Thang máy lồng kính thịnh hành"
